@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
-using NLua;
+﻿using NLua;
 using NLua.Exceptions;
+using System.Reflection;
 using RacMAN.API;
+using RacMAN.Forms;
 
 namespace RacMAN;
 public class Racman
 {
-    public IMemoryAPI api;
+    public MemoryAPI? api;
     public APIType apiType;
     internal bool connected;
     public string gameTitleID;
@@ -41,7 +36,7 @@ public class Racman
         switch (form.apiType)
         {
             case APIType.PS3:
-                this.api = new RatchetronClient(form.ipAddress);
+                this.api = new Ratchetron(form.ipAddress);
                 break;
             case APIType.RPCS3:
             case APIType.PCSX2: break;
@@ -64,21 +59,22 @@ public class Racman
     }
 
     // maybe move this somewhere else?
-    public static byte[] ReverseArray(byte[] arr)
-    {
-        return arr.Reverse().ToArray();
-    }
+
 
     void InitLuaState()
     {
         lua = new Lua();
 
-        // TODO add the interop functions here I think
+        // Allow loading .NET assemblies.
         lua.LoadCLRPackage();
-        lua.RegisterFunction("TableToByteArray", typeof(LuaFunctions).GetMethod("LuaTableToByteArray"));
-        lua.RegisterFunction("IntToBytes", typeof(BitConverter).GetMethod("GetBytes", new Type[] { typeof(int) }));
-        lua.RegisterFunction("FloatToBytes", typeof(BitConverter).GetMethod("GetBytes", new Type[] { typeof(float) }));
-        lua.RegisterFunction("ReverseArray", typeof(Racman).GetMethod("ReverseArray"));
+
+        EvalLua("Convert = {}");
+
+        // Putting these functions here because calling them directly from lua doesn't seem to be possible.
+        lua.RegisterFunction("Convert.TableToByteArray", typeof(LuaFunctions).GetMethod("LuaTableToByteArray"));
+        lua.RegisterFunction("Convert.IntToByteArray", typeof(LuaFunctions).GetMethod("IntToByteArray"));
+        lua.RegisterFunction("Convert.FloatToByteArray", typeof(BitConverter).GetMethod("GetBytes", new Type[] { typeof(float) }));
+        lua.RegisterFunction("Convert.ReverseArray", typeof(LuaFunctions).GetMethod("ReverseArray"));
         lua["API"] = api;
         lua["Racman"] = this;
 
@@ -94,6 +90,8 @@ public class Racman
         }
 
         // Prevent user scripts from loading .NET assemblies for security
+        // If there's something that can only be done by loading an assembly, it should
+        // probably be included in the racman scripts anyway
         EvalLua("import = function() end");
 
         // Load game libraries/scripts
