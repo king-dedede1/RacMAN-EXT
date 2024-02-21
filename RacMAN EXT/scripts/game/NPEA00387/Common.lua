@@ -37,7 +37,7 @@ end
 local rc3_ghost_ratchet_subid = nil
 function rc3_set_ghost_ratchet(enable)
 	if enable then
-		rc3_ghost_ratchet_subid = API:FreezeMemory(0xDA29DE, Convert.IntToByteArray(10))
+		rc3_ghost_ratchet_subid = API:FreezeMemory(0xDA29DE, Convert.TableToByteArray({0,0,255,0}))
 	else
 		if rc3_ghost_ratchet_subid ~= nil then
 			API:ReleaseSubID(rc3_ghost_ratchet_subid)
@@ -66,21 +66,21 @@ function rc3_get_armor()
 end
 
 function rc3_unlock_skill_points()
+local table = {
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+	}
+	API:WriteMemory(0xDA521D, Convert.TableToByteArray(table))
+end
+
+function rc3_reset_skill_points()
 	local table = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	}
-	API:WriteMemory(0xDA521D, TableToByteArray(table))
-end
-
-function rc3_reset_skill_points()
-	local table = {
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-	}
-	API:WriteMemory(0xDA521D, TableToByteArray(table))
+	API:WriteMemory(0xDA521D, Convert.TableToByteArray(table))
 end
 
 function rc3_setup_ngplus()

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using RacMAN.Forms;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
@@ -95,7 +96,7 @@ public class Ratchetron : MemoryAPI
 
     public override int FreezeMemory(uint addr, byte[] value)
     {
-        return FreezeMemory(getCurrentPID(), addr, (uint)value.Length, MemoryCondition.Changed, value);
+        return FreezeMemory(getCurrentPID(), addr, (uint)value.Length, MemoryCondition.Any, value);
     }
 
     public override string GetGameTitle()
@@ -159,7 +160,7 @@ public class Ratchetron : MemoryAPI
         this.memSubTickUpdates.Remove(id);
         this.frozenAddresses.Remove(id);
 
-        Console.WriteLine($"Released memory subscription ID {id}");
+        LuaConsoleForm.instance.Log($"Released memory subscription ID {id}");
 
         // we're ignoring the results because yolo
     }
@@ -398,13 +399,16 @@ public class Ratchetron : MemoryAPI
 
     public int FreezeMemory(int pid, uint address, uint size, MemoryCondition condition, byte[] memory)
     {
-        var cmdBuf = new List<byte>();
-        cmdBuf.Add(0x0b);
-        cmdBuf.AddRange(BitConverter.GetBytes((UInt32) pid).Reverse());
-        cmdBuf.AddRange(BitConverter.GetBytes((UInt32) address).Reverse());
-        cmdBuf.AddRange(BitConverter.GetBytes((UInt32) size).Reverse());
-        cmdBuf.AddRange(new byte[] { (byte) condition });
-        cmdBuf.AddRange(memory);
+        LuaConsoleForm.instance.Log($"PID: {pid}, ADDR: {address}, SIZE: {size}, COND:{condition}, MEM LENGTH:{memory.Length}");
+        List<byte> cmdBuf =
+        [
+            0x0b,
+            .. BitConverter.GetBytes((UInt32) pid).Reverse(),
+            .. BitConverter.GetBytes((UInt32) address).Reverse(),
+            .. BitConverter.GetBytes((UInt32) size).Reverse(),
+            ((byte)condition),
+            .. memory,
+        ];
 
         this.WriteStream(cmdBuf.ToArray(), 0, cmdBuf.Count);
 
@@ -418,7 +422,7 @@ public class Ratchetron : MemoryAPI
 
         var memSubID = (int) BitConverter.ToInt32(memSubIDBuf.Take(4).Reverse().ToArray(), 0);
 
-        Console.WriteLine($"Froze address {address.ToString("X")} with subscription ID {memSubID}");
+        LuaConsoleForm.instance.Log($"Froze address {address.ToString("X")} with subscription ID {memSubID}");
 
         frozenAddresses[memSubID] = address;
 

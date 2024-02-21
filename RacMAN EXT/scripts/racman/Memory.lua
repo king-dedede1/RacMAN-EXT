@@ -5,7 +5,7 @@ Memory = {}
 
 -- Write an int to memory
 Memory.WriteInt = function(addr, int)
-    API:WriteMemory(addr, Convert.IntToByteArray(int))
+    API:WriteMemory(addr, Convert.IntToByteArray(int, 4))
 end
 
 -- Read an int to memory.
