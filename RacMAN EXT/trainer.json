@@ -1,0 +1,50 @@
+{
+  "TitleID": "NPEA00387",
+  "RacmanVersion": "2.0.0.0",
+  "Labels": [
+    {
+      "Name": "",
+      "Text": "New Label",
+      "Position": {
+        "IsEmpty": false,
+        "X": 16,
+        "Y": 108
+      }
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "New Button",
+      "Position": {
+        "IsEmpty": false,
+        "X": 351,
+        "Y": 131
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": ""
+    }
+  ],
+  "TextBoxes": [
+    {
+      "Name": "Test",
+      "Enabled": true,
+      "Text": "",
+      "Position": {
+        "IsEmpty": false,
+        "X": 83,
+        "Y": 254
+      },
+      "OnEnter": "print(Trainer.GetControlByName(\u0027Test\u0027).Text)"
+    }
+  ],
+  "CheckBoxes": [],
+  "Dropdowns": [],
+  "OnLoad": "",
+  "OnUnload": ""
+}

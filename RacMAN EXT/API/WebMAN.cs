@@ -40,7 +40,7 @@ public static class WebMAN
     {
         var cpursx = Get($"http://{ip}/cpursx.ps3");
         int loc = cpursx.IndexOf("http://google.com/search?q=");
-        if (loc != -1)
+        if (loc == -1)
         {
             return "PS3 Game";
         }

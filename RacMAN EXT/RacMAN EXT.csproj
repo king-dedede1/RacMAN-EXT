@@ -40,4 +40,13 @@
 	</Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="NPEA00387.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="trainer.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

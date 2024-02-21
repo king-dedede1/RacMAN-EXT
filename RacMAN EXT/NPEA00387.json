@@ -1,0 +1,287 @@
+{
+  "TitleID": "NPEA00387",
+  "RacmanVersion": "2.0.0.0",
+  "Labels": [
+    {
+      "Name": "",
+      "Text": "Bolt Count:",
+      "Position": {
+        "IsEmpty": false,
+        "X": 376,
+        "Y": 76
+      }
+    },
+    {
+      "Name": "",
+      "Text": "Challenge Mode:",
+      "Position": {
+        "IsEmpty": false,
+        "X": 378,
+        "Y": 154
+      }
+    },
+    {
+      "Name": "",
+      "Text": "Armor:",
+      "Position": {
+        "IsEmpty": false,
+        "X": 372,
+        "Y": 231
+      }
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "saveposButton",
+      "Enabled": true,
+      "Text": "Save Position",
+      "Position": {
+        "IsEmpty": false,
+        "X": 29,
+        "Y": 72
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "rc3_save_pos()"
+    },
+    {
+      "Name": "loadposButton",
+      "Enabled": true,
+      "Text": "Load Position",
+      "Position": {
+        "IsEmpty": false,
+        "X": 28,
+        "Y": 96
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "rc3_load_pos()"
+    },
+    {
+      "Name": "killyourselfButton",
+      "Enabled": true,
+      "Text": "Die",
+      "Position": {
+        "IsEmpty": false,
+        "X": 27,
+        "Y": 119
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "rc3_kill()"
+    },
+    {
+      "Name": "loadplanetButton",
+      "Enabled": true,
+      "Text": "Load",
+      "Position": {
+        "IsEmpty": false,
+        "X": 116,
+        "Y": 191
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "rc3_load_planet(Trainer.GetControlByName(\u0027planetDropdown\u0027).SelectedIndex \u002B 1, Trainer.GetControlByName(\u0027fastloadCheckbox\u0027).Checked)"
+    },
+    {
+      "Name": "resetspButton",
+      "Enabled": true,
+      "Text": "Reset SPs",
+      "Position": {
+        "IsEmpty": false,
+        "X": 375,
+        "Y": 295
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "rc3_reset_skill_points()"
+    },
+    {
+      "Name": "unlockspButton",
+      "Enabled": true,
+      "Text": "Unlock SPs",
+      "Position": {
+        "IsEmpty": false,
+        "X": 374,
+        "Y": 320
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "rc3_unlock_skill_points()"
+    },
+    {
+      "Name": "setupButton",
+      "Enabled": true,
+      "Text": "Setup NG\u002B",
+      "Position": {
+        "IsEmpty": false,
+        "X": 373,
+        "Y": 345
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "rc3_setup_ngplus()"
+    }
+  ],
+  "TextBoxes": [
+    {
+      "Name": "boltCountTextBox",
+      "Enabled": true,
+      "Text": "",
+      "Position": {
+        "IsEmpty": false,
+        "X": 376,
+        "Y": 102
+      },
+      "OnEnter": "rc3_set_boltcount(tonumber(Trainer.GetControlByName(\u0027boltCountTextBox\u0027).Text))"
+    },
+    {
+      "Name": "challengemodeTextBox",
+      "Enabled": true,
+      "Text": "",
+      "Position": {
+        "IsEmpty": false,
+        "X": 375,
+        "Y": 182
+      },
+      "OnEnter": "rc3_set_challenge_mode(tonumber(Trainer.GetControlByName(\u0027challengemodeTextBox\u0027).Text))"
+    }
+  ],
+  "CheckBoxes": [
+    {
+      "Name": "ghostratchetCheckbox",
+      "Enabled": true,
+      "Text": "Ghost Ratchet",
+      "CheckState": 0,
+      "Position": {
+        "IsEmpty": false,
+        "X": 33,
+        "Y": 267
+      },
+      "AllowIndeterminate": false,
+      "OnCheck": "rc3_set_ghost_ratchet(Trainer.GetControlByName(\u0027ghostratchetCheckbox\u0027).Checked)"
+    },
+    {
+      "Name": "infiniteammoCheckbox",
+      "Enabled": true,
+      "Text": "Infinite Ammo",
+      "CheckState": 0,
+      "Position": {
+        "IsEmpty": false,
+        "X": 33,
+        "Y": 286
+      },
+      "AllowIndeterminate": false,
+      "OnCheck": ""
+    },
+    {
+      "Name": "freezehealthCheckbox",
+      "Enabled": true,
+      "Text": "Freeze Health",
+      "CheckState": 0,
+      "Position": {
+        "IsEmpty": false,
+        "X": 32,
+        "Y": 306
+      },
+      "AllowIndeterminate": false,
+      "OnCheck": "rc3_set_freeze_health(Trainer.GetControlByName(\u0027freezehealthCheckbox\u0027).CheckState)"
+    },
+    {
+      "Name": "qspCheckbox",
+      "Enabled": true,
+      "Text": "Quick Select Pause",
+      "CheckState": 0,
+      "Position": {
+        "IsEmpty": false,
+        "X": 31,
+        "Y": 329
+      },
+      "AllowIndeterminate": false,
+      "OnCheck": "if Trainer.GetControlByName('qspCheckbox').Checked then rc3_set_quick_select_pause(1) else rc3_set_quick_select_pause(0) end"
+    },
+    {
+      "Name": "fastloadCheckbox",
+      "Enabled": true,
+      "Text": "Fast",
+      "CheckState": 0,
+      "Position": {
+        "IsEmpty": false,
+        "X": 116,
+        "Y": 214
+      },
+      "AllowIndeterminate": false,
+      "OnCheck": ""
+    }
+  ],
+  "Dropdowns": [
+    {
+      "Name": "planetDropdown",
+      "Enabled": true,
+      "Position": {
+        "IsEmpty": false,
+        "X": 30,
+        "Y": 189
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "Options": [
+        "Veldin",
+        "Florana",
+        "Phoenix",
+        "Marcadia"
+      ],
+      "Index": 0,
+      "OnItemSelected": ""
+    },
+    {
+      "Name": "armorDropdown",
+      "Enabled": true,
+      "Position": {
+        "IsEmpty": false,
+        "X": 375,
+        "Y": 251
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "Options": [
+        "Alpha combat suit",
+        "Magnaplate",
+        "Adamantine",
+        "AEGIS Mk. V",
+        "Infernox"
+      ],
+      "Index": 0,
+      "OnItemSelected": "rc3_set_armor(Trainer.GetControlByName(\u0027armorDropdown\u0027).SelectedIndex)"
+    }
+  ],
+  "OnLoad": "Trainer.GetControlByName(\u0027armorDropdown\u0027).SelectedIndex = rc3_get_armor()\nTrainer.GetControlByName(\u0027qspCheckbox\u0027).Checked = (rc3_get_quick_select_pause() == 1)",
+  "OnUnload": ""
+}
