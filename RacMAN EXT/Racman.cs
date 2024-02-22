@@ -39,6 +39,8 @@ public class Racman
                 this.api = new Ratchetron(form.ipAddress);
                 break;
             case APIType.RPCS3:
+                this.api = new RPCS3();
+                break;
             case APIType.PCSX2: break;
         }
 
