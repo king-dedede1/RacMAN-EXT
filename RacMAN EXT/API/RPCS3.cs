@@ -1,15 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using RacMAN.Forms;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace RacMAN.API;
 public class RPCS3 : MemoryAPI
 {
-    nint hProcess;
-    const string PROCESS_NAME = "";
+    const string PROCESS_NAME = "rpcs3";
+
+    private nint hProcess;
+    private int pid;
+    private bool workerRunning;
+    private List<MemSub> memSubs = [];
+
+    private class MemSub
+    {
+        //MemSub's state
+        public uint address;
+        public MemSubType type;
+        public uint size;
+        public Action<byte[]>? callback;
+        public byte[]? freezeValue;
+
+        // for checking if value has changed
+        public byte[]? oldValue;
+
+        // to be written by application and read by worker thread
+        public bool released;
+        
+    }
+
+    private enum MemSubType
+    {
+        SUBSCRIBE,
+        FREEZE
+    }
 
     public RPCS3()
     {
@@ -18,12 +43,17 @@ public class RPCS3 : MemoryAPI
         {
             throw new Exception("Couldn't locate process to connect to. Did you start the game yet?");
         }
-        Process process = Process.GetProcessesByName("rpcs3")[0];
-        hProcess = Win32.OpenProcess(Win32.PROCESS_ALL_ACCESS, false, process.Id);
+        Process process = processList[0];
+        pid = process.Id;
+        hProcess = Win32.OpenProcess(Win32.PROCESS_ALL_ACCESS, false, pid);
         if (hProcess == IntPtr.Zero)
         {
             throw new Exception($"Invalid handle ({hProcess:X})");
         }
+
+        // start mem sub worker thread
+        new Thread(MemSubWorkerThread).Start();
+        workerRunning = true;
     }
 
     public override void Disconnect()
@@ -33,38 +63,49 @@ public class RPCS3 : MemoryAPI
 
     public override int FreezeMemory(uint addr, byte[] value)
     {
-        throw new NotImplementedException();
+        var memsub = new MemSub()
+        {
+            address = addr,
+            type = MemSubType.FREEZE,
+            size = (uint) value.Length,
+            released = false,
+            freezeValue = value
+        };
+        memSubs.Add(memsub);
+        return memSubs.Count-1;
     }
 
     public override string GetGameTitle()
     {
-        var titles = GetWindowTitles();
+        var title = GetGameWindowTitle(pid);
 
-        foreach (var title in titles)
+        var match = Regex.Match(title, "(?<=(.*\\|.*){3})([^|[]+)"); // it works i guess
+
+        if (match.Success)
         {
-            if (title.Contains('['))
-            {
-                var e = title.IndexOf('[');
-                var s = e;
-                for (; title[s] != '|'; s--) ;
-                return title.Substring(s + 2, (e - 2)-s);
-            }
+            // fun fact i spent like 20 minutes trying to trim the whitespace with regex not knowing there was a method for it
+            return match.Value.Trim();
         }
-        return "Unknown RPCS3 Game";
+        else
+        {
+            throw new Exception("Couldn't get game title");
+        }
     }
 
     public override string GetGameTitleID()
     {
-        var titles = GetWindowTitles();
+        var title = GetGameWindowTitle(pid);
 
-        foreach (var title in titles)
+        var match = Regex.Match(title, "([A-Z]{4})(\\d{5})");
+
+        if (match.Success)
         {
-            if (title.Contains('['))
-            {
-                return title.Substring(title.IndexOf('[') + 1, 9);
-            }
+            return match.Value;
         }
-        return "UNKNOWN00";
+        else
+        {
+            throw new Exception("Couldn't get game title ID");
+        }
     }
 
     public override void Notify(string text)
@@ -84,12 +125,27 @@ public class RPCS3 : MemoryAPI
 
     public override void ReleaseSubID(int id)
     {
-        throw new NotImplementedException();
+        if (id >= 0 && id < memSubs.Count)
+        {
+            memSubs[id].released = true;
+        }
+        else
+        {
+            LuaConsoleForm.instance.Warn($"Tried to release sub ID {id} but it doesn't exist!");
+        }
     }
 
     public override int SubMemory(uint addr, uint size, Action<byte[]> callback)
     {
-        throw new NotImplementedException();
+        var memsub = new MemSub()
+        {
+            address = addr,
+            size = size,
+            callback = callback,
+            type = MemSubType.SUBSCRIBE,
+        };
+        memSubs.Add(memsub);
+        return memSubs.Count-1;
     }
 
     public override void WriteMemory(uint addr, byte[] bytes)
@@ -100,11 +156,15 @@ public class RPCS3 : MemoryAPI
         }
     }
 
-    private static List<string> GetWindowTitles()
+    private static string GetGameWindowTitle(int processId)
+    {
+        // fix later
+        return GetWindowTitles(processId)[0];
+    }
+
+    private static List<string> GetWindowTitles(int processId)
     {
         List<string> titles = new List<string>();
-        // WHY?!?!? why does it only work if you open the process again????
-        uint processId = (uint) Process.GetProcessesByName("rpcs3")[0].Id;
 
         Win32.EnumWindows((hWnd, lParam) =>
         {
@@ -123,6 +183,37 @@ public class RPCS3 : MemoryAPI
         }, IntPtr.Zero);
 
         return titles;
+    }
+
+    // not really thread safe
+    private void MemSubWorkerThread()
+    {
+        while (workerRunning)
+        {
+            foreach (var memsub in memSubs)
+            {
+                if (memsub.released) continue;
+                switch (memsub.type)
+                {
+                    case MemSubType.SUBSCRIBE:
+                        var newValue = ReadMemory(memsub.address, memsub.size);
+                        if (memsub.oldValue == null || newValue.SequenceEqual(memsub.oldValue.Reverse().ToArray()))
+                        {
+                            memsub.callback!(newValue);
+                            // callback is set by SubMemory and shouldn't be null
+
+                            memsub.oldValue = newValue;
+                        }
+                        break;
+
+                    case MemSubType.FREEZE:
+                        WriteMemory(memsub.address, memsub.freezeValue!);
+                        break;
+                }
+            }
+
+            Thread.Sleep(1000 / 120);
+        }
     }
 }
 
