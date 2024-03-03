@@ -28,170 +28,169 @@ partial class MainForm
     /// </summary>
     private void InitializeComponent()
     {
-        this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-        this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.aboutRaCMANToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.reconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.combosHotkeysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.inputDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.autosplittersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.luaConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.rAMWatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.modLoaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.modulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.addRemoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-        this.pS3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.savesManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        this.menuStrip1.SuspendLayout();
-        this.SuspendLayout();
+        menuStrip1 = new MenuStrip();
+        fileToolStripMenuItem = new ToolStripMenuItem();
+        aboutRaCMANToolStripMenuItem = new ToolStripMenuItem();
+        settingsToolStripMenuItem = new ToolStripMenuItem();
+        reconnectToolStripMenuItem = new ToolStripMenuItem();
+        toolsToolStripMenuItem = new ToolStripMenuItem();
+        combosHotkeysToolStripMenuItem = new ToolStripMenuItem();
+        inputDisplayToolStripMenuItem = new ToolStripMenuItem();
+        autosplittersToolStripMenuItem = new ToolStripMenuItem();
+        luaConsoleToolStripMenuItem = new ToolStripMenuItem();
+        rAMWatchToolStripMenuItem = new ToolStripMenuItem();
+        modLoaderToolStripMenuItem = new ToolStripMenuItem();
+        modulesToolStripMenuItem = new ToolStripMenuItem();
+        addRemoveToolStripMenuItem = new ToolStripMenuItem();
+        toolStripSeparator1 = new ToolStripSeparator();
+        pS3ToolStripMenuItem = new ToolStripMenuItem();
+        savesManagerToolStripMenuItem = new ToolStripMenuItem();
+        toolStripSeparator2 = new ToolStripSeparator();
+        reloadLuaStateToolStripMenuItem = new ToolStripMenuItem();
+        menuStrip1.SuspendLayout();
+        SuspendLayout();
         // 
         // menuStrip1
         // 
-        this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.modulesToolStripMenuItem,
-            this.pS3ToolStripMenuItem});
-        this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-        this.menuStrip1.Name = "menuStrip1";
-        this.menuStrip1.Size = new System.Drawing.Size(592, 24);
-        this.menuStrip1.TabIndex = 0;
-        this.menuStrip1.Text = "menuStrip1";
+        menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, toolsToolStripMenuItem, modulesToolStripMenuItem, pS3ToolStripMenuItem });
+        menuStrip1.Location = new Point(0, 0);
+        menuStrip1.Name = "menuStrip1";
+        menuStrip1.Padding = new Padding(7, 2, 0, 2);
+        menuStrip1.Size = new Size(691, 24);
+        menuStrip1.TabIndex = 0;
+        menuStrip1.Text = "menuStrip1";
         // 
         // fileToolStripMenuItem
         // 
-        this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutRaCMANToolStripMenuItem,
-            this.settingsToolStripMenuItem,
-            this.reconnectToolStripMenuItem});
-        this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-        this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-        this.fileToolStripMenuItem.Text = "File";
+        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutRaCMANToolStripMenuItem, settingsToolStripMenuItem, reconnectToolStripMenuItem, toolStripSeparator2, reloadLuaStateToolStripMenuItem });
+        fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+        fileToolStripMenuItem.Size = new Size(37, 20);
+        fileToolStripMenuItem.Text = "File";
         // 
         // aboutRaCMANToolStripMenuItem
         // 
-        this.aboutRaCMANToolStripMenuItem.Name = "aboutRaCMANToolStripMenuItem";
-        this.aboutRaCMANToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-        this.aboutRaCMANToolStripMenuItem.Text = "About RaCMAN...";
-        this.aboutRaCMANToolStripMenuItem.Click += new System.EventHandler(this.aboutRaCMANToolStripMenuItem_Click);
+        aboutRaCMANToolStripMenuItem.Name = "aboutRaCMANToolStripMenuItem";
+        aboutRaCMANToolStripMenuItem.Size = new Size(180, 22);
+        aboutRaCMANToolStripMenuItem.Text = "About RaCMAN...";
+        aboutRaCMANToolStripMenuItem.Click += aboutRaCMANToolStripMenuItem_Click;
         // 
         // settingsToolStripMenuItem
         // 
-        this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-        this.settingsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-        this.settingsToolStripMenuItem.Text = "Settings...";
+        settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+        settingsToolStripMenuItem.Size = new Size(180, 22);
+        settingsToolStripMenuItem.Text = "Settings...";
         // 
         // reconnectToolStripMenuItem
         // 
-        this.reconnectToolStripMenuItem.Name = "reconnectToolStripMenuItem";
-        this.reconnectToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-        this.reconnectToolStripMenuItem.Text = "Reconnect";
-        this.reconnectToolStripMenuItem.Click += new System.EventHandler(this.reconnectToolStripMenuItem_Click);
+        reconnectToolStripMenuItem.Name = "reconnectToolStripMenuItem";
+        reconnectToolStripMenuItem.Size = new Size(180, 22);
+        reconnectToolStripMenuItem.Text = "Reconnect";
+        reconnectToolStripMenuItem.Click += reconnectToolStripMenuItem_Click;
         // 
         // toolsToolStripMenuItem
         // 
-        this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.combosHotkeysToolStripMenuItem,
-            this.inputDisplayToolStripMenuItem,
-            this.autosplittersToolStripMenuItem,
-            this.luaConsoleToolStripMenuItem,
-            this.rAMWatchToolStripMenuItem,
-            this.modLoaderToolStripMenuItem});
-        this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-        this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-        this.toolsToolStripMenuItem.Text = "Tools";
+        toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { combosHotkeysToolStripMenuItem, inputDisplayToolStripMenuItem, autosplittersToolStripMenuItem, luaConsoleToolStripMenuItem, rAMWatchToolStripMenuItem, modLoaderToolStripMenuItem });
+        toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+        toolsToolStripMenuItem.Size = new Size(46, 20);
+        toolsToolStripMenuItem.Text = "Tools";
         // 
         // combosHotkeysToolStripMenuItem
         // 
-        this.combosHotkeysToolStripMenuItem.Name = "combosHotkeysToolStripMenuItem";
-        this.combosHotkeysToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-        this.combosHotkeysToolStripMenuItem.Text = "Combos/Hotkeys...";
+        combosHotkeysToolStripMenuItem.Name = "combosHotkeysToolStripMenuItem";
+        combosHotkeysToolStripMenuItem.Size = new Size(176, 22);
+        combosHotkeysToolStripMenuItem.Text = "Combos/Hotkeys...";
         // 
         // inputDisplayToolStripMenuItem
         // 
-        this.inputDisplayToolStripMenuItem.Name = "inputDisplayToolStripMenuItem";
-        this.inputDisplayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-        this.inputDisplayToolStripMenuItem.Text = "Input Display...";
+        inputDisplayToolStripMenuItem.Name = "inputDisplayToolStripMenuItem";
+        inputDisplayToolStripMenuItem.Size = new Size(176, 22);
+        inputDisplayToolStripMenuItem.Text = "Input Display...";
         // 
         // autosplittersToolStripMenuItem
         // 
-        this.autosplittersToolStripMenuItem.Name = "autosplittersToolStripMenuItem";
-        this.autosplittersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-        this.autosplittersToolStripMenuItem.Text = "Autosplitters...";
+        autosplittersToolStripMenuItem.Name = "autosplittersToolStripMenuItem";
+        autosplittersToolStripMenuItem.Size = new Size(176, 22);
+        autosplittersToolStripMenuItem.Text = "Autosplitters...";
         // 
         // luaConsoleToolStripMenuItem
         // 
-        this.luaConsoleToolStripMenuItem.Name = "luaConsoleToolStripMenuItem";
-        this.luaConsoleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-        this.luaConsoleToolStripMenuItem.Text = "Lua Console...";
-        this.luaConsoleToolStripMenuItem.Click += new System.EventHandler(this.luaConsoleToolStripMenuItem_Click);
+        luaConsoleToolStripMenuItem.Name = "luaConsoleToolStripMenuItem";
+        luaConsoleToolStripMenuItem.Size = new Size(176, 22);
+        luaConsoleToolStripMenuItem.Text = "Lua Console...";
+        luaConsoleToolStripMenuItem.Click += luaConsoleToolStripMenuItem_Click;
         // 
         // rAMWatchToolStripMenuItem
         // 
-        this.rAMWatchToolStripMenuItem.Name = "rAMWatchToolStripMenuItem";
-        this.rAMWatchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-        this.rAMWatchToolStripMenuItem.Text = "RAM Watch...";
+        rAMWatchToolStripMenuItem.Name = "rAMWatchToolStripMenuItem";
+        rAMWatchToolStripMenuItem.Size = new Size(176, 22);
+        rAMWatchToolStripMenuItem.Text = "RAM Watch...";
         // 
         // modLoaderToolStripMenuItem
         // 
-        this.modLoaderToolStripMenuItem.Name = "modLoaderToolStripMenuItem";
-        this.modLoaderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-        this.modLoaderToolStripMenuItem.Text = "Mod Loader...";
+        modLoaderToolStripMenuItem.Name = "modLoaderToolStripMenuItem";
+        modLoaderToolStripMenuItem.Size = new Size(176, 22);
+        modLoaderToolStripMenuItem.Text = "Mod Loader...";
         // 
         // modulesToolStripMenuItem
         // 
-        this.modulesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addRemoveToolStripMenuItem,
-            this.toolStripSeparator1});
-        this.modulesToolStripMenuItem.Name = "modulesToolStripMenuItem";
-        this.modulesToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-        this.modulesToolStripMenuItem.Text = "Game";
+        modulesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addRemoveToolStripMenuItem, toolStripSeparator1 });
+        modulesToolStripMenuItem.Name = "modulesToolStripMenuItem";
+        modulesToolStripMenuItem.Size = new Size(50, 20);
+        modulesToolStripMenuItem.Text = "Game";
         // 
         // addRemoveToolStripMenuItem
         // 
-        this.addRemoveToolStripMenuItem.Name = "addRemoveToolStripMenuItem";
-        this.addRemoveToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-        this.addRemoveToolStripMenuItem.Text = "Add/Remove modules...";
+        addRemoveToolStripMenuItem.Name = "addRemoveToolStripMenuItem";
+        addRemoveToolStripMenuItem.Size = new Size(202, 22);
+        addRemoveToolStripMenuItem.Text = "Add/Remove modules...";
         // 
         // toolStripSeparator1
         // 
-        this.toolStripSeparator1.Name = "toolStripSeparator1";
-        this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+        toolStripSeparator1.Name = "toolStripSeparator1";
+        toolStripSeparator1.Size = new Size(199, 6);
         // 
         // pS3ToolStripMenuItem
         // 
-        this.pS3ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.savesManagerToolStripMenuItem});
-        this.pS3ToolStripMenuItem.Name = "pS3ToolStripMenuItem";
-        this.pS3ToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
-        this.pS3ToolStripMenuItem.Text = "PS3";
+        pS3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { savesManagerToolStripMenuItem });
+        pS3ToolStripMenuItem.Name = "pS3ToolStripMenuItem";
+        pS3ToolStripMenuItem.Size = new Size(38, 20);
+        pS3ToolStripMenuItem.Text = "PS3";
         // 
         // savesManagerToolStripMenuItem
         // 
-        this.savesManagerToolStripMenuItem.Name = "savesManagerToolStripMenuItem";
-        this.savesManagerToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-        this.savesManagerToolStripMenuItem.Text = "Saves Manager...";
+        savesManagerToolStripMenuItem.Name = "savesManagerToolStripMenuItem";
+        savesManagerToolStripMenuItem.Size = new Size(162, 22);
+        savesManagerToolStripMenuItem.Text = "Saves Manager...";
+        // 
+        // toolStripSeparator2
+        // 
+        toolStripSeparator2.Name = "toolStripSeparator2";
+        toolStripSeparator2.Size = new Size(177, 6);
+        // 
+        // reloadLuaStateToolStripMenuItem
+        // 
+        reloadLuaStateToolStripMenuItem.Name = "reloadLuaStateToolStripMenuItem";
+        reloadLuaStateToolStripMenuItem.Size = new Size(180, 22);
+        reloadLuaStateToolStripMenuItem.Text = "Reload Lua runtime";
+        reloadLuaStateToolStripMenuItem.Click += reloadLuaStateToolStripMenuItem_Click;
         // 
         // MainForm
         // 
-        this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(592, 450);
-        this.Controls.Add(this.menuStrip1);
-        this.DoubleBuffered = true;
-        this.MainMenuStrip = this.menuStrip1;
-        this.Name = "MainForm";
-        this.Text = "RaCMAN {version} - {title ID} - {game title}";
-        this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-        this.Shown += new System.EventHandler(this.MainForm_Shown);
-        this.menuStrip1.ResumeLayout(false);
-        this.menuStrip1.PerformLayout();
-        this.ResumeLayout(false);
-        this.PerformLayout();
-
+        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(691, 519);
+        Controls.Add(menuStrip1);
+        DoubleBuffered = true;
+        MainMenuStrip = menuStrip1;
+        Margin = new Padding(4, 3, 4, 3);
+        Name = "MainForm";
+        Text = "RaCMAN {version} - {title ID} - {game title}";
+        FormClosing += MainForm_FormClosing;
+        Shown += MainForm_Shown;
+        menuStrip1.ResumeLayout(false);
+        menuStrip1.PerformLayout();
+        ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
@@ -213,4 +212,6 @@ partial class MainForm
     private System.Windows.Forms.ToolStripMenuItem modLoaderToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem pS3ToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem savesManagerToolStripMenuItem;
+    private ToolStripSeparator toolStripSeparator2;
+    private ToolStripMenuItem reloadLuaStateToolStripMenuItem;
 }

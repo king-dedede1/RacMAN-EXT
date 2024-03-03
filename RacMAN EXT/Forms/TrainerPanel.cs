@@ -1,283 +1,120 @@
 ﻿namespace RacMAN.Forms;
 public class TrainerPanel : Panel
 {
-    #region designer generated code
-    private ContextMenuStrip AddStuffMenu;
-    private ToolStripMenuItem toolStripMenuItem1;
-    private ToolStripMenuItem label;
-    private ToolStripMenuItem button;
-    private ToolStripMenuItem textbox;
-    private ToolStripMenuItem checkbox;
-    private ToolStripMenuItem dropdown;
-    private ToolStripMenuItem deleteEverything;
-    private ToolStripMenuItem save;
-    private System.ComponentModel.IContainer components;
-
-    private void InitializeComponent()
-    {
-        this.components = new System.ComponentModel.Container();
-        this.AddStuffMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-        this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-        this.label = new System.Windows.Forms.ToolStripMenuItem();
-        this.button = new System.Windows.Forms.ToolStripMenuItem();
-        this.textbox = new System.Windows.Forms.ToolStripMenuItem();
-        this.checkbox = new System.Windows.Forms.ToolStripMenuItem();
-        this.dropdown = new System.Windows.Forms.ToolStripMenuItem();
-        this.deleteEverything = new System.Windows.Forms.ToolStripMenuItem();
-        this.save = new System.Windows.Forms.ToolStripMenuItem();
-        this.AddStuffMenu.SuspendLayout();
-        this.SuspendLayout();
-        // 
-        // AddStuffMenu
-        // 
-        this.AddStuffMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.deleteEverything,
-            this.save});
-        this.AddStuffMenu.Name = "AddStuffMenu";
-        this.AddStuffMenu.Size = new System.Drawing.Size(167, 70);
-        // 
-        // toolStripMenuItem1
-        // 
-        this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.label,
-            this.button,
-            this.textbox,
-            this.checkbox,
-            this.dropdown});
-        this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-        this.toolStripMenuItem1.Size = new System.Drawing.Size(166, 22);
-        this.toolStripMenuItem1.Text = "Add";
-        // 
-        // label
-        // 
-        this.label.Name = "label";
-        this.label.Size = new System.Drawing.Size(164, 22);
-        this.label.Text = "Label";
-        // 
-        // button
-        // 
-        this.button.Name = "button";
-        this.button.Size = new System.Drawing.Size(164, 22);
-        this.button.Text = "Button";
-        // 
-        // textbox
-        // 
-        this.textbox.Name = "textbox";
-        this.textbox.Size = new System.Drawing.Size(164, 22);
-        this.textbox.Text = "Text Box";
-        // 
-        // checkbox
-        // 
-        this.checkbox.Name = "checkbox";
-        this.checkbox.Size = new System.Drawing.Size(164, 22);
-        this.checkbox.Text = "Check Box";
-        // 
-        // dropdown
-        // 
-        this.dropdown.Name = "dropdown";
-        this.dropdown.Size = new System.Drawing.Size(164, 22);
-        this.dropdown.Text = "Dropdown Menu";
-        // 
-        // deleteEverything
-        // 
-        this.deleteEverything.Name = "deleteEverything";
-        this.deleteEverything.Size = new System.Drawing.Size(166, 22);
-        this.deleteEverything.Text = "Delete Everything";
-        // 
-        // save
-        // 
-        this.save.Name = "save";
-        this.save.Size = new System.Drawing.Size(166, 22);
-        this.save.Text = "Save";
-        // 
-        // TrainerPanel
-        // 
-        this.Click += new System.EventHandler(this.TrainerPanel_Click);
-        this.AddStuffMenu.ResumeLayout(false);
-        this.ResumeLayout(false);
-
-    }
-    #endregion
-
     Trainer trainerJson;
-
-    private Point clickPoint; //lol
-
-    private Control draggedControl;
-    private Point draggedControlPoint;
 
     internal TrainerPanel(Trainer trainer)
     {
-        InitializeComponent();
-
         trainerJson = trainer;
         this.Name = "trainerpanel";
         this.Dock = DockStyle.Fill;
 
-        // why cant you set events from the designer???????
-        label.Click += AddLabelButtonClick;
-        button.Click += AddButtonButtonClick;
-        textbox.Click += AddTextboxButtonClick;
-        checkbox.Click += AddCheckboxButtonClick;
-        dropdown.Click += AddDropdownButtonClick;
-        deleteEverything.Click += DeleteEverything_Click;
-        save.Click += Save_Click;
-
         // add controls from JSON file
         SuspendLayout();
-        foreach (var i in trainer.Labels)
-        {
-            this.Controls.Add(DefineLabel.ToLabel(i, this));
-        }
-        foreach (var i in trainer.Buttons)
-        {
-            this.Controls.Add(DefineButton.ToButton(i, this));
-        }
-        foreach (var i in trainer.TextBoxes)
-        {
-            this.Controls.Add(DefineTextBox.ToTextBox(i, this));
-        }
-        foreach (var i in trainer.CheckBoxes)
-        {
-            this.Controls.Add(DefineCheckBox.ToCheckBox(i, this));
-        }
-        foreach (var i in trainer.Dropdowns)
-        {
-            this.Controls.Add(DefineDropdown.ToComboBox(i, this));
-        }
+
+        foreach (var label in trainer.Labels) Controls.Add(ConstructLabel(label));
+        foreach (var button in trainer.Buttons) Controls.Add(ConstructButton(button));
+        foreach (var textbox in trainer.TextBoxes) Controls.Add(ConstructTextBox(textbox));
+        foreach (var checkbox in trainer.CheckBoxes) Controls.Add(ConstructCheckBox(checkbox));
+        foreach (var combobox in trainer.Dropdowns) Controls.Add(ConstructComboBox(combobox));
+
         ResumeLayout();
     }
 
-    private void Save_Click(object sender, EventArgs e)
+    internal void CallOnLoadEvent()
     {
-        ((MainForm) this.Parent).SaveTrainer();
+        Racman.EvalLua(trainerJson.OnLoad);
     }
 
-    private void DeleteEverything_Click(object sender, EventArgs e)
+    /// <summary>
+    /// Construct a label control from JSON definition
+    /// </summary>
+    /// <param name="define"></param>
+    /// <returns></returns>
+    private static Label ConstructLabel(DefineLabel define)
     {
-        // todo add message box here, very important
-        trainerJson.Labels.Clear();
-        trainerJson.TextBoxes.Clear();
-        trainerJson.CheckBoxes.Clear();
-        trainerJson.Dropdowns.Clear();
-        trainerJson.Buttons.Clear();
-        trainerJson.OnLoad = string.Empty;
-        trainerJson.OnUnload = string.Empty;
-        this.Controls.Clear();
+        Label label = new Label();
+        label.Text = define.Text;
+        label.Name = define.Name;
+        label.Location = define.Position;
+        label.AutoSize = true;
+        return label;
     }
 
-    private void AddDropdownButtonClick(object sender, EventArgs e)
+    private static Button ConstructButton(DefineButton define)
     {
-        DefineDropdown drop = new DefineDropdown()
+        Button button = new Button();
+        button.Name = define.Name;
+        button.Location = define.Position;
+        button.Text = define.Text;
+        button.Enabled = define.Enabled;
+        button.Size = define.Size;
+        button.Tag = define; // so Click event knows what event to run
+        button.Click += Button_Click;
+        return button;
+    }
+
+    private static TextBox ConstructTextBox(DefineTextBox define)
+    {
+        TextBox textBox = new TextBox();
+        textBox.Name = define.Name;
+        textBox.Location = define.Position;
+        textBox.Text = define.Text;
+        textBox.Enabled = define.Enabled;
+        textBox.Tag = define;
+        textBox.KeyDown += TextBox_KeyDown;
+        return textBox;
+    }
+
+    private static CheckBox ConstructCheckBox(DefineCheckBox define)
+    {
+        CheckBox checkBox = new CheckBox();
+        checkBox.Name = define.Name;
+        checkBox.Enabled = define.Enabled;
+        checkBox.Text = define.Text;
+        checkBox.CheckState = define.CheckState;
+        checkBox.Location = define.Position;
+        checkBox.ThreeState = define.AllowIndeterminate;
+        checkBox.Tag = define;
+        checkBox.CheckedChanged += CheckBox_CheckedChanged;
+        return checkBox;
+    }
+
+    private static ComboBox ConstructComboBox(DefineDropdown define)
+    {
+        ComboBox comboBox = new ComboBox();
+        comboBox.Name = define.Name;
+        comboBox.Enabled = define.Enabled;
+        comboBox.Location = define.Position;
+        comboBox.Size = define.Size;
+        comboBox.Items.AddRange(define.Options);
+        comboBox.SelectedIndex = define.Index;
+        comboBox.Tag = define;
+        comboBox.SelectedIndexChanged += ComboBox_SelectedIndexChanged;
+        return comboBox;
+    }
+
+    private static void ComboBox_SelectedIndexChanged(object? sender, EventArgs e)
+    {
+        Racman.EvalLua(((sender! as ComboBox)!.Tag as DefineDropdown)!.OnItemSelected);
+    }
+
+    private static void CheckBox_CheckedChanged(object? sender, EventArgs e)
+    {
+        Racman.EvalLua(((sender! as CheckBox)!.Tag as DefineCheckBox)!.OnCheck);
+    }
+
+    private static void TextBox_KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Enter)
         {
-            Size = new Size(80, 20),
-            Position = clickPoint,
-            Name = "",
-            Options = new string[] { "" },
-            OnItemSelected = "",
-            Enabled = true
-        };
-        trainerJson.Dropdowns.Add(drop);
-        this.Controls.Add(DefineDropdown.ToComboBox(drop, this));
-    }
-
-    private void AddCheckboxButtonClick(object sender, EventArgs e)
-    {
-        DefineCheckBox box = new DefineCheckBox()
-        {
-            Text = "",
-            Name = "",
-            Enabled = true,
-            Position = clickPoint,
-            OnCheck = "",
-        };
-        trainerJson.CheckBoxes.Add(box);
-        this.Controls.Add(DefineCheckBox.ToCheckBox(box, this));
-    }
-
-    private void AddTextboxButtonClick(object sender, EventArgs e)
-    {
-        DefineTextBox box = new DefineTextBox()
-        {
-            Text = "",
-            Name = "",
-            OnEnter = "",
-            Position = clickPoint,
-            Enabled = true,
-        };
-        trainerJson.TextBoxes.Add(box);
-        this.Controls.Add(DefineTextBox.ToTextBox(box, this));
-    }
-
-    private void AddButtonButtonClick(object sender, EventArgs e)
-    {
-        DefineButton button = new DefineButton()
-        {
-            Text = "New Button",
-            Name = "",
-            OnClick = "",
-            Size = new Size(80, 20),
-            Enabled = true,
-            Position = clickPoint
-        };
-        trainerJson.Buttons.Add(button);
-        this.Controls.Add(DefineButton.ToButton(button, this));
-    }
-
-    private void AddLabelButtonClick(object sender, EventArgs e)
-    {
-        DefineLabel label = new DefineLabel()
-        {
-            Text = "New Label",
-            Name = "",
-            Position = clickPoint
-        };
-        trainerJson.Labels.Add(label);
-        this.Controls.Add(DefineLabel.ToLabel(label, this));
-    }
-
-    private void TrainerPanel_Click(object sender, EventArgs e)
-    {
-        var mouse = (MouseEventArgs) e;
-        if (mouse.Button == MouseButtons.Right)
-        {
-            clickPoint = mouse.Location;
-            AddStuffMenu.Show(PointToScreen(mouse.Location));
+            Racman.EvalLua(((sender! as TextBox)!.Tag as DefineTextBox)!.OnEnter);
         }
     }
 
-    public void DraggableControlMouseDown(object sender, MouseEventArgs e)
+    private static void Button_Click(object? sender, EventArgs e)
     {
-        if (ModifierKeys == Keys.Control)
-        {
-            draggedControl = sender as Control;
-            draggedControlPoint = e.Location;
-            Cursor = Cursors.SizeAll;
-        }
-    }
-
-    public void DraggableControlMouseMove(object sender, MouseEventArgs e)
-    {
-        if (ModifierKeys != Keys.Control)
-        {
-            DraggableControlMouseUp(sender, e);
-            return;
-        }
-        if (draggedControl == null || draggedControl != sender)
-        {
-            return;
-        }
-        var location = draggedControl.Location;
-        location.Offset(e.Location.X - draggedControlPoint.X, e.Location.Y - draggedControlPoint.Y);
-        draggedControl.Location = location;
-        dynamic tag = draggedControl.Tag; // this is probably a bad way to do this, but it works.
-        tag.Position = location;
-    }
-
-    public void DraggableControlMouseUp(object sender, MouseEventArgs e)
-    {
-        draggedControl = null;
-        Cursor = Cursors.Default;
+        // really good code and I am an excellent programmer
+        Racman.EvalLua(((sender! as Button)!.Tag as DefineButton)!.OnClick);
     }
 }

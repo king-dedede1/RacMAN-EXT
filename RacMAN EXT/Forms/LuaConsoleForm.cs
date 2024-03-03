@@ -27,12 +27,12 @@ public partial class LuaConsoleForm : Form
 
     public void Warn(string msg)
     {
-        console.AppendText($"\n[WARN]  {msg}");
+        console.AppendText($"\n[WARN]  {msg}", Color.Yellow);
     }
 
     public void Error(string msg)
     {
-        console.AppendText($"\n[ERROR] {msg}");
+        console.AppendText($"\n[ERROR] {msg}", Color.Salmon);
     }
 
     private void ExecuteCommand()
@@ -57,6 +57,8 @@ public partial class LuaConsoleForm : Form
         }
     }
 
+    
+
     private void commandBox_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
@@ -76,5 +78,21 @@ public partial class LuaConsoleForm : Form
     {
         console.SelectionStart = console.Text.Length;
         console.ScrollToCaret();
+    }
+
+    
+}
+
+public static class RichTextBoxExtensions
+{
+    // from stackoverflow
+    public static void AppendText(this RichTextBox box, string text, Color color)
+    {
+        box.SelectionStart = box.TextLength;
+        box.SelectionLength = 0;
+
+        box.SelectionColor = color;
+        box.AppendText(text);
+        box.SelectionColor = box.ForeColor;
     }
 }

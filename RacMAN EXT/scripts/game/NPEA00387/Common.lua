@@ -102,7 +102,7 @@ end
 local rc3_freeze_health_subid = nil
 function rc3_set_freeze_health(enabled)
 	if enabled then
-		rc3_freeze_health_subid = API:FreezeMemory(0xDA5040, Convert.IntToByteArray(200))
+		rc3_freeze_health_subid = API:FreezeMemory(0xDA5040, Convert.IntToByteArray(200,4))
 	else
 		API:ReleaseSubID(rc3_freeze_health_subid)
 	end

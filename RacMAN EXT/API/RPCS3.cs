@@ -159,7 +159,8 @@ public class RPCS3 : MemoryAPI
     private static string GetGameWindowTitle(int processId)
     {
         // fix later
-        return GetWindowTitles(processId)[0];
+        foreach (string s in GetWindowTitles(processId)) if (s.Contains('[')) return s;
+        return "";
     }
 
     private static List<string> GetWindowTitles(int processId)

@@ -27,7 +27,7 @@
         "Width": 80,
         "Height": 20
       },
-      "OnClick": ""
+      "OnClick": "Console.Log('hi hello hi')"
     }
   ],
   "TextBoxes": [
@@ -45,6 +45,6 @@
   ],
   "CheckBoxes": [],
   "Dropdowns": [],
-  "OnLoad": "",
+  "OnLoad": "Console.Log('yo')",
   "OnUnload": ""
 }

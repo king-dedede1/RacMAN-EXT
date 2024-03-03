@@ -56,14 +56,14 @@ public class Racman
             MainForm.Text = $"RaCMAN {Assembly.GetEntryAssembly().GetName().Version} - {this.gameTitleID} - {api.GetGameTitle()}";
         }
 
-        OnAPIConnect();
         InitLuaState();
+        OnAPIConnect();
     }
 
     // maybe move this somewhere else?
 
 
-    void InitLuaState()
+    internal void InitLuaState()
     {
         lua = new Lua();
 
@@ -125,7 +125,6 @@ public class Racman
             }
             catch (LuaException e)
             {
-                // TODO replace with lua console
                 LuaConsoleForm.instance.Error(e.ToString());
                 return null;
             }

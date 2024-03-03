@@ -13,6 +13,10 @@ Memory.ReadInt = function(addr)
     return Convert.ByteArrayToInt(API:ReadMemory(addr, 4))
 end
 
+Memory.ReadByte = function(addr)
+    return Convert.ByteArrayToInt(API:ReadMemory(addr, 1))
+end
+
 Memory.WriteFloat = function(addr, float)
     API:WriteMemory(addr, Convert.FloatToByteArray(float))
 end
