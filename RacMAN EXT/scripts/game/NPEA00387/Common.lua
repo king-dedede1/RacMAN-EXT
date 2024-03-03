@@ -66,7 +66,7 @@ function rc3_get_armor()
 end
 
 function rc3_unlock_skill_points()
-local table = {
+	local table = {
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1

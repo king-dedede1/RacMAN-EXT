@@ -91,5 +91,6 @@ public partial class MainForm : Form
     private void reloadLuaStateToolStripMenuItem_Click(object sender, EventArgs e)
     {
         state.InitLuaState();
+        LoadTrainer();
     }
 }

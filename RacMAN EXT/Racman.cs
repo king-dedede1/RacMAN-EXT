@@ -65,6 +65,8 @@ public class Racman
 
     internal void InitLuaState()
     {
+        LuaConsoleForm.instance.Log("Initializing lua state...");
+
         lua = new Lua();
 
         // Allow loading .NET assemblies.
@@ -113,6 +115,8 @@ public class Racman
                 Directory.CreateDirectory($"scripts/game/{gameTitleID}/");
             }
         }
+
+        LuaConsoleForm.instance.Log("Lua done initializing");
     }
 
     public static object[] EvalLua(string code)

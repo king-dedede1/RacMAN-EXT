@@ -27,7 +27,7 @@ public partial class LuaConsoleForm : Form
 
     public void Warn(string msg)
     {
-        console.AppendText($"\n[WARN]  {msg}", Color.Yellow);
+        console.AppendText($"\n[WARN]  {msg}", Color.Gold);
     }
 
     public void Error(string msg)

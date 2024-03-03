@@ -1,3 +1,5 @@
+-- for writing output to the Console
+
 Console = {}
 
 Console.Log = function(text)
