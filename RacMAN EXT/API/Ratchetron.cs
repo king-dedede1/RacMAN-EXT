@@ -43,6 +43,7 @@ public class Ratchetron : MemoryAPI
 
     public bool Connect()
     {
+        WebMAN.PrepareRatchetron(ip);
         try
         {
             this.client = new TcpClient(this.ip, this.port);

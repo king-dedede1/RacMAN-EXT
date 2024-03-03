@@ -60,4 +60,19 @@ public static class WebMAN
     {
         Get($"http://{ip}/xmb.ps3$rsx_continue");
     }
+
+    public static void PrepareRatchetron(string ip)
+    {
+        // Check if Ratchetron is already loaded
+        string slot6sprx = Get($"http://{ip}/home.ps3mapi");
+
+        bool ratchetronLoaded = slot6sprx.Contains("ratchetron_server.sprx");
+
+        if (ratchetronLoaded)
+        {
+            return;
+        }
+
+        Get($"http://{ip}/vshplugin.ps3mapi?prx=%2Fdev_hdd0%2Ftmp%2Fratchetron_server.sprx&load_slot=6");
+    }
 }
