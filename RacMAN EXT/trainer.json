@@ -24,8 +24,8 @@
       },
       "Size": {
         "IsEmpty": false,
-        "Width": 80,
-        "Height": 20
+        "Width": 200,
+        "Height": 200
       },
       "OnClick": "Console.Log('hi hello hi')"
     }

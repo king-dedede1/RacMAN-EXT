@@ -93,4 +93,14 @@ public partial class MainForm : Form
         state.InitLuaState();
         LoadTrainer();
     }
+
+    private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        LoadTrainer();
+    }
+
+    private void openDesignerToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        new TrainerEditorForm(Trainer).ShowDialog();
+    }
 }
