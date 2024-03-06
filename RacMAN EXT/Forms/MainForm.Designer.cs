@@ -59,7 +59,7 @@ partial class MainForm
         menuStrip1.Location = new Point(0, 0);
         menuStrip1.Name = "menuStrip1";
         menuStrip1.Padding = new Padding(7, 2, 0, 2);
-        menuStrip1.Size = new Size(691, 24);
+        menuStrip1.Size = new Size(624, 24);
         menuStrip1.TabIndex = 0;
         menuStrip1.Text = "menuStrip1";
         // 
@@ -162,14 +162,14 @@ partial class MainForm
         // reloadToolStripMenuItem
         // 
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(180, 22);
+        reloadToolStripMenuItem.Size = new Size(146, 22);
         reloadToolStripMenuItem.Text = "Reload";
         reloadToolStripMenuItem.Click += reloadToolStripMenuItem_Click;
         // 
         // openDesignerToolStripMenuItem
         // 
         openDesignerToolStripMenuItem.Name = "openDesignerToolStripMenuItem";
-        openDesignerToolStripMenuItem.Size = new Size(180, 22);
+        openDesignerToolStripMenuItem.Size = new Size(146, 22);
         openDesignerToolStripMenuItem.Text = "Open Editor...";
         openDesignerToolStripMenuItem.Click += openDesignerToolStripMenuItem_Click;
         // 
@@ -210,7 +210,7 @@ partial class MainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(691, 519);
+        ClientSize = new Size(624, 441);
         Controls.Add(menuStrip1);
         DoubleBuffered = true;
         MainMenuStrip = menuStrip1;

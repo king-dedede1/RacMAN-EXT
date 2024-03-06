@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 
 namespace RacMAN.Forms;
 
@@ -95,8 +97,14 @@ internal class Handle : Control
             if (Anchor == center) Anchor = AnchorStyles.None;
 
             parent.SetBounds(left, top, right - left, bottom - top);
-            parent.Invalidate();
             lastMouse = Cursor.Position;
+
+            dynamic tag = parent.Tag!;
+            if (tag.GetType().GetProperty("Size") != null)
+            {
+                tag.Size = new Size(right - left, bottom - top);
+            }
+            tag.Position = new Point(left, top);
         }
     }
 
@@ -123,6 +131,18 @@ internal class Handle : Control
         control.Controls.Add(new Handle(control, AnchorStyles.Bottom | AnchorStyles.Right));
         control.Controls.Add(new Handle(control, AnchorStyles.Top | AnchorStyles.Left));
         control.Controls.Add(new Handle(control, AnchorStyles.Top | AnchorStyles.Right));
+        control.Controls.Add(new Handle(control, AnchorStyles.None));
+    }
+
+    public static void MakeLeftRightCenter(Control control)
+    {
+        control.Controls.Add(new Handle(control, AnchorStyles.Left));
+        control.Controls.Add(new Handle(control, AnchorStyles.Right));
+        control.Controls.Add(new Handle(control, AnchorStyles.None));
+    }
+
+    public static void MakeCenter(Control control)
+    {
         control.Controls.Add(new Handle(control, AnchorStyles.None));
     }
 

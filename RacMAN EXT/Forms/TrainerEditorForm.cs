@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Handle = RacMAN.Forms.Handle;
+﻿using System.Text.Json;
 
 namespace RacMAN.Forms;
 public partial class TrainerEditorForm : Form
@@ -15,8 +6,22 @@ public partial class TrainerEditorForm : Form
     Trainer trainer;
 
     Control? selectedControl = null;
+    Control? SelectedControl
+    {
+        get => selectedControl;
+        set
+        {
+            selectedControl = value;
+            SelectedControlChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
     Point rightClickPoint;
     Point draggedControlPoint;
+
+    private static readonly JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
+    {
+        WriteIndented = true
+    };
 
     internal event EventHandler SelectedControlChanged;
 
@@ -41,8 +46,7 @@ public partial class TrainerEditorForm : Form
 
     private void ControlMouseClick(object? sender, MouseEventArgs e)
     {
-        selectedControl = sender as Control;
-        SelectedControlChanged?.Invoke(this, new EventArgs());
+        SelectedControl = sender as Control;
         Refresh();
     }
 
@@ -55,6 +59,17 @@ public partial class TrainerEditorForm : Form
         label.AutoSize = true;
         label.MouseClick += ControlMouseClick;
         label.Tag = define;
+        SelectedControlChanged += (s, e) =>
+        {
+            if (SelectedControl == label && label.Controls.Count == 0)
+            {
+                RacMAN.Forms.Handle.MakeCenter(label);
+            }
+            else
+            {
+                label.Controls.Clear();
+            }
+        };
         return label;
     }
 
@@ -70,7 +85,7 @@ public partial class TrainerEditorForm : Form
         button.MouseClick += ControlMouseClick;
         SelectedControlChanged += (s, e) =>
         {
-            if (selectedControl == button && button.Controls.Count == 0)
+            if (SelectedControl == button && button.Controls.Count == 0)
             {
                 RacMAN.Forms.Handle.MakeSidesCornersAndCenter(button);
             }
@@ -91,6 +106,17 @@ public partial class TrainerEditorForm : Form
         textBox.Enabled = define.Enabled;
         textBox.Tag = define;
         textBox.MouseClick += ControlMouseClick;
+        SelectedControlChanged += (s, e) =>
+        {
+            if (SelectedControl == textBox && textBox.Controls.Count == 0)
+            {
+                RacMAN.Forms.Handle.MakeLeftRightCenter(textBox);
+            }
+            else
+            {
+                textBox.Controls.Clear();
+            }
+        };
         return textBox;
     }
 
@@ -105,6 +131,17 @@ public partial class TrainerEditorForm : Form
         checkBox.ThreeState = define.AllowIndeterminate;
         checkBox.Tag = define;
         checkBox.MouseClick += ControlMouseClick;
+        SelectedControlChanged += (s, e) =>
+        {
+            if (SelectedControl == checkBox && checkBox.Controls.Count == 0)
+            {
+                RacMAN.Forms.Handle.MakeCenter(checkBox);
+            }
+            else
+            {
+                checkBox.Controls.Clear();
+            }
+        };
         return checkBox;
     }
 
@@ -119,19 +156,141 @@ public partial class TrainerEditorForm : Form
         comboBox.SelectedIndex = define.Index;
         comboBox.Tag = define;
         comboBox.MouseClick += ControlMouseClick;
+        SelectedControlChanged += (s, e) =>
+        {
+            if (SelectedControl == comboBox && comboBox.Controls.Count == 0)
+            {
+                RacMAN.Forms.Handle.MakeLeftRightCenter(comboBox);
+            }
+            else
+            {
+                comboBox.Controls.Clear();
+            }
+        };
         return comboBox;
     }
 
     private void TrainerEditorForm_Paint(object sender, PaintEventArgs e)
     {
-        /*if (selectedControl != null)
+        if (SelectedControl != null)
         {
             var g = e.Graphics;
             g.Clear(BackColor);
             var b = new SolidBrush(Color.FromArgb(128, 255, 0, 0));
-            var rect = selectedControl.Bounds;
-            rect.Inflate(2,2);
+            var rect = SelectedControl.Bounds;
+            rect.Inflate(2, 2);
             g.FillRectangle(b, rect);
-        }*/
+        }
+    }
+
+    private void TrainerEditorForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        // this is bad
+        var state = ((MainForm) Application.OpenForms["MainForm"]).state;
+        string json = JsonSerializer.Serialize(trainer, jsonSerializerOptions);
+        File.WriteAllText(state.connected ? $"{state.gameTitleID}.json" : "trainer.json", json);
+    }
+
+    private void repaintTimer_Tick(object sender, EventArgs e)
+    {
+        Refresh();
+    }
+
+    private void TrainerEditorForm_MouseClick(object sender, MouseEventArgs e)
+    {
+        SelectedControl = null;
+        if (e.Button == MouseButtons.Right)
+        {
+            rightClickPoint = PointToClient(Cursor.Position);
+
+            // these two should only be selectable when you right click a control
+            contextMenuStrip1.Items[0].Enabled = false;
+            contextMenuStrip1.Items[1].Enabled = false;
+
+            contextMenuStrip1.Show(Cursor.Position);
+        }
+    }
+
+    private void labelToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        DefineLabel def = new()
+        {
+            Position = rightClickPoint,
+            Text = "New Label",
+            Name = ""
+        };
+        var control = ConstructLabel(def);
+        Controls.Add(control);
+        SelectedControl = control;
+        trainer.Labels.Add(def);
+    }
+
+    private void buttonToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        DefineButton def = new()
+        {
+            Position = rightClickPoint,
+            Text = "New Button",
+            Name = "",
+            OnClick = "",
+            Size = new Size(80, 20),
+            Enabled = true
+        };
+        var control = ConstructButton(def);
+        Controls.Add(control);
+        SelectedControl = control;
+        trainer.Buttons.Add(def);
+    }
+
+    private void textBoxToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        DefineTextBox def = new()
+        {
+            Position = rightClickPoint,
+            Text = "",
+            Name = "",
+            OnEnter = "",
+            Enabled = true
+        };
+        var control = ConstructTextBox(def);
+        Controls.Add(control);
+        SelectedControl = control;
+        trainer.TextBoxes.Add(def);
+    }
+
+    private void checkBoxToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        DefineCheckBox def = new()
+        {
+            Position = rightClickPoint,
+            Text = "Check Box",
+            Name = "",
+            CheckState = CheckState.Unchecked,
+            AllowIndeterminate = false,
+            OnCheck = "",
+            Enabled = true
+        };
+        var control = ConstructCheckBox(def);
+        Controls.Add(control);
+        SelectedControl = control;
+        trainer.CheckBoxes.Add(def);
+    }
+
+    private void dropdownMenuToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        DefineDropdown def = new()
+        {
+            Position = rightClickPoint,
+            Size = new Size(80,20),
+            Enabled = true,
+            Options = ["Dropdown"],
+            Index = 0,
+            OnItemSelected = "",
+            Name = ""
+        };
+        var control = ConstructComboBox(def);
+        Controls.Add(control);
+        SelectedControl = control;
+        trainer.Dropdowns.Add(def);
     }
 }

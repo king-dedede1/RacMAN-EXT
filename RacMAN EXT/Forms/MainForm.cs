@@ -102,5 +102,6 @@ public partial class MainForm : Form
     private void openDesignerToolStripMenuItem_Click(object sender, EventArgs e)
     {
         new TrainerEditorForm(Trainer).ShowDialog();
+        LoadTrainer();
     }
 }
