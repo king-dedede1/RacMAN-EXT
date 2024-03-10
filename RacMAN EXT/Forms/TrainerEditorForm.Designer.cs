@@ -60,6 +60,7 @@ partial class TrainerEditorForm
         propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
         propertiesToolStripMenuItem.Size = new Size(180, 22);
         propertiesToolStripMenuItem.Text = "Properties...";
+        propertiesToolStripMenuItem.Click += propertiesToolStripMenuItem_Click;
         // 
         // toolStripMenuItem1
         // 
@@ -82,35 +83,35 @@ partial class TrainerEditorForm
         // labelToolStripMenuItem
         // 
         labelToolStripMenuItem.Name = "labelToolStripMenuItem";
-        labelToolStripMenuItem.Size = new Size(180, 22);
+        labelToolStripMenuItem.Size = new Size(164, 22);
         labelToolStripMenuItem.Text = "Label";
         labelToolStripMenuItem.Click += labelToolStripMenuItem_Click;
         // 
         // buttonToolStripMenuItem
         // 
         buttonToolStripMenuItem.Name = "buttonToolStripMenuItem";
-        buttonToolStripMenuItem.Size = new Size(180, 22);
+        buttonToolStripMenuItem.Size = new Size(164, 22);
         buttonToolStripMenuItem.Text = "Button";
         buttonToolStripMenuItem.Click += buttonToolStripMenuItem_Click;
         // 
         // textBoxToolStripMenuItem
         // 
         textBoxToolStripMenuItem.Name = "textBoxToolStripMenuItem";
-        textBoxToolStripMenuItem.Size = new Size(180, 22);
+        textBoxToolStripMenuItem.Size = new Size(164, 22);
         textBoxToolStripMenuItem.Text = "Text Box";
         textBoxToolStripMenuItem.Click += textBoxToolStripMenuItem_Click;
         // 
         // checkBoxToolStripMenuItem
         // 
         checkBoxToolStripMenuItem.Name = "checkBoxToolStripMenuItem";
-        checkBoxToolStripMenuItem.Size = new Size(180, 22);
+        checkBoxToolStripMenuItem.Size = new Size(164, 22);
         checkBoxToolStripMenuItem.Text = "Check Box";
         checkBoxToolStripMenuItem.Click += checkBoxToolStripMenuItem_Click;
         // 
         // dropdownMenuToolStripMenuItem
         // 
         dropdownMenuToolStripMenuItem.Name = "dropdownMenuToolStripMenuItem";
-        dropdownMenuToolStripMenuItem.Size = new Size(180, 22);
+        dropdownMenuToolStripMenuItem.Size = new Size(164, 22);
         dropdownMenuToolStripMenuItem.Text = "Dropdown Menu";
         dropdownMenuToolStripMenuItem.Click += dropdownMenuToolStripMenuItem_Click;
         // 

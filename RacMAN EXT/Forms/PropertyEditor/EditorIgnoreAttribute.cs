@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RacMAN.Forms.PropertyEditor;
-internal class EditorIgnoreAttribute
+
+[AttributeUsage(AttributeTargets.Property)]
+internal class EditorIgnoreAttribute : Attribute
 {
 }

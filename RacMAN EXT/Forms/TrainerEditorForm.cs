@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using RacMAN.Forms.PropertyEditor;
+using System.Text.Json;
 
 namespace RacMAN.Forms;
 public partial class TrainerEditorForm : Form
@@ -47,6 +48,17 @@ public partial class TrainerEditorForm : Form
     private void ControlMouseClick(object? sender, MouseEventArgs e)
     {
         SelectedControl = sender as Control;
+
+        if (e.Button == MouseButtons.Right)
+        {
+            rightClickPoint = PointToClient(Cursor.Position);
+
+            // these two should only be selectable when you right click a control
+            contextMenuStrip1.Items[0].Enabled = true;
+            contextMenuStrip1.Items[1].Enabled = true;
+
+            contextMenuStrip1.Show(Cursor.Position);
+        }
         Refresh();
     }
 
@@ -57,7 +69,7 @@ public partial class TrainerEditorForm : Form
         label.Name = define.Name;
         label.Location = define.Position;
         label.AutoSize = true;
-        label.MouseClick += ControlMouseClick;
+        label.MouseUp += ControlMouseClick;
         label.Tag = define;
         SelectedControlChanged += (s, e) =>
         {
@@ -82,7 +94,7 @@ public partial class TrainerEditorForm : Form
         button.Enabled = define.Enabled;
         button.Size = define.Size;
         button.Tag = define; // so Click event knows what event to run
-        button.MouseClick += ControlMouseClick;
+        button.MouseUp += ControlMouseClick;
         SelectedControlChanged += (s, e) =>
         {
             if (SelectedControl == button && button.Controls.Count == 0)
@@ -94,6 +106,7 @@ public partial class TrainerEditorForm : Form
                 button.Controls.Clear();
             }
         };
+
         return button;
     }
 
@@ -105,7 +118,7 @@ public partial class TrainerEditorForm : Form
         textBox.Text = define.Text;
         textBox.Enabled = define.Enabled;
         textBox.Tag = define;
-        textBox.MouseClick += ControlMouseClick;
+        textBox.MouseUp += ControlMouseClick;
         SelectedControlChanged += (s, e) =>
         {
             if (SelectedControl == textBox && textBox.Controls.Count == 0)
@@ -130,7 +143,7 @@ public partial class TrainerEditorForm : Form
         checkBox.Location = define.Position;
         checkBox.ThreeState = define.AllowIndeterminate;
         checkBox.Tag = define;
-        checkBox.MouseClick += ControlMouseClick;
+        checkBox.MouseUp += ControlMouseClick;
         SelectedControlChanged += (s, e) =>
         {
             if (SelectedControl == checkBox && checkBox.Controls.Count == 0)
@@ -155,7 +168,7 @@ public partial class TrainerEditorForm : Form
         comboBox.Items.AddRange(define.Options);
         comboBox.SelectedIndex = define.Index;
         comboBox.Tag = define;
-        comboBox.MouseClick += ControlMouseClick;
+        comboBox.MouseUp += ControlMouseClick;
         SelectedControlChanged += (s, e) =>
         {
             if (SelectedControl == comboBox && comboBox.Controls.Count == 0)
@@ -185,10 +198,15 @@ public partial class TrainerEditorForm : Form
 
     private void TrainerEditorForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-        // this is bad
-        var state = ((MainForm) Application.OpenForms["MainForm"]).state;
-        string json = JsonSerializer.Serialize(trainer, jsonSerializerOptions);
-        File.WriteAllText(state.connected ? $"{state.gameTitleID}.json" : "trainer.json", json);
+        var result = MessageBox.Show("Do you want to save your changes?", "Save?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+        if (result == DialogResult.Yes)
+        {
+            // this is bad
+            var state = ((MainForm) Application.OpenForms["MainForm"]).state;
+            string json = JsonSerializer.Serialize(trainer, jsonSerializerOptions);
+            File.WriteAllText(state.connected ? $"{state.gameTitleID}.json" : "trainer.json", json);
+        }
     }
 
     private void repaintTimer_Tick(object sender, EventArgs e)
@@ -281,7 +299,7 @@ public partial class TrainerEditorForm : Form
         DefineDropdown def = new()
         {
             Position = rightClickPoint,
-            Size = new Size(80,20),
+            Size = new Size(80, 20),
             Enabled = true,
             Options = ["Dropdown"],
             Index = 0,
@@ -292,5 +310,10 @@ public partial class TrainerEditorForm : Form
         Controls.Add(control);
         SelectedControl = control;
         trainer.Dropdowns.Add(def);
+    }
+
+    private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        new PropertyEditorForm(SelectedControl.Tag).ShowDialog();
     }
 }

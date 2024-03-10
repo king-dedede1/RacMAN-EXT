@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RacMAN.Forms.PropertyEditor;
-internal class MultilineAttribute
+
+[AttributeUsage(AttributeTargets.Property)]
+internal class MultilineAttribute : Attribute
 {
 }
