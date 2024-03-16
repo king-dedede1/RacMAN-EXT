@@ -1,0 +1,141 @@
+{
+  "TitleID": "NPEA00341",
+  "RacmanVersion": "2.0.0.0",
+  "Labels": [
+    {
+      "Name": "",
+      "Text": "Coin Count:",
+      "Position": {
+        "IsEmpty": false,
+        "X": 376,
+        "Y": 76
+      }
+    },
+    {
+      "Name": "",
+      "Text": "Charm Count:",
+      "Position": {
+        "IsEmpty": false,
+        "X": 378,
+        "Y": 154
+      }
+    },
+    {
+      "Name": "",
+      "Text": "Life Count:",
+      "Position": {
+        "IsEmpty": false,
+        "X": 372,
+        "Y": 231
+      }
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "saveposButton",
+      "Enabled": true,
+      "Text": "Save Position",
+      "Position": {
+        "IsEmpty": false,
+        "X": 29,
+        "Y": 72
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "sly1_save_pos()"
+    },
+    {
+      "Name": "loadposButton",
+      "Enabled": true,
+      "Text": "Load Position",
+      "Position": {
+        "IsEmpty": false,
+        "X": 28,
+        "Y": 96
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "sly1_load_pos()"
+    },
+    {
+      "Name": "removeGadgets",
+      "Enabled": true,
+      "Text": "Remove Gadgets",
+      "Position": {
+        "IsEmpty": false,
+        "X": 375,
+        "Y": 295
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "sly1_remove_gadgets()"
+    },
+    {
+      "Name": "unlockGadgets",
+      "Enabled": true,
+      "Text": "Unlock Gadgets",
+      "Position": {
+        "IsEmpty": false,
+        "X": 374,
+        "Y": 320
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 80,
+        "Height": 20
+      },
+      "OnClick": "sly1_unlock_gadgets()"
+    }
+  ],
+  "TextBoxes": [
+    {
+      "Name": "coinCountTextBox",
+      "Enabled": true,
+      "Text": "",
+      "Position": {
+        "IsEmpty": false,
+        "X": 376,
+        "Y": 102
+      },
+      "OnEnter": "sly1_set_coincount(tonumber(Trainer.GetControlByName(\u0027coinCountTextBox\u0027).Text))"
+    },
+    {
+      "Name": "charmCountTextBox",
+      "Enabled": true,
+      "Text": "",
+      "Position": {
+        "IsEmpty": false,
+        "X": 375,
+        "Y": 182
+      },
+      "OnEnter": "sly1_set_charmcount(tonumber(Trainer.GetControlByName(\u0027charmCountTextBox\u0027).Text))"
+    }
+  ],
+  "CheckBoxes": [
+    {
+      "Name": "freezeCharmCheckbox",
+      "Enabled": true,
+      "Text": "Freeze Charm",
+      "CheckState": 0,
+      "Position": {
+        "IsEmpty": false,
+        "X": 33,
+        "Y": 267
+      },
+      "AllowIndeterminate": false,
+      "OnCheck": "sly1_set_freeze_charms(Trainer.GetControlByName(\u0027freezeCharmCheckbox\u0027).Checked)"
+    }
+  ],
+  "Dropdowns": [],
+  "OnLoad": "",
+  "OnUnload": ""
+}
