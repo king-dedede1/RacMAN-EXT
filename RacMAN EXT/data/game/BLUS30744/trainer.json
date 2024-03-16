@@ -1,0 +1,205 @@
+{
+  "TitleID": "BLUS30744",
+  "RacmanVersion": "1",
+  "Labels": [
+    {
+      "Name": "",
+      "Text": "Stud Count",
+      "Position": {
+        "IsEmpty": false,
+        "X": 272,
+        "Y": 81
+      }
+    },
+    {
+      "Name": "",
+      "Text": "Load Level:",
+      "Position": {
+        "IsEmpty": false,
+        "X": 40,
+        "Y": 215
+      }
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Unlock All Characters",
+      "Position": {
+        "IsEmpty": false,
+        "X": 269,
+        "Y": 126
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 176,
+        "Height": 25
+      },
+      "OnClick": ""
+    },
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Unlock all Gold Bricks",
+      "Position": {
+        "IsEmpty": false,
+        "X": 269,
+        "Y": 155
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 177,
+        "Height": 25
+      },
+      "OnClick": ""
+    },
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Unlock all Red Hats",
+      "Position": {
+        "IsEmpty": false,
+        "X": 269,
+        "Y": 182
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 177,
+        "Height": 25
+      },
+      "OnClick": ""
+    },
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Unlock all Levels",
+      "Position": {
+        "IsEmpty": false,
+        "X": 269,
+        "Y": 212
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 177,
+        "Height": 25
+      },
+      "OnClick": ""
+    },
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Save Position",
+      "Position": {
+        "IsEmpty": false,
+        "X": 40,
+        "Y": 65
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 105,
+        "Height": 32
+      },
+      "OnClick": ""
+    },
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Load Position",
+      "Position": {
+        "IsEmpty": false,
+        "X": 39,
+        "Y": 101
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 106,
+        "Height": 29
+      },
+      "OnClick": ""
+    },
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Die",
+      "Position": {
+        "IsEmpty": false,
+        "X": 38,
+        "Y": 133
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 106,
+        "Height": 30
+      },
+      "OnClick": ""
+    },
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Load",
+      "Position": {
+        "IsEmpty": false,
+        "X": 143,
+        "Y": 233
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 59,
+        "Height": 23
+      },
+      "OnClick": ""
+    }
+  ],
+  "TextBoxes": [
+    {
+      "Name": "studCountTextBox",
+      "Enabled": true,
+      "Text": "",
+      "Position": {
+        "IsEmpty": false,
+        "X": 347,
+        "Y": 77
+      },
+      "OnEnter": "Memory.WriteInt(0x1065E14, tonumber(Trainer.GetControlByName('studCountTextBox').Text))"
+    }
+  ],
+  "CheckBoxes": [
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Free Play",
+      "CheckState": 0,
+      "Position": {
+        "IsEmpty": false,
+        "X": 40,
+        "Y": 260
+      },
+      "AllowIndeterminate": false,
+      "OnCheck": ""
+    }
+  ],
+  "Dropdowns": [
+    {
+      "Name": "",
+      "Enabled": true,
+      "Position": {
+        "IsEmpty": false,
+        "X": 39,
+        "Y": 233
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 102,
+        "Height": 23
+      },
+      "Options": [
+        "Dropdown"
+      ],
+      "Index": 0,
+      "OnItemSelected": ""
+    }
+  ],
+  "OnLoad": "",
+  "OnUnload": ""
+}

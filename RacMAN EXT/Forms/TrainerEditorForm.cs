@@ -30,6 +30,8 @@ public partial class TrainerEditorForm : Form
     {
         InitializeComponent();
 
+        //TODO copy instead of passing by reference!
+        // this is really bad!!!!
         this.trainer = trainer;
 
 
@@ -207,8 +209,8 @@ public partial class TrainerEditorForm : Form
         {
             // this is bad
             var state = ((MainForm) Application.OpenForms["MainForm"]).state;
-            string json = JsonSerializer.Serialize(trainer, jsonSerializerOptions);
-            File.WriteAllText(state.connected ? $"{state.gameTitleID}.json" : "trainer.json", json);
+            state.Game.Trainer = trainer;
+            state.Game.SaveEverything();
         }
     }
 

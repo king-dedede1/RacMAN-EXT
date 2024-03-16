@@ -84,6 +84,10 @@ public class Ratchetron : MemoryAPI
             // who cares about error handling anyway?
             return false;
         }
+        finally
+        {
+            OpenDataChannel();
+        }
 
         return false;
     }

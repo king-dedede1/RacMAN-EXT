@@ -7,10 +7,6 @@ public partial class MainForm : Form
     internal Racman state;
     public Panel TrainerPanel { get; set; }
     public Trainer Trainer { get; set; }
-    private static JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
-    {
-        WriteIndented = true
-    };
 
     public MainForm(Racman state)
     {
@@ -21,7 +17,7 @@ public partial class MainForm : Form
 
     private void ReloadGameSpecificStuff()
     {
-        LoadTrainer(); // this takes a long time the first time its called, but almost instant afterwards. idk why
+        LoadTrainer();
 
         if (state.apiType == APIType.PS3)
         {
@@ -40,8 +36,7 @@ public partial class MainForm : Form
         {
             this.Controls.Remove(TrainerPanel);
         }
-        string json = File.ReadAllText(state.connected ? $"{state.gameTitleID}.json" : "trainer.json");
-        Trainer trainer = JsonSerializer.Deserialize<Trainer>(json);
+        var trainer = state.Game.Trainer;
         TrainerPanel panel = new TrainerPanel(trainer);
         this.Controls.Add(panel);
         this.TrainerPanel = panel;
@@ -50,19 +45,9 @@ public partial class MainForm : Form
         LuaConsoleForm.instance.Log($"Done loading trainer for {trainer.TitleID}");
     }
 
-    internal void SaveTrainer()
-    {
-        if (Trainer != null)
-        {
-            // json pretty printing doesnt put a newline after the last brace and that really bugs me lol
-            string json = JsonSerializer.Serialize(Trainer, jsonOptions);
-            File.WriteAllText(state.connected ? $"{state.gameTitleID}.json" : "trainer.json", json);
-        }
-    }
-
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-        SaveTrainer();
+        state.Game.SaveEverything();
         state.api?.Disconnect();
     }
 

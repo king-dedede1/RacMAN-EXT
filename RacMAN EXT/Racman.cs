@@ -14,6 +14,8 @@ public class Racman
     public LuaConsoleForm consoleForm;
 
     public MainForm MainForm { get; set; }
+    public Game Game { get; set; }
+
     internal event Action OnAPIConnect;
 
     public static Lua lua; // maybe shouldnt be static?
@@ -56,12 +58,12 @@ public class Racman
             MainForm.Text = $"RaCMAN {Assembly.GetEntryAssembly().GetName().Version} - {this.gameTitleID} - {api.GetGameTitle()}";
         }
 
+        // load game from disk
+        Game = new(gameTitleID);
+
         InitLuaState();
         OnAPIConnect();
     }
-
-    // maybe move this somewhere else?
-
 
     internal void InitLuaState()
     {
@@ -77,7 +79,7 @@ public class Racman
         // Putting these functions here because calling them directly from lua doesn't seem to be possible.
         lua.RegisterFunction("Convert.TableToByteArray", typeof(LuaFunctions).GetMethod("LuaTableToByteArray"));
         lua.RegisterFunction("Convert.IntToByteArray", typeof(LuaFunctions).GetMethod("IntToByteArray"));
-        lua.RegisterFunction("Convert.FloatToByteArray", typeof(BitConverter).GetMethod("GetBytes", new Type[] { typeof(float) }));
+        lua.RegisterFunction("Convert.FloatToByteArray", typeof(BitConverter).GetMethod("GetBytes", [typeof(float)]));
         lua.RegisterFunction("Convert.ReverseArray", typeof(LuaFunctions).GetMethod("ReverseArray"));
         lua["API"] = api;
         lua["Racman"] = this;

@@ -40,11 +40,18 @@
 	</Content>
   </ItemGroup>
 
+	<ItemGroup>
+		<Content Include="data\**">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="data\game\NPEA00387\trainer.json" />
+	</ItemGroup>
+
   <ItemGroup>
-    <None Update="NPEA00387.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="trainer.json">
+    <None Update="data\game\NPEA00387\trainer.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

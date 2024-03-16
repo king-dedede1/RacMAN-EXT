@@ -1,5 +1,6 @@
 ﻿namespace RacMAN;
 using RacMAN.Forms;
+using System.Reflection;
 
 public class Trainer
 {
@@ -21,6 +22,19 @@ public class Trainer
     // Lua actions
     public string OnLoad { get; set; } // action run when trainer is loaded.
     public string OnUnload { get; set; } // run when trainer is about to be unloaded (i.e. game change, app closing)
+
+    public Trainer(string titleID)
+    {
+        TitleID = titleID;
+        RacmanVersion = "1";
+        Labels = [];
+        Buttons = [];
+        TextBoxes = [];
+        CheckBoxes = [];
+        Dropdowns = [];
+        OnLoad = "";
+        OnUnload = "";
+    }
 }
 
 public class DefineLabel

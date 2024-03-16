@@ -46,6 +46,7 @@ public abstract class MemoryAPI
     /// </summary>
     public abstract void Disconnect();
 
+    public event EventHandler GameChanged;
 }
 
 /// <summary>
