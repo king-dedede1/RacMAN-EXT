@@ -32,7 +32,10 @@ partial class TrainerEditorForm
         repaintTimer = new System.Windows.Forms.Timer(components);
         contextMenuStrip1 = new ContextMenuStrip(components);
         propertiesToolStripMenuItem = new ToolStripMenuItem();
-        toolStripMenuItem1 = new ToolStripMenuItem();
+        textToolStripMenuItem = new ToolStripMenuItem();
+        nameToolStripMenuItem = new ToolStripMenuItem();
+        eventToolStripMenuItem = new ToolStripMenuItem();
+        removeToolStripMenuItem = new ToolStripMenuItem();
         toolStripSeparator1 = new ToolStripSeparator();
         addToolStripMenuItem = new ToolStripMenuItem();
         labelToolStripMenuItem = new ToolStripMenuItem();
@@ -51,9 +54,9 @@ partial class TrainerEditorForm
         // 
         // contextMenuStrip1
         // 
-        contextMenuStrip1.Items.AddRange(new ToolStripItem[] { propertiesToolStripMenuItem, toolStripMenuItem1, toolStripSeparator1, addToolStripMenuItem });
+        contextMenuStrip1.Items.AddRange(new ToolStripItem[] { propertiesToolStripMenuItem, textToolStripMenuItem, nameToolStripMenuItem, eventToolStripMenuItem, removeToolStripMenuItem, toolStripSeparator1, addToolStripMenuItem });
         contextMenuStrip1.Name = "contextMenuStrip1";
-        contextMenuStrip1.Size = new Size(181, 98);
+        contextMenuStrip1.Size = new Size(181, 164);
         // 
         // propertiesToolStripMenuItem
         // 
@@ -62,11 +65,30 @@ partial class TrainerEditorForm
         propertiesToolStripMenuItem.Text = "Properties...";
         propertiesToolStripMenuItem.Click += propertiesToolStripMenuItem_Click;
         // 
-        // toolStripMenuItem1
+        // textToolStripMenuItem
         // 
-        toolStripMenuItem1.Name = "toolStripMenuItem1";
-        toolStripMenuItem1.Size = new Size(180, 22);
-        toolStripMenuItem1.Text = "Remove";
+        textToolStripMenuItem.Name = "textToolStripMenuItem";
+        textToolStripMenuItem.Size = new Size(180, 22);
+        textToolStripMenuItem.Text = "Text";
+        textToolStripMenuItem.Click += textToolStripMenuItem_Click;
+        // 
+        // nameToolStripMenuItem
+        // 
+        nameToolStripMenuItem.Name = "nameToolStripMenuItem";
+        nameToolStripMenuItem.Size = new Size(180, 22);
+        nameToolStripMenuItem.Text = "Name";
+        // 
+        // eventToolStripMenuItem
+        // 
+        eventToolStripMenuItem.Name = "eventToolStripMenuItem";
+        eventToolStripMenuItem.Size = new Size(180, 22);
+        eventToolStripMenuItem.Text = "Event";
+        // 
+        // removeToolStripMenuItem
+        // 
+        removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+        removeToolStripMenuItem.Size = new Size(180, 22);
+        removeToolStripMenuItem.Text = "Remove";
         // 
         // toolStripSeparator1
         // 
@@ -136,7 +158,7 @@ partial class TrainerEditorForm
     private System.Windows.Forms.Timer repaintTimer;
     private ContextMenuStrip contextMenuStrip1;
     private ToolStripMenuItem propertiesToolStripMenuItem;
-    private ToolStripMenuItem toolStripMenuItem1;
+    private ToolStripMenuItem removeToolStripMenuItem;
     private ToolStripSeparator toolStripSeparator1;
     private ToolStripMenuItem addToolStripMenuItem;
     private ToolStripMenuItem labelToolStripMenuItem;
@@ -144,4 +166,7 @@ partial class TrainerEditorForm
     private ToolStripMenuItem textBoxToolStripMenuItem;
     private ToolStripMenuItem checkBoxToolStripMenuItem;
     private ToolStripMenuItem dropdownMenuToolStripMenuItem;
+    private ToolStripMenuItem textToolStripMenuItem;
+    private ToolStripMenuItem nameToolStripMenuItem;
+    private ToolStripMenuItem eventToolStripMenuItem;
 }

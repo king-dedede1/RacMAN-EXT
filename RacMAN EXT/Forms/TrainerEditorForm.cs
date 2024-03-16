@@ -53,9 +53,12 @@ public partial class TrainerEditorForm : Form
         {
             rightClickPoint = PointToClient(Cursor.Position);
 
-            // these two should only be selectable when you right click a control
+            // these five should only be selectable when you right click a control
             contextMenuStrip1.Items[0].Enabled = true;
-            contextMenuStrip1.Items[1].Enabled = true;
+            contextMenuStrip1.Items[1].Enabled = SelectedControl is not ComboBox;
+            contextMenuStrip1.Items[2].Enabled = true;
+            contextMenuStrip1.Items[3].Enabled = true;
+            contextMenuStrip1.Items[4].Enabled = true;
 
             contextMenuStrip1.Show(Cursor.Position);
         }
@@ -221,9 +224,13 @@ public partial class TrainerEditorForm : Form
         {
             rightClickPoint = PointToClient(Cursor.Position);
 
-            // these two should only be selectable when you right click a control
+            // these five should only be selectable when you right click a control
             contextMenuStrip1.Items[0].Enabled = false;
             contextMenuStrip1.Items[1].Enabled = false;
+            contextMenuStrip1.Items[2].Enabled = false;
+            contextMenuStrip1.Items[3].Enabled = false;
+            contextMenuStrip1.Items[4].Enabled = false;
+
 
             contextMenuStrip1.Show(Cursor.Position);
         }
@@ -315,5 +322,12 @@ public partial class TrainerEditorForm : Form
     private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
     {
         new PropertyEditorForm(SelectedControl.Tag).ShowDialog();
+    }
+
+    private void textToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var tag = SelectedControl.Tag as dynamic;
+        tag.Text = InputDialog.ShowInputDialog("Name", tag.Text);
+        SelectedControl.Text = tag.Text;
     }
 }
