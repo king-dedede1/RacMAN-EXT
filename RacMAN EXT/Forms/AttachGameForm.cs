@@ -24,6 +24,11 @@ public partial class AttachGameForm : Form
 
     private void attachButton_Click(object sender, EventArgs e)
     {
+        Connect();
+    }
+
+    private void Connect()
+    {
         switch (this.comboBox1.SelectedIndex)
         {
             case 0:
@@ -58,6 +63,14 @@ public partial class AttachGameForm : Form
         else
         {
             textBox1.Enabled = false;
+        }
+    }
+
+    private void textBox1_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Enter)
+        {
+            Connect();
         }
     }
 }
