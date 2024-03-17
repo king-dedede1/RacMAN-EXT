@@ -36,7 +36,7 @@ partial class LuaConsoleForm
         // console
         // 
         console.BackColor = Color.Black;
-        console.Font = new Font("Monaco", 9.75F, FontStyle.Regular, GraphicsUnit.Point,  0);
+        console.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point,  0);
         console.ForeColor = Color.White;
         console.Location = new Point(14, 14);
         console.Margin = new Padding(4, 3, 4, 3);
