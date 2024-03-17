@@ -43,6 +43,11 @@ partial class TrainerEditorForm
         textBoxToolStripMenuItem = new ToolStripMenuItem();
         checkBoxToolStripMenuItem = new ToolStripMenuItem();
         dropdownMenuToolStripMenuItem = new ToolStripMenuItem();
+        copyToolStripMenuItem = new ToolStripMenuItem();
+        pasteToolStripMenuItem = new ToolStripMenuItem();
+        toolStripSeparator2 = new ToolStripSeparator();
+        onLoadToolStripMenuItem = new ToolStripMenuItem();
+        onUnloadToolStripMenuItem = new ToolStripMenuItem();
         contextMenuStrip1.SuspendLayout();
         SuspendLayout();
         // 
@@ -54,55 +59,55 @@ partial class TrainerEditorForm
         // 
         // contextMenuStrip1
         // 
-        contextMenuStrip1.Items.AddRange(new ToolStripItem[] { propertiesToolStripMenuItem, textToolStripMenuItem, nameToolStripMenuItem, eventToolStripMenuItem, removeToolStripMenuItem, toolStripSeparator1, addToolStripMenuItem });
+        contextMenuStrip1.Items.AddRange(new ToolStripItem[] { propertiesToolStripMenuItem, textToolStripMenuItem, nameToolStripMenuItem, eventToolStripMenuItem, removeToolStripMenuItem, toolStripSeparator1, addToolStripMenuItem, copyToolStripMenuItem, pasteToolStripMenuItem, toolStripSeparator2, onLoadToolStripMenuItem, onUnloadToolStripMenuItem });
         contextMenuStrip1.Name = "contextMenuStrip1";
-        contextMenuStrip1.Size = new Size(137, 142);
+        contextMenuStrip1.Size = new Size(138, 236);
         // 
         // propertiesToolStripMenuItem
         // 
         propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
-        propertiesToolStripMenuItem.Size = new Size(136, 22);
+        propertiesToolStripMenuItem.Size = new Size(137, 22);
         propertiesToolStripMenuItem.Text = "Properties...";
         propertiesToolStripMenuItem.Click += propertiesToolStripMenuItem_Click;
         // 
         // textToolStripMenuItem
         // 
         textToolStripMenuItem.Name = "textToolStripMenuItem";
-        textToolStripMenuItem.Size = new Size(136, 22);
+        textToolStripMenuItem.Size = new Size(137, 22);
         textToolStripMenuItem.Text = "Text";
         textToolStripMenuItem.Click += textToolStripMenuItem_Click;
         // 
         // nameToolStripMenuItem
         // 
         nameToolStripMenuItem.Name = "nameToolStripMenuItem";
-        nameToolStripMenuItem.Size = new Size(136, 22);
+        nameToolStripMenuItem.Size = new Size(137, 22);
         nameToolStripMenuItem.Text = "Name";
         nameToolStripMenuItem.Click += nameToolStripMenuItem_Click;
         // 
         // eventToolStripMenuItem
         // 
         eventToolStripMenuItem.Name = "eventToolStripMenuItem";
-        eventToolStripMenuItem.Size = new Size(136, 22);
+        eventToolStripMenuItem.Size = new Size(137, 22);
         eventToolStripMenuItem.Text = "Event";
         eventToolStripMenuItem.Click += eventToolStripMenuItem_Click;
         // 
         // removeToolStripMenuItem
         // 
         removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-        removeToolStripMenuItem.Size = new Size(136, 22);
+        removeToolStripMenuItem.Size = new Size(137, 22);
         removeToolStripMenuItem.Text = "Remove";
         removeToolStripMenuItem.Click += removeToolStripMenuItem_Click;
         // 
         // toolStripSeparator1
         // 
         toolStripSeparator1.Name = "toolStripSeparator1";
-        toolStripSeparator1.Size = new Size(133, 6);
+        toolStripSeparator1.Size = new Size(134, 6);
         // 
         // addToolStripMenuItem
         // 
         addToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { labelToolStripMenuItem, buttonToolStripMenuItem, textBoxToolStripMenuItem, checkBoxToolStripMenuItem, dropdownMenuToolStripMenuItem });
         addToolStripMenuItem.Name = "addToolStripMenuItem";
-        addToolStripMenuItem.Size = new Size(136, 22);
+        addToolStripMenuItem.Size = new Size(137, 22);
         addToolStripMenuItem.Text = "Add";
         // 
         // labelToolStripMenuItem
@@ -140,6 +145,39 @@ partial class TrainerEditorForm
         dropdownMenuToolStripMenuItem.Text = "Dropdown Menu";
         dropdownMenuToolStripMenuItem.Click += dropdownMenuToolStripMenuItem_Click;
         // 
+        // copyToolStripMenuItem
+        // 
+        copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+        copyToolStripMenuItem.Size = new Size(137, 22);
+        copyToolStripMenuItem.Text = "Copy";
+        copyToolStripMenuItem.Click += copyToolStripMenuItem_Click;
+        // 
+        // pasteToolStripMenuItem
+        // 
+        pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+        pasteToolStripMenuItem.Size = new Size(137, 22);
+        pasteToolStripMenuItem.Text = "Paste";
+        pasteToolStripMenuItem.Click += pasteToolStripMenuItem_Click;
+        // 
+        // toolStripSeparator2
+        // 
+        toolStripSeparator2.Name = "toolStripSeparator2";
+        toolStripSeparator2.Size = new Size(134, 6);
+        // 
+        // onLoadToolStripMenuItem
+        // 
+        onLoadToolStripMenuItem.Name = "onLoadToolStripMenuItem";
+        onLoadToolStripMenuItem.Size = new Size(137, 22);
+        onLoadToolStripMenuItem.Text = "OnLoad...";
+        onLoadToolStripMenuItem.Click += onLoadToolStripMenuItem_Click;
+        // 
+        // onUnloadToolStripMenuItem
+        // 
+        onUnloadToolStripMenuItem.Name = "onUnloadToolStripMenuItem";
+        onUnloadToolStripMenuItem.Size = new Size(137, 22);
+        onUnloadToolStripMenuItem.Text = "OnUnload...";
+        onUnloadToolStripMenuItem.Click += onUnloadToolStripMenuItem_Click;
+        // 
         // TrainerEditorForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -172,4 +210,9 @@ partial class TrainerEditorForm
     private ToolStripMenuItem textToolStripMenuItem;
     private ToolStripMenuItem nameToolStripMenuItem;
     private ToolStripMenuItem eventToolStripMenuItem;
+    private ToolStripMenuItem copyToolStripMenuItem;
+    private ToolStripMenuItem pasteToolStripMenuItem;
+    private ToolStripSeparator toolStripSeparator2;
+    private ToolStripMenuItem onLoadToolStripMenuItem;
+    private ToolStripMenuItem onUnloadToolStripMenuItem;
 }

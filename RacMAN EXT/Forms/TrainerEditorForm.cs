@@ -65,6 +65,7 @@ public partial class TrainerEditorForm : Form
             contextMenuStrip1.Items[2].Enabled = true;
             contextMenuStrip1.Items[3].Enabled = SelectedControl is not Label;
             contextMenuStrip1.Items[4].Enabled = true;
+            contextMenuStrip1.Items[7].Enabled = true;
 
             contextMenuStrip1.Show(Cursor.Position);
         }
@@ -184,7 +185,7 @@ public partial class TrainerEditorForm : Form
         // select the new control
         SelectedControl = control;
 
-         // Copy this new control so pasting again doesn't put it in the same place
+        // Copy this new control so pasting again doesn't put it in the same place
         clipboardItem = ((dynamic) clipboardItem).Copy(); // forgive me
     }
 
@@ -335,6 +336,7 @@ public partial class TrainerEditorForm : Form
             contextMenuStrip1.Items[2].Enabled = false;
             contextMenuStrip1.Items[3].Enabled = false;
             contextMenuStrip1.Items[4].Enabled = false;
+            contextMenuStrip1.Items[7].Enabled = false;
 
 
             contextMenuStrip1.Show(Cursor.Position);
@@ -487,7 +489,7 @@ public partial class TrainerEditorForm : Form
 
     private void removeToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (MessageBox.Show("Do you really want to delete this?","Are you sure?",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning) == DialogResult.OK)
+        if (MessageBox.Show("Do you really want to delete this?", "Are you sure?", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
         {
             // once again, i am sorry
             if (SelectedControl.Tag is DefineButton btn)
@@ -513,6 +515,30 @@ public partial class TrainerEditorForm : Form
 
             Controls.Remove(SelectedControl);
             SelectedControl = null;
+        }
+    }
+
+    private void onLoadToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        trainer.OnLoad = InputDialog.ShowInputDialog("OnLoad:", trainer.OnLoad, true);
+    }
+
+    private void onUnloadToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        trainer.OnUnload = InputDialog.ShowInputDialog("OnUnload:", trainer.OnUnload, true);
+    }
+
+    private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        //TODO make it paste at clickPoint
+        PasteClipboardItem();
+    }
+
+    private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (SelectedControl != null)
+        {
+            clipboardItem = (SelectedControl.Tag! as dynamic).Copy();
         }
     }
 }
