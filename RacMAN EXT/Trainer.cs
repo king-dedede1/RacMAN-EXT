@@ -59,6 +59,11 @@ public class DefineLabel
     {
         return (DefineLabel) o.MemberwiseClone();
     }
+
+    internal DefineLabel Copy()
+    {
+        return Copy(this);
+    }
 }
 
 public class DefineButton
@@ -74,6 +79,11 @@ public class DefineButton
     {
         return (DefineButton) o.MemberwiseClone();
     }
+
+    internal DefineButton Copy()
+    {
+        return Copy(this);
+    }
 }
 
 public class DefineTextBox
@@ -88,6 +98,11 @@ public class DefineTextBox
     internal static DefineTextBox Copy(DefineTextBox o)
     {
         return (DefineTextBox) o.MemberwiseClone();
+    }
+
+    internal DefineTextBox Copy()
+    {
+        return Copy(this);
     }
 }
 
@@ -105,6 +120,11 @@ public class DefineCheckBox
     {
         return (DefineCheckBox) o.MemberwiseClone();
     }
+
+    internal DefineCheckBox Copy()
+    {
+        return Copy(this);
+    }
 }
 
 public class DefineDropdown
@@ -121,5 +141,10 @@ public class DefineDropdown
     internal static DefineDropdown Copy(DefineDropdown o)
     {
         return (DefineDropdown) o.MemberwiseClone();
+    }
+
+    internal DefineDropdown Copy()
+    {
+        return Copy(this);
     }
 }

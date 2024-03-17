@@ -1,4 +1,5 @@
 ﻿using RacMAN.Forms.PropertyEditor;
+using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 
@@ -19,6 +20,8 @@ public partial class TrainerEditorForm : Form
     }
     Point rightClickPoint;
     Point draggedControlPoint;
+
+    object clipboardItem;
 
     private static readonly JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
     {
@@ -100,6 +103,11 @@ public partial class TrainerEditorForm : Form
     // confusing name
     private void ControlKeyDown(object? sender, KeyEventArgs e)
     {
+        if (e.KeyCode == Keys.V && e.Modifiers.HasFlag(Keys.Control))
+        {
+            // putting this here because this should be run, even if no control is selected
+            PasteClipboardItem();
+        }
         if (SelectedControl == null || !e.Modifiers.HasFlag(Keys.Control)) return;
         var me = SelectedControl;
         dynamic tag = me.Tag;
@@ -121,6 +129,10 @@ public partial class TrainerEditorForm : Form
                 me.Left += 1;
                 Nudge(tag, 1, 0);
                 break;
+            case Keys.C:
+                // COPY
+                clipboardItem = tag.Copy();
+                break;
         }
         e.Handled = true;
     }
@@ -130,6 +142,50 @@ public partial class TrainerEditorForm : Form
         Point pos = tag.Position;
         pos.Offset(x, y);
         tag.Position = pos;
+    }
+
+    private void PasteClipboardItem()
+    {
+        if (clipboardItem is null) return;
+
+        // prevent these controls from overlapping
+        Nudge(clipboardItem, 25, 25);
+
+        Control? control = null;
+        if (clipboardItem is DefineLabel def)
+        {
+            control = ConstructLabel(def);
+            trainer.Labels.Add(def);
+        }
+        else if (clipboardItem is DefineButton btn)
+        {
+            control = ConstructButton(btn);
+            trainer.Buttons.Add(btn);
+        }
+        else if (clipboardItem is DefineCheckBox checkBox)
+        {
+            control = ConstructCheckBox(checkBox);
+            trainer.CheckBoxes.Add(checkBox);
+        }
+        else if (clipboardItem is DefineTextBox text)
+        {
+            control = ConstructTextBox(text);
+            trainer.TextBoxes.Add(text);
+        }
+        else if (clipboardItem is DefineDropdown drop)
+        {
+            control = ConstructComboBox(drop);
+            trainer.Dropdowns.Add(drop);
+        }
+
+        Controls.Add(control);
+        control.BringToFront();
+
+        // select the new control
+        SelectedControl = control;
+
+         // Copy this new control so pasting again doesn't put it in the same place
+        clipboardItem = ((dynamic) clipboardItem).Copy(); // forgive me
     }
 
     private Button ConstructButton(DefineButton define)
