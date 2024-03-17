@@ -59,7 +59,7 @@ public partial class TrainerEditorForm : Form
             contextMenuStrip1.Items[0].Enabled = true;
             contextMenuStrip1.Items[1].Enabled = SelectedControl is not ComboBox;
             contextMenuStrip1.Items[2].Enabled = true;
-            contextMenuStrip1.Items[3].Enabled = true;
+            contextMenuStrip1.Items[3].Enabled = SelectedControl is not Label;
             contextMenuStrip1.Items[4].Enabled = true;
 
             contextMenuStrip1.Show(Cursor.Position);
@@ -329,7 +329,67 @@ public partial class TrainerEditorForm : Form
     private void textToolStripMenuItem_Click(object sender, EventArgs e)
     {
         var tag = SelectedControl.Tag as dynamic;
-        tag.Text = InputDialog.ShowInputDialog("Name", tag.Text);
+        tag.Text = InputDialog.ShowInputDialog("Text:", tag.Text);
         SelectedControl.Text = tag.Text;
+    }
+
+    private void nameToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var tag = SelectedControl.Tag as dynamic;
+        tag.Name = InputDialog.ShowInputDialog("Name:", tag.Name);
+    }
+
+    private void eventToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (SelectedControl == null || SelectedControl.Tag == null) return;
+
+        // I am sorry
+        if (SelectedControl.Tag is DefineButton btn)
+        {
+            btn.OnClick = InputDialog.ShowInputDialog("OnClick:", btn.OnClick, true);
+        }
+        else if (SelectedControl.Tag is DefineCheckBox checkbox)
+        {
+            checkbox.OnCheck = InputDialog.ShowInputDialog("OnCheck:", checkbox.OnCheck, true);
+        }
+        else if (SelectedControl.Tag is DefineTextBox textbox)
+        {
+            textbox.OnEnter = InputDialog.ShowInputDialog("OnEnter:", textbox.OnEnter, true);
+        }
+        else if (SelectedControl.Tag is DefineDropdown dropdown)
+        {
+            dropdown.OnItemSelected = InputDialog.ShowInputDialog("OnItemSelected:", dropdown.OnItemSelected, true);
+        }
+    }
+
+    private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (MessageBox.Show("Do you really want to delete this?","Are you sure?",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning) == DialogResult.OK)
+        {
+            // once again, i am sorry
+            if (SelectedControl.Tag is DefineButton btn)
+            {
+                trainer.Buttons.Remove(btn);
+            }
+            else if (SelectedControl.Tag is DefineCheckBox checkbox)
+            {
+                trainer.CheckBoxes.Remove(checkbox);
+            }
+            else if (SelectedControl.Tag is DefineTextBox textbox)
+            {
+                trainer.TextBoxes.Remove(textbox);
+            }
+            else if (SelectedControl.Tag is DefineDropdown dropdown)
+            {
+                trainer.Dropdowns.Remove(dropdown);
+            }
+            else if (SelectedControl.Tag is DefineLabel label)
+            {
+                trainer.Labels.Remove(label);
+            }
+
+            Controls.Remove(SelectedControl);
+            SelectedControl = null;
+        }
     }
 }

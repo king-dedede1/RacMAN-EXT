@@ -56,50 +56,53 @@ partial class TrainerEditorForm
         // 
         contextMenuStrip1.Items.AddRange(new ToolStripItem[] { propertiesToolStripMenuItem, textToolStripMenuItem, nameToolStripMenuItem, eventToolStripMenuItem, removeToolStripMenuItem, toolStripSeparator1, addToolStripMenuItem });
         contextMenuStrip1.Name = "contextMenuStrip1";
-        contextMenuStrip1.Size = new Size(181, 164);
+        contextMenuStrip1.Size = new Size(137, 142);
         // 
         // propertiesToolStripMenuItem
         // 
         propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
-        propertiesToolStripMenuItem.Size = new Size(180, 22);
+        propertiesToolStripMenuItem.Size = new Size(136, 22);
         propertiesToolStripMenuItem.Text = "Properties...";
         propertiesToolStripMenuItem.Click += propertiesToolStripMenuItem_Click;
         // 
         // textToolStripMenuItem
         // 
         textToolStripMenuItem.Name = "textToolStripMenuItem";
-        textToolStripMenuItem.Size = new Size(180, 22);
+        textToolStripMenuItem.Size = new Size(136, 22);
         textToolStripMenuItem.Text = "Text";
         textToolStripMenuItem.Click += textToolStripMenuItem_Click;
         // 
         // nameToolStripMenuItem
         // 
         nameToolStripMenuItem.Name = "nameToolStripMenuItem";
-        nameToolStripMenuItem.Size = new Size(180, 22);
+        nameToolStripMenuItem.Size = new Size(136, 22);
         nameToolStripMenuItem.Text = "Name";
+        nameToolStripMenuItem.Click += nameToolStripMenuItem_Click;
         // 
         // eventToolStripMenuItem
         // 
         eventToolStripMenuItem.Name = "eventToolStripMenuItem";
-        eventToolStripMenuItem.Size = new Size(180, 22);
+        eventToolStripMenuItem.Size = new Size(136, 22);
         eventToolStripMenuItem.Text = "Event";
+        eventToolStripMenuItem.Click += eventToolStripMenuItem_Click;
         // 
         // removeToolStripMenuItem
         // 
         removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-        removeToolStripMenuItem.Size = new Size(180, 22);
+        removeToolStripMenuItem.Size = new Size(136, 22);
         removeToolStripMenuItem.Text = "Remove";
+        removeToolStripMenuItem.Click += removeToolStripMenuItem_Click;
         // 
         // toolStripSeparator1
         // 
         toolStripSeparator1.Name = "toolStripSeparator1";
-        toolStripSeparator1.Size = new Size(177, 6);
+        toolStripSeparator1.Size = new Size(133, 6);
         // 
         // addToolStripMenuItem
         // 
         addToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { labelToolStripMenuItem, buttonToolStripMenuItem, textBoxToolStripMenuItem, checkBoxToolStripMenuItem, dropdownMenuToolStripMenuItem });
         addToolStripMenuItem.Name = "addToolStripMenuItem";
-        addToolStripMenuItem.Size = new Size(180, 22);
+        addToolStripMenuItem.Size = new Size(136, 22);
         addToolStripMenuItem.Text = "Add";
         // 
         // labelToolStripMenuItem
