@@ -58,6 +58,7 @@ public class RPCS3 : MemoryAPI
 
     public override void Disconnect()
     {
+        workerRunning = false;
         Win32.CloseHandle(hProcess);
     }
 
