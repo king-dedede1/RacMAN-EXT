@@ -44,6 +44,8 @@ public partial class TrainerEditorForm : Form
         foreach (var combobox in this.trainer.Dropdowns) Controls.Add(ConstructComboBox(combobox));
 
         ResumeLayout();
+
+        KeyDown += ControlKeyDown;
     }
 
     private void ControlMouseClick(object? sender, MouseEventArgs e)
@@ -74,6 +76,11 @@ public partial class TrainerEditorForm : Form
         label.Location = define.Position;
         label.AutoSize = true;
         label.MouseUp += ControlMouseClick;
+        label.KeyDown += ControlKeyDown;
+        label.MouseClick += (s, e) =>
+        {
+            this.Select();
+        };
         label.Tag = define;
         SelectedControlChanged += (s, e) =>
         {
@@ -89,6 +96,42 @@ public partial class TrainerEditorForm : Form
         return label;
     }
 
+    // for when a key is down on a control, NOT when the control key is down
+    // confusing name
+    private void ControlKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (SelectedControl == null || !e.Modifiers.HasFlag(Keys.Control)) return;
+        var me = SelectedControl;
+        dynamic tag = me.Tag;
+        switch (e.KeyCode)
+        {
+            case Keys.Up:
+                me.Top -= 1;
+                Nudge(tag, 0, -1);
+                break;
+            case Keys.Down:
+                me.Top += 1;
+                Nudge(tag, 0, 1);
+                break;
+            case Keys.Left:
+                me.Left -= 1;
+                Nudge(tag, -1, 0);
+                break;
+            case Keys.Right:
+                me.Left += 1;
+                Nudge(tag, 1, 0);
+                break;
+        }
+        e.Handled = true;
+    }
+
+    private void Nudge(dynamic tag, int x, int y)
+    {
+        Point pos = tag.Position;
+        pos.Offset(x, y);
+        tag.Position = pos;
+    }
+
     private Button ConstructButton(DefineButton define)
     {
         Button button = new Button();
@@ -99,6 +142,7 @@ public partial class TrainerEditorForm : Form
         button.Size = define.Size;
         button.Tag = define; // so Click event knows what event to run
         button.MouseUp += ControlMouseClick;
+        button.KeyDown += ControlKeyDown;
         SelectedControlChanged += (s, e) =>
         {
             if (SelectedControl == button && button.Controls.Count == 0)
@@ -123,6 +167,7 @@ public partial class TrainerEditorForm : Form
         textBox.Enabled = define.Enabled;
         textBox.Tag = define;
         textBox.MouseUp += ControlMouseClick;
+        textBox.KeyDown += ControlKeyDown;
         SelectedControlChanged += (s, e) =>
         {
             if (SelectedControl == textBox && textBox.Controls.Count == 0)
@@ -149,6 +194,7 @@ public partial class TrainerEditorForm : Form
         checkBox.Tag = define;
         checkBox.AutoSize = true;
         checkBox.MouseUp += ControlMouseClick;
+        checkBox.KeyDown += ControlKeyDown;
         SelectedControlChanged += (s, e) =>
         {
             if (SelectedControl == checkBox && checkBox.Controls.Count == 0)
@@ -174,6 +220,7 @@ public partial class TrainerEditorForm : Form
         comboBox.SelectedIndex = define.Index;
         comboBox.Tag = define;
         comboBox.MouseUp += ControlMouseClick;
+        comboBox.KeyDown += ControlKeyDown;
         SelectedControlChanged += (s, e) =>
         {
             if (SelectedControl == comboBox && comboBox.Controls.Count == 0)
