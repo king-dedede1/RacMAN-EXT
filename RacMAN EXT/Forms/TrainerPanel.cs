@@ -76,6 +76,7 @@ public class TrainerPanel : Panel
         checkBox.Location = define.Position;
         checkBox.ThreeState = define.AllowIndeterminate;
         checkBox.Tag = define;
+        checkBox.AutoSize = true;
         checkBox.CheckedChanged += CheckBox_CheckedChanged;
         return checkBox;
     }

@@ -30,19 +30,17 @@ public partial class TrainerEditorForm : Form
     {
         InitializeComponent();
 
-        //TODO copy instead of passing by reference!
-        // this is really bad!!!!
-        this.trainer = trainer;
-
+        // Deep copy to avoid changing things on the main form
+        this.trainer = Trainer.DeepCopy(trainer);
 
         // add controls from JSON file
         SuspendLayout();
 
-        foreach (var label in trainer.Labels) Controls.Add(ConstructLabel(label));
-        foreach (var button in trainer.Buttons) Controls.Add(ConstructButton(button));
-        foreach (var textbox in trainer.TextBoxes) Controls.Add(ConstructTextBox(textbox));
-        foreach (var checkbox in trainer.CheckBoxes) Controls.Add(ConstructCheckBox(checkbox));
-        foreach (var combobox in trainer.Dropdowns) Controls.Add(ConstructComboBox(combobox));
+        foreach (var label in this.trainer.Labels) Controls.Add(ConstructLabel(label));
+        foreach (var button in this.trainer.Buttons) Controls.Add(ConstructButton(button));
+        foreach (var textbox in this.trainer.TextBoxes) Controls.Add(ConstructTextBox(textbox));
+        foreach (var checkbox in this.trainer.CheckBoxes) Controls.Add(ConstructCheckBox(checkbox));
+        foreach (var combobox in this.trainer.Dropdowns) Controls.Add(ConstructComboBox(combobox));
 
         ResumeLayout();
     }
@@ -148,6 +146,7 @@ public partial class TrainerEditorForm : Form
         checkBox.Location = define.Position;
         checkBox.ThreeState = define.AllowIndeterminate;
         checkBox.Tag = define;
+        checkBox.AutoSize = true;
         checkBox.MouseUp += ControlMouseClick;
         SelectedControlChanged += (s, e) =>
         {

@@ -1,7 +1,4 @@
 ﻿namespace RacMAN;
-using RacMAN.Forms;
-using System.Reflection;
-
 public class Trainer
 {
     // Maybe redundant?
@@ -35,6 +32,21 @@ public class Trainer
         OnLoad = "";
         OnUnload = "";
     }
+
+    internal static Trainer DeepCopy(Trainer t)
+    {
+        return new Trainer(t.TitleID)
+        {
+            RacmanVersion = t.RacmanVersion,
+            OnLoad = t.OnLoad,
+            OnUnload = t.OnUnload,
+            Labels = t.Labels.ConvertAll(DefineLabel.Copy),
+            Buttons = t.Buttons.ConvertAll(DefineButton.Copy),
+            TextBoxes = t.TextBoxes.ConvertAll(DefineTextBox.Copy),
+            CheckBoxes = t.CheckBoxes.ConvertAll(DefineCheckBox.Copy),
+            Dropdowns = t.Dropdowns.ConvertAll(DefineDropdown.Copy)
+        };
+    }
 }
 
 public class DefineLabel
@@ -42,6 +54,11 @@ public class DefineLabel
     public string Name { get; set; } // used for access by code.
     public string Text { get; set; }
     public Point Position { get; set; }
+
+    internal static DefineLabel Copy(DefineLabel o)
+    {
+        return (DefineLabel) o.MemberwiseClone();
+    }
 }
 
 public class DefineButton
@@ -52,6 +69,11 @@ public class DefineButton
     public Point Position { get; set; }
     public Size Size { get; set; }
     public string OnClick { get; set; } // lua action
+
+    internal static DefineButton Copy(DefineButton o)
+    {
+        return (DefineButton) o.MemberwiseClone();
+    }
 }
 
 public class DefineTextBox
@@ -62,6 +84,11 @@ public class DefineTextBox
     public Point Position { get; set; } // is a rectangle necessary here? idk
     public string OnEnter { get; set; } // for when the enter key is pressed
                                         // maybe add an action for when the text is changed?
+
+    internal static DefineTextBox Copy(DefineTextBox o)
+    {
+        return (DefineTextBox) o.MemberwiseClone();
+    }
 }
 
 public class DefineCheckBox
@@ -73,6 +100,11 @@ public class DefineCheckBox
     public Point Position { get; set; }
     public bool AllowIndeterminate { get; set; } // putting this here to annoy robo
     public string OnCheck { get; set; } // called when checked changed
+
+    internal static DefineCheckBox Copy(DefineCheckBox o)
+    {
+        return (DefineCheckBox) o.MemberwiseClone();
+    }
 }
 
 public class DefineDropdown
@@ -85,4 +117,9 @@ public class DefineDropdown
     public int Index { get; set; } // index of default selected item
     public string OnItemSelected { get; set; } // called when the user selects a dropdown item
                                                // or you could just put a button next to it like a normal person...
+
+    internal static DefineDropdown Copy(DefineDropdown o)
+    {
+        return (DefineDropdown) o.MemberwiseClone();
+    }
 }
