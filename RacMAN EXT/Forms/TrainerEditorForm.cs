@@ -1,4 +1,5 @@
 ﻿using RacMAN.Forms.PropertyEditor;
+using System.Text;
 using System.Text.Json;
 
 namespace RacMAN.Forms;
@@ -55,7 +56,7 @@ public partial class TrainerEditorForm : Form
 
             // these five should only be selectable when you right click a control
             contextMenuStrip1.Items[0].Enabled = true;
-            contextMenuStrip1.Items[1].Enabled = SelectedControl is not ComboBox;
+            contextMenuStrip1.Items[1].Enabled = true;
             contextMenuStrip1.Items[2].Enabled = true;
             contextMenuStrip1.Items[3].Enabled = SelectedControl is not Label;
             contextMenuStrip1.Items[4].Enabled = true;
@@ -328,8 +329,28 @@ public partial class TrainerEditorForm : Form
     private void textToolStripMenuItem_Click(object sender, EventArgs e)
     {
         var tag = SelectedControl.Tag as dynamic;
-        tag.Text = InputDialog.ShowInputDialog("Text:", tag.Text);
-        SelectedControl.Text = tag.Text;
+        if (tag is DefineDropdown def)
+        {
+            StringBuilder sb = new();
+            foreach (var entry in def.Options)
+            {
+                sb.AppendLine(entry);
+            }
+            sb.Remove(sb.Length - 1, 1); // remove the last newline
+            var optionsString = sb.ToString();
+
+            var result = InputDialog.ShowInputDialog("Dropdown Options:", optionsString, true);
+            def.Options = result.TrimEnd().Split('\n');
+            var combobox = (ComboBox) SelectedControl;
+            combobox.Items.Clear();
+            combobox.Items.AddRange(def.Options);
+            combobox.SelectedIndex = 0;
+        }
+        else
+        {
+            tag.Text = InputDialog.ShowInputDialog("Text:", tag.Text);
+            SelectedControl.Text = tag.Text;
+        }
     }
 
     private void nameToolStripMenuItem_Click(object sender, EventArgs e)

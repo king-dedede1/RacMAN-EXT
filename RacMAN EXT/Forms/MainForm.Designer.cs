@@ -50,6 +50,8 @@ partial class MainForm
         toolStripSeparator1 = new ToolStripSeparator();
         pS3ToolStripMenuItem = new ToolStripMenuItem();
         savesManagerToolStripMenuItem = new ToolStripMenuItem();
+        toolStripSeparator3 = new ToolStripSeparator();
+        installGamePackageToolStripMenuItem = new ToolStripMenuItem();
         menuStrip1.SuspendLayout();
         SuspendLayout();
         // 
@@ -65,7 +67,7 @@ partial class MainForm
         // 
         // fileToolStripMenuItem
         // 
-        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutRaCMANToolStripMenuItem, settingsToolStripMenuItem, reconnectToolStripMenuItem, toolStripSeparator2, reloadLuaStateToolStripMenuItem });
+        fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutRaCMANToolStripMenuItem, settingsToolStripMenuItem, reconnectToolStripMenuItem, toolStripSeparator2, reloadLuaStateToolStripMenuItem, toolStripSeparator3, installGamePackageToolStripMenuItem });
         fileToolStripMenuItem.Name = "fileToolStripMenuItem";
         fileToolStripMenuItem.Size = new Size(37, 20);
         fileToolStripMenuItem.Text = "File";
@@ -73,7 +75,7 @@ partial class MainForm
         // aboutRaCMANToolStripMenuItem
         // 
         aboutRaCMANToolStripMenuItem.Name = "aboutRaCMANToolStripMenuItem";
-        aboutRaCMANToolStripMenuItem.Size = new Size(177, 22);
+        aboutRaCMANToolStripMenuItem.Size = new Size(195, 22);
         aboutRaCMANToolStripMenuItem.Text = "About RaCMAN...";
         aboutRaCMANToolStripMenuItem.Click += aboutRaCMANToolStripMenuItem_Click;
         // 
@@ -81,25 +83,25 @@ partial class MainForm
         // 
         settingsToolStripMenuItem.Enabled = false;
         settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-        settingsToolStripMenuItem.Size = new Size(177, 22);
+        settingsToolStripMenuItem.Size = new Size(195, 22);
         settingsToolStripMenuItem.Text = "Settings...";
         // 
         // reconnectToolStripMenuItem
         // 
         reconnectToolStripMenuItem.Name = "reconnectToolStripMenuItem";
-        reconnectToolStripMenuItem.Size = new Size(177, 22);
+        reconnectToolStripMenuItem.Size = new Size(195, 22);
         reconnectToolStripMenuItem.Text = "Reconnect";
         reconnectToolStripMenuItem.Click += reconnectToolStripMenuItem_Click;
         // 
         // toolStripSeparator2
         // 
         toolStripSeparator2.Name = "toolStripSeparator2";
-        toolStripSeparator2.Size = new Size(174, 6);
+        toolStripSeparator2.Size = new Size(192, 6);
         // 
         // reloadLuaStateToolStripMenuItem
         // 
         reloadLuaStateToolStripMenuItem.Name = "reloadLuaStateToolStripMenuItem";
-        reloadLuaStateToolStripMenuItem.Size = new Size(177, 22);
+        reloadLuaStateToolStripMenuItem.Size = new Size(195, 22);
         reloadLuaStateToolStripMenuItem.Text = "Reload Lua runtime";
         reloadLuaStateToolStripMenuItem.Click += reloadLuaStateToolStripMenuItem_Click;
         // 
@@ -114,27 +116,27 @@ partial class MainForm
         // 
         combosHotkeysToolStripMenuItem.Enabled = false;
         combosHotkeysToolStripMenuItem.Name = "combosHotkeysToolStripMenuItem";
-        combosHotkeysToolStripMenuItem.Size = new Size(176, 22);
+        combosHotkeysToolStripMenuItem.Size = new Size(180, 22);
         combosHotkeysToolStripMenuItem.Text = "Combos/Hotkeys...";
         // 
         // inputDisplayToolStripMenuItem
         // 
         inputDisplayToolStripMenuItem.Enabled = false;
         inputDisplayToolStripMenuItem.Name = "inputDisplayToolStripMenuItem";
-        inputDisplayToolStripMenuItem.Size = new Size(176, 22);
+        inputDisplayToolStripMenuItem.Size = new Size(180, 22);
         inputDisplayToolStripMenuItem.Text = "Input Display...";
         // 
         // autosplittersToolStripMenuItem
         // 
         autosplittersToolStripMenuItem.Enabled = false;
         autosplittersToolStripMenuItem.Name = "autosplittersToolStripMenuItem";
-        autosplittersToolStripMenuItem.Size = new Size(176, 22);
+        autosplittersToolStripMenuItem.Size = new Size(180, 22);
         autosplittersToolStripMenuItem.Text = "Autosplitters...";
         // 
         // luaConsoleToolStripMenuItem
         // 
         luaConsoleToolStripMenuItem.Name = "luaConsoleToolStripMenuItem";
-        luaConsoleToolStripMenuItem.Size = new Size(176, 22);
+        luaConsoleToolStripMenuItem.Size = new Size(180, 22);
         luaConsoleToolStripMenuItem.Text = "Lua Console...";
         luaConsoleToolStripMenuItem.Click += luaConsoleToolStripMenuItem_Click;
         // 
@@ -142,14 +144,14 @@ partial class MainForm
         // 
         rAMWatchToolStripMenuItem.Enabled = false;
         rAMWatchToolStripMenuItem.Name = "rAMWatchToolStripMenuItem";
-        rAMWatchToolStripMenuItem.Size = new Size(176, 22);
+        rAMWatchToolStripMenuItem.Size = new Size(180, 22);
         rAMWatchToolStripMenuItem.Text = "RAM Watch...";
         // 
         // modLoaderToolStripMenuItem
         // 
         modLoaderToolStripMenuItem.Enabled = false;
         modLoaderToolStripMenuItem.Name = "modLoaderToolStripMenuItem";
-        modLoaderToolStripMenuItem.Size = new Size(176, 22);
+        modLoaderToolStripMenuItem.Size = new Size(180, 22);
         modLoaderToolStripMenuItem.Text = "Mod Loader...";
         // 
         // toolStripMenuItem1
@@ -162,14 +164,14 @@ partial class MainForm
         // reloadToolStripMenuItem
         // 
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(146, 22);
+        reloadToolStripMenuItem.Size = new Size(180, 22);
         reloadToolStripMenuItem.Text = "Reload";
         reloadToolStripMenuItem.Click += reloadToolStripMenuItem_Click;
         // 
         // openDesignerToolStripMenuItem
         // 
         openDesignerToolStripMenuItem.Name = "openDesignerToolStripMenuItem";
-        openDesignerToolStripMenuItem.Size = new Size(146, 22);
+        openDesignerToolStripMenuItem.Size = new Size(180, 22);
         openDesignerToolStripMenuItem.Text = "Open Editor...";
         openDesignerToolStripMenuItem.Click += openDesignerToolStripMenuItem_Click;
         // 
@@ -205,6 +207,18 @@ partial class MainForm
         savesManagerToolStripMenuItem.Name = "savesManagerToolStripMenuItem";
         savesManagerToolStripMenuItem.Size = new Size(162, 22);
         savesManagerToolStripMenuItem.Text = "Saves Manager...";
+        // 
+        // toolStripSeparator3
+        // 
+        toolStripSeparator3.Name = "toolStripSeparator3";
+        toolStripSeparator3.Size = new Size(192, 6);
+        // 
+        // installGamePackageToolStripMenuItem
+        // 
+        installGamePackageToolStripMenuItem.Enabled = false;
+        installGamePackageToolStripMenuItem.Name = "installGamePackageToolStripMenuItem";
+        installGamePackageToolStripMenuItem.Size = new Size(195, 22);
+        installGamePackageToolStripMenuItem.Text = "Install Game Package...";
         // 
         // MainForm
         // 
@@ -249,4 +263,6 @@ partial class MainForm
     private ToolStripMenuItem toolStripMenuItem1;
     private ToolStripMenuItem reloadToolStripMenuItem;
     private ToolStripMenuItem openDesignerToolStripMenuItem;
+    private ToolStripSeparator toolStripSeparator3;
+    private ToolStripMenuItem installGamePackageToolStripMenuItem;
 }
