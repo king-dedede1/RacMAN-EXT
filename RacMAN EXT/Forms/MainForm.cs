@@ -1,4 +1,5 @@
 ﻿using RacMAN.API;
+using System.IO.Compression;
 using System.Text.Json;
 
 namespace RacMAN.Forms;
@@ -88,5 +89,30 @@ public partial class MainForm : Form
     {
         new TrainerEditorForm(Trainer).ShowDialog();
         LoadTrainer();
+    }
+
+    // maybe add an option to install a zip of multiple packages?
+    // also there should be some error checking if the zip file has a name that isn't a valid title ID
+    // also there should be an option to update an existing package
+    private void installGamePackageToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (openFileDialog1.ShowDialog() == DialogResult.OK)
+        {
+            var path = openFileDialog1.FileName;
+            try
+            {
+                File.Copy(path, $"data/game/PACKAGE.ZIP");
+                ZipFile.ExtractToDirectory("data/game/PACKAGE.ZIP", $"data/game/");
+                MessageBox.Show($"Installed package {Path.GetFileNameWithoutExtension(path)}");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Couldn't extract package ({ex.Message})", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                File.Delete("data/game/PACKAGE.ZIP");
+            }
+        }
     }
 }
