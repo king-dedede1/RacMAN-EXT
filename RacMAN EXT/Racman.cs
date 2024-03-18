@@ -3,6 +3,7 @@ using NLua.Exceptions;
 using System.Reflection;
 using RacMAN.API;
 using RacMAN.Forms;
+using System.Security.Cryptography;
 
 namespace RacMAN;
 public class Racman
@@ -85,10 +86,10 @@ public class Racman
         lua["Racman"] = this;
 
         // if a game script and racman script have the same name for some reason, the racman script will be prioritized.
-        EvalLua($"package.path = \"scripts/racman/?.lua;scripts/racman/?;scripts/game/{gameTitleID ?? ""}/?;scripts/game/{gameTitleID ?? ""}/?.lua\"");
+        EvalLua($"package.path = 'data/common/scripts/?;data/common/scripts/?.lua;{Game.ScriptFolderPath ?? ""}?;{Game.ScriptFolderPath ?? ""}?.lua'");
 
         // Load racman common scripts
-        foreach (string filePath in Directory.EnumerateFiles("scripts/racman/"))
+        foreach (string filePath in Directory.EnumerateFiles("data/common/scripts/"))
         {
             LuaConsoleForm.instance.Log($"Loading script {filePath}");
             // using require instead of DoFile prevents running the same file twice
@@ -100,21 +101,13 @@ public class Racman
         // probably be included in the racman scripts anyway
         EvalLua("import = function() end");
 
-        // Load game libraries/scripts
-        if (connected && gameTitleID != null)
+        // Load game scripts (if they exist)
+        if (Game?.ScriptFolderPath != null)
         {
-            if (Directory.Exists($"scripts/game/{gameTitleID}/"))
+            foreach (var path in Directory.EnumerateFiles(Game.ScriptFolderPath))
             {
-                foreach (string filePath in Directory.EnumerateFiles($"scripts/game/{gameTitleID}/"))
-                {
-                    LuaConsoleForm.instance.Log($"Loading script {filePath}");
-                    EvalLua($"require '{Path.GetFileNameWithoutExtension(filePath)}'");
-                }
-            }
-            else
-            {
-                // this game doesn't have a directory for scripts, so make one
-                Directory.CreateDirectory($"scripts/game/{gameTitleID}/");
+                consoleForm.Log($"Loading game script {path}");
+                EvalLua($"require '{Path.GetFileNameWithoutExtension(path)}'");
             }
         }
 

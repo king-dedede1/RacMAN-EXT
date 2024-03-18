@@ -20,6 +20,7 @@ public class Game
     };
 
     public Trainer Trainer { get; internal set; }
+    public string? ScriptFolderPath { get; }
 
     private string folderPath;
     private string trainerPath;
@@ -56,6 +57,10 @@ public class Game
             Trainer = new Trainer(titleID);
             
         }
+
+        // ScriptFolderPath should be the path to the game's scripts folder if it exists, otherwise, it should be null.
+        ScriptFolderPath = $"data/game/{titleID}/scripts/";
+        if (!Directory.Exists(ScriptFolderPath)) ScriptFolderPath = null;
     }
 
     public void SaveEverything()

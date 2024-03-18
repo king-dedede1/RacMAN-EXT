@@ -30,16 +30,6 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="scripts\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="scripts\**">
-	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	</Content>
-  </ItemGroup>
-
 	<ItemGroup>
 		<Content Include="data\**">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
