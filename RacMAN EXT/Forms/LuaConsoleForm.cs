@@ -57,7 +57,7 @@ public partial class LuaConsoleForm : Form
         }
     }
 
-    
+
 
     private void commandBox_KeyDown(object sender, KeyEventArgs e)
     {
@@ -80,7 +80,13 @@ public partial class LuaConsoleForm : Form
         console.ScrollToCaret();
     }
 
-    
+    // Prevent this form from getting garbage collected when the X is clicked
+    // Maybe not the best way to do this? Idk
+    private void LuaConsoleForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        e.Cancel = true;
+        Hide();
+    }
 }
 
 public static class RichTextBoxExtensions

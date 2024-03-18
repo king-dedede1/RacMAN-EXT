@@ -80,6 +80,7 @@ partial class LuaConsoleForm
         Margin = new Padding(4, 3, 4, 3);
         Name = "LuaConsoleForm";
         Text = "Console";
+        FormClosing += LuaConsoleForm_FormClosing;
         ResumeLayout(false);
         PerformLayout();
     }
