@@ -3,14 +3,22 @@ require 'Convert'
 
 Memory = {}
 
+local bigendian = API:GetType().Name ~= "PCSX2"
+
+if bigendian then
+    Console.Log("Using big-endian mode")
+else
+    Console.Log("Using little-endian mode")
+end
+
 -- Write an int (32-bit) to memory
 Memory.WriteInt = function(addr, int)
-    API:WriteMemory(addr, Convert.IntToByteArray(int, 4))
+    API:WriteMemory(addr, Convert.IntToByteArray(int, 4, bigendian))
 end
 
 -- Read an int (32-bit) from memory.
 Memory.ReadInt = function(addr)
-    return Convert.ByteArrayToInt(API:ReadMemory(addr, 4))
+    return Convert.ByteArrayToInt(API:ReadMemory(addr, 4), bigendian)
 end
 
 -- Write a single byte to memory.

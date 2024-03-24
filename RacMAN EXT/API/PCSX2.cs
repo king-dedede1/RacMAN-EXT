@@ -1,15 +1,20 @@
 ﻿using RacMAN.Forms;
 using System.Diagnostics;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace RacMAN.API;
-public class RPCS3 : MemoryAPI
+public class PCSX2 : MemoryAPI
 {
-    const string PROCESS_NAME = "rpcs3";
+    const string PROCCESS_NAME = "pcsx2-qt";
+    const nint EEMEM_PTR = 0x1696560;
+    const int TITLEID_PTR = 0xDE93D8;
 
-    private nint hProcess;
-    private int pid;
+    Process process;
+    int pid;
+    nint handle;
+    nint eemem;
+    nint exe;
+
     private bool workerRunning;
     private List<MemSub> memSubs = [];
 
@@ -27,7 +32,7 @@ public class RPCS3 : MemoryAPI
 
         // to be written by application and read by worker thread
         public bool released;
-        
+
     }
 
     private enum MemSubType
@@ -36,22 +41,30 @@ public class RPCS3 : MemoryAPI
         FREEZE
     }
 
-    public RPCS3()
+    public PCSX2()
     {
-        var processList = Process.GetProcessesByName(PROCESS_NAME);
+        var processList = Process.GetProcessesByName(PROCCESS_NAME);
+
         if (processList.Length == 0)
         {
-            throw new Exception("Couldn't locate process to connect to. Did you start the game yet?");
-        }
-        Process process = processList[0];
-        pid = process.Id;
-        hProcess = Win32.OpenProcess(Win32.PROCESS_ALL_ACCESS, false, pid);
-        if (hProcess == IntPtr.Zero)
-        {
-            throw new Exception($"Invalid handle ({hProcess:X})");
+            throw new Exception("Couldn't find emulator process, did you open the emulator yet?");
         }
 
-        // start mem sub worker thread
+        process = processList[0];
+        pid = process.Id;
+        handle = Win32.OpenProcess(Win32.PROCESS_ALL_ACCESS, false, pid);
+
+        if (handle == 0)
+        {
+            throw new Exception("Couldn't open process handle!");
+        }
+
+        exe = process.MainModule!.BaseAddress;
+
+        byte[] buffer = new byte[8];
+        Win32.ReadProcessMemory(handle, exe + EEMEM_PTR, buffer, 8, out _);
+        eemem = (nint) BitConverter.ToInt64(buffer);
+
         new Thread(MemSubWorkerThread).Start();
         workerRunning = true;
     }
@@ -59,7 +72,7 @@ public class RPCS3 : MemoryAPI
     public override void Disconnect()
     {
         workerRunning = false;
-        Win32.CloseHandle(hProcess);
+        Win32.CloseHandle(handle);
     }
 
     public override int FreezeMemory(uint addr, byte[] value)
@@ -73,53 +86,47 @@ public class RPCS3 : MemoryAPI
             freezeValue = value
         };
         memSubs.Add(memsub);
-        return memSubs.Count-1;
+        return memSubs.Count - 1;
     }
 
     public override string GetGameTitle()
     {
-        var title = GetGameWindowTitle(pid);
-
-        var match = Regex.Match(title, "(?<=(.*\\|.*){3})([^|[]+)"); // it works i guess
-
-        if (match.Success)
+        var titles = RPCS3.GetWindowTitles(pid); // just gonna hope this works
+        string[] otherTitles = ["", "Temp Window", "Default IME", "MSCTFIME UI", PROCCESS_NAME];
+        foreach (var title in titles)
         {
-            // fun fact i spent like 20 minutes trying to trim the whitespace with regex not knowing there was a method for it
-            return match.Value.Trim();
+            if ( !otherTitles.Contains(title))
+            {
+                return title;
+            }
         }
-        else
-        {
-            throw new Exception("Couldn't get game title");
-        }
+        return "";
     }
 
     public override string GetGameTitleID()
     {
-        var title = GetGameWindowTitle(pid);
+        var address = exe + TITLEID_PTR;
 
-        var match = Regex.Match(title, "([A-Z]{4})(\\d{5})");
+        byte[] buffer = new byte[10];
+        Win32.ReadProcessMemory(handle, address, buffer, 10, out _);
 
-        if (match.Success)
-        {
-            return match.Value;
-        }
-        else
-        {
-            throw new Exception("Couldn't get game title ID");
-        }
+        var str = Encoding.ASCII.GetString(buffer);
+
+        // the string has a dash after the first 4 letters, so remove it
+        return str.Remove(4,1);
     }
 
     public override void Notify(string text)
     {
-        MessageBox.Show(text);
+        LuaConsoleForm.instance.Log(text);
     }
 
     public override byte[] ReadMemory(uint addr, uint size)
     {
         byte[] buffer = new byte[size];
-        if (!Win32.ReadProcessMemory(hProcess, (nint) (addr + 0x300000000), buffer, size, out _))
+        if (!Win32.ReadProcessMemory(handle, (nint) (eemem + addr), buffer, size, out _))
         {
-            throw new IOException($"Unable to read memory (Error code 0x{Win32.GetLastError():X})");
+            throw new Exception($"Error reading memory 0x{Win32.GetLastError():X}");
         }
         return buffer;
     }
@@ -146,48 +153,17 @@ public class RPCS3 : MemoryAPI
             type = MemSubType.SUBSCRIBE,
         };
         memSubs.Add(memsub);
-        return memSubs.Count-1;
+        return memSubs.Count - 1;
     }
 
     public override void WriteMemory(uint addr, byte[] bytes)
     {
-        if (!Win32.WriteProcessMemory(hProcess, (nint)(addr + 0x300000000), bytes, (nuint)bytes.Length, out _))
+        if (!Win32.WriteProcessMemory(handle, (nint) (eemem + addr), bytes, (nuint) bytes.Length, out _))
         {
-            throw new IOException($"Unable to write memory (Error code 0x{Win32.GetLastError():X})");
+            throw new Exception(Win32.GetLastError().ToString());
         }
     }
 
-    private static string GetGameWindowTitle(int processId)
-    {
-        // fix later
-        foreach (string s in GetWindowTitles(processId)) if (s.Contains('[')) return s;
-        return "";
-    }
-
-    internal static List<string> GetWindowTitles(int processId)
-    {
-        List<string> titles = new List<string>();
-
-        Win32.EnumWindows((hWnd, lParam) =>
-        {
-            uint windowProcessId;
-            Win32.GetWindowThreadProcessId(hWnd, out windowProcessId);
-
-            if (windowProcessId == processId)
-            {
-                int length = Win32.GetWindowTextLength(hWnd);
-                StringBuilder sb = new StringBuilder(length + 1);
-                Win32.GetWindowText(hWnd, sb, sb.Capacity);
-                titles.Add(sb.ToString());
-            }
-
-            return true;  // Continue enumeration
-        }, IntPtr.Zero);
-
-        return titles;
-    }
-
-    // not really thread safe
     private void MemSubWorkerThread()
     {
         while (workerRunning)
@@ -218,4 +194,3 @@ public class RPCS3 : MemoryAPI
         }
     }
 }
-

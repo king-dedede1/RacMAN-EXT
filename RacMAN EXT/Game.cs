@@ -55,7 +55,7 @@ public class Game
         {
             File.Create(trainerPath).Close();
             Trainer = new Trainer(titleID);
-            
+            File.WriteAllText(trainerPath, JsonSerializer.Serialize(Trainer, jso));
         }
 
         // ScriptFolderPath should be the path to the game's scripts folder if it exists, otherwise, it should be null.

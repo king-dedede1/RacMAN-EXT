@@ -39,6 +39,12 @@ internal static class Win32
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool CloseHandle(IntPtr hObject);
 
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern nint GetProcAddress(nint hModule, string lpProcName);
+
+    [DllImport("kernel32.dll")]
+    public static extern nint GetModuleHandleA(string lpModuleName);
+
     public static readonly int PROCESS_ALL_ACCESS = 0x1F0FFF;
 
     // these next things are used to get window titles because c# standard library doesnt have that for some reason :(

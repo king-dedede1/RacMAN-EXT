@@ -37,8 +37,10 @@ end
 
 -- Converts a C# byte array into a number
 -- can be any width, 8 16 32 or 64 bit.
-Convert.ByteArrayToInt = function(bytes)
-	bytes = Convert.ReverseArray(bytes)
+Convert.ByteArrayToInt = function(bytes, bigEndian)
+	if bigEndian then
+		bytes = Convert.ReverseArray(bytes)
+	end
 	if bytes.Length == 8 then
 		return BitConverter.ToUInt64(bytes,0)
 	elseif bytes.Length == 4 then

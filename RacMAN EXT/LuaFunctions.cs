@@ -1,4 +1,6 @@
-﻿namespace RacMAN;
+﻿using RacMAN.API;
+
+namespace RacMAN;
 public static class LuaFunctions
 {
     public static byte[] LuaTableToByteArray(object table)
@@ -33,8 +35,14 @@ public static class LuaFunctions
         return BitConverter.ToUInt32(bytes.Reverse().ToArray(), 0);
     }
 
-    public static byte[] IntToByteArray(int num, int size)
+    public static byte[] IntToByteArray(int num, int size, bool bigEndian = true)
     {
-        return BitConverter.GetBytes(num).Take(size).Reverse().ToArray();
+        //return BitConverter.GetBytes(num).Take(size).Reverse().ToArray();
+        var bytes = BitConverter.GetBytes(num).Take(size);
+        if (bigEndian)
+        {
+            bytes = bytes.Reverse();
+        }
+        return bytes.ToArray();
     }
 }

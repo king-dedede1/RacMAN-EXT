@@ -44,7 +44,9 @@ public class Racman
             case APIType.RPCS3:
                 this.api = new RPCS3();
                 break;
-            case APIType.PCSX2: break;
+            case APIType.PCSX2:
+                this.api = new PCSX2();
+                break;
         }
 
         if (this.api == null)
