@@ -2,6 +2,7 @@ namespace RacMAN;
 
 internal static class Program
 {
+    public static Racman state;
     /// <summary>
     ///  The main entry point for the application.
     /// </summary>
@@ -12,8 +13,8 @@ internal static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
 
-        var racman = new Racman();
-        racman.ShowConnectDialog();
-        Application.Run(racman.MainForm);
+        state = new Racman();
+        state.ShowConnectDialog();
+        Application.Run(state.MainForm);
     }
 }

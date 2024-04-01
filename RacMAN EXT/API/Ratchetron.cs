@@ -298,7 +298,7 @@ public class Ratchetron : MemoryAPI
                             if (this.memSubTickUpdates.ContainsKey((int) memSubID) && this.memSubTickUpdates[(int) memSubID] != tickUpdated)
                             {
                                 this.memSubTickUpdates[(int) memSubID] = tickUpdated;
-                                this.memSubCallbacks[(int) memSubID](value);
+                                Program.state.MainForm.BeginInvoke(() => memSubCallbacks[(int) memSubID](value));
                             }
 
                             break;

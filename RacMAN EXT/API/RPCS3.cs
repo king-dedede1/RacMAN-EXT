@@ -201,7 +201,7 @@ public class RPCS3 : MemoryAPI
                         var newValue = ReadMemory(memsub.address, memsub.size);
                         if (memsub.oldValue == null || newValue.SequenceEqual(memsub.oldValue.Reverse().ToArray()))
                         {
-                            memsub.callback!(newValue);
+                            Program.state.MainForm.BeginInvoke(() => memsub.callback!(newValue));
                             // callback is set by SubMemory and shouldn't be null
 
                             memsub.oldValue = newValue;
