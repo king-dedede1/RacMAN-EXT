@@ -20,6 +20,11 @@ public partial class LuaConsoleForm : Form
         instance = this;
     }
 
+    public void Append(string msg)
+    {
+        console.AppendText("\n"+msg,Color.Gray);
+    }
+
     public void Log(string msg)
     {
         console.AppendText($"\n[INFO]  {msg}");

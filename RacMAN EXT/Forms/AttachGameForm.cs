@@ -5,7 +5,7 @@ namespace RacMAN.Forms;
 public partial class AttachGameForm : Form
 {
     public APIType apiType = APIType.None;
-    public IPAddress? ipAddress = null;
+    public string BoxText => textBox1.Text;
 
     public AttachGameForm()
     {
@@ -17,7 +17,6 @@ public partial class AttachGameForm : Form
     private void continueButton_Click(object sender, EventArgs e)
     {
         this.apiType = APIType.None;
-        this.ipAddress = null;
 
         this.Hide();
     }
@@ -42,27 +41,29 @@ public partial class AttachGameForm : Form
                 break;
         }
 
-        if (this.apiType == APIType.PS3)
-        {
-            if (!IPAddress.TryParse(this.textBox1.Text, out ipAddress))
-            {
-                MessageBox.Show("Invalid IP.");
-                return;
-            }
-        }
-
         this.Hide();
     }
 
     private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (comboBox1.SelectedIndex == 0)
+        if (comboBox1.SelectedIndex != 1)
         {
             textBox1.Enabled = true;
         }
         else
         {
             textBox1.Enabled = false;
+        }
+
+        if (comboBox1.SelectedIndex == 2)
+        {
+            label3.Text = "Slot:";
+            textBox1.Text = "28011";
+        }
+        else
+        {
+            label3.Text = "IP Address:";
+            textBox1.Text = "";
         }
     }
 

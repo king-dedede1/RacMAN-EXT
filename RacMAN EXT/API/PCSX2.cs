@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Text;
 
 namespace RacMAN.API;
+
+[Obsolete("Doesn't work with current build of PCSX2, use PCSX2_Pine instead.")]
 public class PCSX2 : MemoryAPI
 {
     const string PROCCESS_NAME = "pcsx2-qt";

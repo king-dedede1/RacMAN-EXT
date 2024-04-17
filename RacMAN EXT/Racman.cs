@@ -4,6 +4,7 @@ using System.Reflection;
 using RacMAN.API;
 using RacMAN.Forms;
 using System.Security.Cryptography;
+using System.Net;
 
 namespace RacMAN;
 public class Racman
@@ -39,13 +40,13 @@ public class Racman
         switch (form.apiType)
         {
             case APIType.PS3:
-                this.api = new Ratchetron(form.ipAddress);
+                this.api = new Ratchetron(IPAddress.Parse(form.BoxText));
                 break;
             case APIType.RPCS3:
                 this.api = new RPCS3();
                 break;
             case APIType.PCSX2:
-                this.api = new PCSX2();
+                this.api = new PCSX2_Pine(UInt16.Parse(form.BoxText));
                 break;
         }
 
@@ -122,6 +123,7 @@ public class Racman
         {
             try
             {
+                LuaConsoleForm.instance.Append(code);
                 return lua.DoString(code);
             }
             catch (LuaException e)
