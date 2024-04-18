@@ -67,17 +67,6 @@ internal class PineClient
         return cmdbuf;
     }
 
-    private byte[] mkcmdbatch((byte opcode, byte[] args)[] cmds)
-    {
-        List<byte> cmdList = [];
-        foreach (var  cmd in cmds)
-        {
-            cmdList.AddRange([cmd.opcode, .. cmd.args]);
-        }
-        byte[] cmdbuf = [.. BitConverter.GetBytes(cmdList.Count + 4), .. cmdList];
-        return cmdbuf;
-    }
-
     private void runcmd(byte[] cmd)
     {
         stream.Write(cmd, 0, cmd.Length);
@@ -259,22 +248,31 @@ internal class PineClient
         return (EmulatorStatus) val;
     }
 
-    // TODO: replace these next 2 with batch messages
     public byte[] Read(uint address,  uint size)
     {
-        byte[] buffer = new byte[size];
+        List<byte> cmdlist = [];
         for (int i = 0; i < size; i++)
         {
-            buffer[i] = Read8((uint) (address + i));
+            cmdlist.Add(OP_READ8);
+            cmdlist.AddRange(BitConverter.GetBytes((int) address + i));
         }
-        return buffer;
+        byte[] cmdBuf = [.. BitConverter.GetBytes(cmdlist.Count + 4), .. cmdlist];
+        runcmd(cmdBuf);
+        readHeader();
+        return reader.ReadBytes((int)size);
     }
 
     public void Write(uint address, byte[] bytes)
     {
+        List<byte> cmdlist = [];
         for (int i = 0; i < bytes.Length; i++)
         {
-            Write8((uint) (address + i), bytes[i]);
+            cmdlist.Add(OP_WRITE8);
+            cmdlist.AddRange(BitConverter.GetBytes((int) address + i));
+            cmdlist.Add(bytes[i]);
         }
+        byte[] cmdBuf = [.. BitConverter.GetBytes(cmdlist.Count+4), .. cmdlist];
+        runcmd(cmdBuf);
+        readHeader();
     }
 }
