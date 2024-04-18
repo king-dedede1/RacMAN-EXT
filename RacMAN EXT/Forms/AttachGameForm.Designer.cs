@@ -41,7 +41,7 @@ partial class AttachGameForm
         // 
         comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
         comboBox1.FormattingEnabled = true;
-        comboBox1.Items.AddRange(new object[] { "PS3 (Ratchetron)", "PS3 EMU (RPCS3)", "PS2 EMU (PCSX2)" });
+        comboBox1.Items.AddRange(new object[] { "PS3 (Ratchetron)", "RPCS3 (PINE)", "PCSX2 (PINE)" });
         comboBox1.Location = new Point(92, 58);
         comboBox1.Margin = new Padding(4, 3, 4, 3);
         comboBox1.Name = "comboBox1";

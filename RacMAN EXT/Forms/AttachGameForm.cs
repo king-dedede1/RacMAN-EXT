@@ -46,25 +46,15 @@ public partial class AttachGameForm : Form
 
     private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (comboBox1.SelectedIndex != 1)
-        {
-            textBox1.Enabled = true;
-        }
-        else
-        {
-            textBox1.Enabled = false;
-        }
-
-        if (comboBox1.SelectedIndex == 2)
-        {
-            label3.Text = "Slot:";
-            textBox1.Text = "28011";
-        }
-        else
+        if (comboBox1.SelectedIndex == 0)
         {
             label3.Text = "IP Address:";
-            textBox1.Text = "";
         }
+        else
+        {
+            label3.Text = "PINE Slot:";
+        }
+
     }
 
     private void textBox1_KeyDown(object sender, KeyEventArgs e)

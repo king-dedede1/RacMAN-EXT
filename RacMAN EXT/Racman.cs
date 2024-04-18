@@ -43,10 +43,10 @@ public class Racman
                 this.api = new Ratchetron(IPAddress.Parse(form.BoxText));
                 break;
             case APIType.RPCS3:
-                this.api = new RPCS3();
+                this.api = new RPCS3(UInt16.Parse(form.BoxText));
                 break;
             case APIType.PCSX2:
-                this.api = new PCSX2_Pine(UInt16.Parse(form.BoxText));
+                this.api = new PCSX2(UInt16.Parse(form.BoxText));
                 break;
         }
 
