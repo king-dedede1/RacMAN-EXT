@@ -14,14 +14,23 @@ You need a homebrew-enabled PS3 (either CFW or HEN) and webMAN MOD installed. Ad
 1. Open RaCMAN EXT, in the dropdown menu select "PS3"
 2. Enter your ps3's IP address and click 'connect'. (If you use HEN, make sure it is enabled first.)
 
-Be sure to close racman-EXT before closing the game or turning off your ps3, or crashes/hardlocks may occur.
+Be sure to close racman before closing the game or turning off your ps3, or crashes/hardlocks may occur.
 
 ## Using on RPCS3
-1. Open RPCS3 and start the game you want to use.
-2. Open RaCMAN EXT, in the dropdown menu select "RPCS3"
-3. Click 'connect'
+1. Open RPCS3 (don't start the game yet)
+2. Click Configuration > IPC and check the box that says "Enable IPC Server". Note the IPC server port. Click "Save"
+3. Start RaCMAN and select RPCS3 from the dropdown. Type the server port in the text box that says 'slot'
+4. Click 'connect'
 
-Please note that you'll need to reconnect racman-EXT if you switch games.
+## Using on PCSX2
+1. Enable advanced settings (Tools > Show advanced settings)
+2. Open PCSX2 settings (System > Settings)
+3. Under "Advanced", scroll down to the bottom and under "PINE Settings" check the box that says "Enable". Note the slot number (default is 28011)
+4. If you have a game running, you'll have to restart it for the changes to apply.
+5. Start RaCMAN and select PCSX2 from the dropdown. Type the slot number in the text box that says 'slot'
+6. Click 'connect'
+
+Please note that you'll need to reconnect racman if you switch games.
 
 ## Credits & Acknowledgments
 - [racman](https://github.com/MichaelRelaxen/racman) contributors
