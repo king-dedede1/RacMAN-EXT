@@ -105,7 +105,7 @@ public partial class MainForm : Form
                 ZipFile.ExtractToDirectory("data/game/PACKAGE.ZIP", $"data/game/");
                 MessageBox.Show($"Installed package {Path.GetFileNameWithoutExtension(path)}");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Couldn't extract package ({ex.Message})", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -114,5 +114,10 @@ public partial class MainForm : Form
                 File.Delete("data/game/PACKAGE.ZIP");
             }
         }
+    }
+
+    private void autosplittersToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        new AutosplittersForm().Show();
     }
 }

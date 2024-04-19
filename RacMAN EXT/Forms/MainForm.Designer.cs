@@ -129,27 +129,27 @@ partial class MainForm
         // 
         combosHotkeysToolStripMenuItem.Enabled = false;
         combosHotkeysToolStripMenuItem.Name = "combosHotkeysToolStripMenuItem";
-        combosHotkeysToolStripMenuItem.Size = new Size(176, 22);
+        combosHotkeysToolStripMenuItem.Size = new Size(180, 22);
         combosHotkeysToolStripMenuItem.Text = "Combos/Hotkeys...";
         // 
         // inputDisplayToolStripMenuItem
         // 
         inputDisplayToolStripMenuItem.Enabled = false;
         inputDisplayToolStripMenuItem.Name = "inputDisplayToolStripMenuItem";
-        inputDisplayToolStripMenuItem.Size = new Size(176, 22);
+        inputDisplayToolStripMenuItem.Size = new Size(180, 22);
         inputDisplayToolStripMenuItem.Text = "Input Display...";
         // 
         // autosplittersToolStripMenuItem
         // 
-        autosplittersToolStripMenuItem.Enabled = false;
         autosplittersToolStripMenuItem.Name = "autosplittersToolStripMenuItem";
-        autosplittersToolStripMenuItem.Size = new Size(176, 22);
+        autosplittersToolStripMenuItem.Size = new Size(180, 22);
         autosplittersToolStripMenuItem.Text = "Autosplitters...";
+        autosplittersToolStripMenuItem.Click += autosplittersToolStripMenuItem_Click;
         // 
         // luaConsoleToolStripMenuItem
         // 
         luaConsoleToolStripMenuItem.Name = "luaConsoleToolStripMenuItem";
-        luaConsoleToolStripMenuItem.Size = new Size(176, 22);
+        luaConsoleToolStripMenuItem.Size = new Size(180, 22);
         luaConsoleToolStripMenuItem.Text = "Lua Console...";
         luaConsoleToolStripMenuItem.Click += luaConsoleToolStripMenuItem_Click;
         // 
@@ -157,14 +157,14 @@ partial class MainForm
         // 
         rAMWatchToolStripMenuItem.Enabled = false;
         rAMWatchToolStripMenuItem.Name = "rAMWatchToolStripMenuItem";
-        rAMWatchToolStripMenuItem.Size = new Size(176, 22);
+        rAMWatchToolStripMenuItem.Size = new Size(180, 22);
         rAMWatchToolStripMenuItem.Text = "RAM Watch...";
         // 
         // modLoaderToolStripMenuItem
         // 
         modLoaderToolStripMenuItem.Enabled = false;
         modLoaderToolStripMenuItem.Name = "modLoaderToolStripMenuItem";
-        modLoaderToolStripMenuItem.Size = new Size(176, 22);
+        modLoaderToolStripMenuItem.Size = new Size(180, 22);
         modLoaderToolStripMenuItem.Text = "Mod Loader...";
         // 
         // toolStripMenuItem1

@@ -5,6 +5,7 @@ using RacMAN.API;
 using RacMAN.Forms;
 using System.Security.Cryptography;
 using System.Net;
+using RacMAN.Autosplitters;
 
 namespace RacMAN;
 public class Racman
@@ -17,6 +18,7 @@ public class Racman
 
     public MainForm MainForm { get; set; }
     public Game Game { get; set; }
+    public List<Autosplitter> autosplitters = [];
 
     internal event Action OnAPIConnect;
 
@@ -28,6 +30,7 @@ public class Racman
         connected = false;
         api = null;
         consoleForm = new LuaConsoleForm();
+        new LivesplitController();
     }
 
     public void ShowConnectDialog()
@@ -79,12 +82,14 @@ public class Racman
         lua.LoadCLRPackage();
 
         EvalLua("Convert = {}");
+        EvalLua("Autosplitter = {}");
 
         // Putting these functions here because calling them directly from lua doesn't seem to be possible.
         lua.RegisterFunction("Convert.TableToByteArray", typeof(LuaFunctions).GetMethod("LuaTableToByteArray"));
         lua.RegisterFunction("Convert.IntToByteArray", typeof(LuaFunctions).GetMethod("IntToByteArray"));
         lua.RegisterFunction("Convert.FloatToByteArray", typeof(BitConverter).GetMethod("GetBytes", [typeof(float)]));
         lua.RegisterFunction("Convert.ReverseArray", typeof(LuaFunctions).GetMethod("ReverseArray"));
+        lua.RegisterFunction("Autosplitter.Create", typeof(Autosplitter).GetMethod("Create"));
         lua["API"] = api;
         lua["Racman"] = this;
 
