@@ -53,12 +53,12 @@ public class Autosplitter
 
     public void UpdateThread()
     {
-        StartFunction.Call();
+        Program.state.EvalLua(StartFunction);
         while (Running)
         {
-            UpdateFunction.Call(Controller);
+            Program.state.EvalLua(UpdateFunction, Controller);
             Thread.Sleep(16);
         }
-        StopFunction.Call();
+        Program.state.EvalLua(StopFunction);
     }
 }

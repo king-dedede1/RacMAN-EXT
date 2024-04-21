@@ -26,6 +26,11 @@ public class TrainerPanel : Panel
         Program.state.EvalLua(trainerJson.OnLoad);
     }
 
+    internal void CallOnUnloadEvent()
+    {
+        Program.state.EvalLua(trainerJson.OnUnload);
+    }
+
     /// <summary>
     /// Construct a label control from JSON definition
     /// </summary>

@@ -6,7 +6,7 @@ namespace RacMAN.Forms;
 public partial class MainForm : Form
 {
     internal Racman state;
-    public Panel TrainerPanel { get; set; }
+    public TrainerPanel? TrainerPanel { get; set; }
     public Trainer Trainer { get; set; }
 
     public MainForm(Racman state)
@@ -32,13 +32,15 @@ public partial class MainForm : Form
 
     internal void LoadTrainer()
     {
+        if (TrainerPanel != null)
+        {
+            TrainerPanel.CallOnUnloadEvent();
+            this.Controls.Remove(TrainerPanel);
+            TrainerPanel = null;
+        }
         if (state.Game != null)
         {
             LuaConsoleForm.instance.Log("Loading trainer...");
-            if (TrainerPanel != null)
-            {
-                this.Controls.Remove(TrainerPanel);
-            }
             var trainer = state.Game.Trainer;
             TrainerPanel panel = new TrainerPanel(trainer);
             this.Controls.Add(panel);
@@ -51,6 +53,10 @@ public partial class MainForm : Form
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
+        if (TrainerPanel != null)
+        {
+            TrainerPanel.CallOnUnloadEvent();
+        }
         state.Game.SaveEverything();
         state.API?.Disconnect();
     }
