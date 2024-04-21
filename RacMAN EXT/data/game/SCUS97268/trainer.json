@@ -1,0 +1,219 @@
+{
+  "TitleID": "SCUS97268",
+  "RacmanVersion": "1",
+  "Labels": [
+    {
+      "Name": "",
+      "Text": "Bolt Count",
+      "Position": {
+        "IsEmpty": false,
+        "X": 259,
+        "Y": 64
+      }
+    },
+    {
+      "Name": "",
+      "Text": "Raritanium",
+      "Position": {
+        "IsEmpty": false,
+        "X": 258,
+        "Y": 99
+      }
+    },
+    {
+      "Name": "",
+      "Text": "Challenge Mode",
+      "Position": {
+        "IsEmpty": false,
+        "X": 229,
+        "Y": 133
+      }
+    },
+    {
+      "Name": "",
+      "Text": "Armor",
+      "Position": {
+        "IsEmpty": false,
+        "X": 325,
+        "Y": 222
+      }
+    },
+    {
+      "Name": "wn2Counter",
+      "Text": "N/A",
+      "Position": {
+        "IsEmpty": false,
+        "X": 28,
+        "Y": 307
+      }
+    },
+    {
+      "Name": "wn2flag",
+      "Text": "N/A",
+      "Position": {
+        "IsEmpty": false,
+        "X": 27,
+        "Y": 329
+      }
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "savePos",
+      "Enabled": true,
+      "Text": "Save Position",
+      "Position": {
+        "IsEmpty": false,
+        "X": 26,
+        "Y": 56
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 129,
+        "Height": 32
+      },
+      "OnClick": "rac2.save_position()"
+    },
+    {
+      "Name": "loadPos",
+      "Enabled": true,
+      "Text": "Load Position",
+      "Position": {
+        "IsEmpty": false,
+        "X": 26,
+        "Y": 94
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 129,
+        "Height": 32
+      },
+      "OnClick": "rac2.load_position()"
+    },
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Die",
+      "Position": {
+        "IsEmpty": false,
+        "X": 26,
+        "Y": 133
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 129,
+        "Height": 32
+      },
+      "OnClick": "rac2.player_z = -50.0"
+    },
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Go into NG\u002B",
+      "Position": {
+        "IsEmpty": false,
+        "X": 326,
+        "Y": 299
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 117,
+        "Height": 28
+      },
+      "OnClick": "rac2.go_to_ngplus()"
+    },
+    {
+      "Name": "",
+      "Enabled": true,
+      "Text": "Store Swingshot",
+      "Position": {
+        "IsEmpty": false,
+        "X": 326,
+        "Y": 332
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 117,
+        "Height": 28
+      },
+      "OnClick": "rac2.store_swingshot()"
+    }
+  ],
+  "TextBoxes": [
+    {
+      "Name": "a",
+      "Enabled": true,
+      "Text": "",
+      "Position": {
+        "IsEmpty": false,
+        "X": 326,
+        "Y": 60
+      },
+      "OnEnter": "rac2.bolts = tonumber(Trainer.GetControlByName(\u0027a\u0027).Text)"
+    },
+    {
+      "Name": "rari",
+      "Enabled": true,
+      "Text": "",
+      "Position": {
+        "IsEmpty": false,
+        "X": 326,
+        "Y": 96
+      },
+      "OnEnter": "rac2.raritanium = tonumber(Trainer.GetControlByName(\u0027rari\u0027).Text)"
+    },
+    {
+      "Name": "cm",
+      "Enabled": true,
+      "Text": "",
+      "Position": {
+        "IsEmpty": false,
+        "X": 326,
+        "Y": 130
+      },
+      "OnEnter": "rac2.challenge_mode = tonumber(Trainer.GetControlByName(\u0027cm\u0027).Text)"
+    }
+  ],
+  "CheckBoxes": [
+    {
+      "Name": "health",
+      "Enabled": true,
+      "Text": "Freeze Health",
+      "CheckState": 0,
+      "Position": {
+        "IsEmpty": false,
+        "X": 28,
+        "Y": 259
+      },
+      "AllowIndeterminate": false,
+      "OnCheck": "if Trainer.GetControlByName(\u0027health\u0027).Checked then\r\n    healthSubID = API:FreezeMemory(ADDR_PLAYER_HEALTH, Convert.IntToByteArray(20,4,false))\r\nelse\r\n    if healthSubID ~= nil then\r\n        API:ReleaseSubID(healthSubID)\r\n        healthSubID = nil\r\n    else\r\n        Console.Warn(\u0027Tried to unfreeze health before freezing...\u0027)\r\n    end\r\nend"
+    }
+  ],
+  "Dropdowns": [
+    {
+      "Name": "armor",
+      "Enabled": true,
+      "Position": {
+        "IsEmpty": false,
+        "X": 326,
+        "Y": 245
+      },
+      "Size": {
+        "IsEmpty": false,
+        "Width": 171,
+        "Height": 23
+      },
+      "Options": [
+        "Commando Suit\r",
+        "Tetrafiber\r",
+        "Duraplate\r",
+        "Electrosteel\r",
+        "Carbonox"
+      ],
+      "Index": 0,
+      "OnItemSelected": "rac2.armor = Trainer.GetControlByName(\u0027armor\u0027).SelectedIndex"
+    }
+  ],
+  "OnLoad": "",
+  "OnUnload": "print(\u0022I\u0027m being unloaded!\u0022)"
+}
