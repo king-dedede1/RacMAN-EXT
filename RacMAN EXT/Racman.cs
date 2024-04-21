@@ -46,6 +46,8 @@ public class Racman
 
         APIType = form.apiType;
 
+        if (API != null) API.Disconnect();
+
         switch (form.apiType)
         {
             case APIType.PS3:
@@ -57,12 +59,16 @@ public class Racman
             case APIType.PCSX2:
                 this.API = new PCSX2(UInt16.Parse(form.BoxText));
                 break;
+            case APIType.None:
+                this.API = null;
+                break;
         }
 
         if (this.API == null)
         {
             this.Connected = false;
             MainForm.Text = $"RaCMAN {Assembly.GetEntryAssembly().GetName().Version} (Not Connected)";
+            Game = null;
         }
         else
         {
