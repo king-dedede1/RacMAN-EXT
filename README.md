@@ -32,6 +32,14 @@ Be sure to close racman before closing the game or turning off your ps3, or cras
 
 Please note that you'll need to reconnect racman if you switch games.
 
+## Using autosplitters with LiveSplit
+
+### 1.8.28 and before:
+You'll need to install the [LiveSplit Server component](https://github.com/LiveSplit/LiveSplit.Server/releases) and add it to your layout.
+
+### 1.8.29 and after:
+Everything should work right out of the box... hopefully
+
 ## Credits & Acknowledgments
 - [racman](https://github.com/MichaelRelaxen/racman) contributors
 - [webMAN MOD](https://github.com/aldostools/webMAN-MOD) contributors
