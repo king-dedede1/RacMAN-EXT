@@ -23,7 +23,7 @@ public class TrainerPanel : Panel
 
     internal void CallOnLoadEvent()
     {
-        Racman.EvalLua(trainerJson.OnLoad);
+        Program.state.EvalLua(trainerJson.OnLoad);
     }
 
     /// <summary>
@@ -97,25 +97,25 @@ public class TrainerPanel : Panel
 
     private static void ComboBox_SelectedIndexChanged(object? sender, EventArgs e)
     {
-        Racman.EvalLua(((sender! as ComboBox)!.Tag as DefineDropdown)!.OnItemSelected);
+        Program.state.EvalLua(((sender! as ComboBox)!.Tag as DefineDropdown)!.OnItemSelected);
     }
 
     private static void CheckBox_CheckedChanged(object? sender, EventArgs e)
     {
-        Racman.EvalLua(((sender! as CheckBox)!.Tag as DefineCheckBox)!.OnCheck);
+        Program.state.EvalLua(((sender! as CheckBox)!.Tag as DefineCheckBox)!.OnCheck);
     }
 
     private static void TextBox_KeyDown(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
-            Racman.EvalLua(((sender! as TextBox)!.Tag as DefineTextBox)!.OnEnter);
+            Program.state.EvalLua(((sender! as TextBox)!.Tag as DefineTextBox)!.OnEnter);
         }
     }
 
     private static void Button_Click(object? sender, EventArgs e)
     {
         // really good code and I am an excellent programmer
-        Racman.EvalLua(((sender! as Button)!.Tag as DefineButton)!.OnClick);
+        Program.state.EvalLua(((sender! as Button)!.Tag as DefineButton)!.OnClick);
     }
 }

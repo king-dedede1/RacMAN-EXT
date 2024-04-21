@@ -29,14 +29,14 @@ public class Autosplitter
         UpdateFunction = updateFunction;
         StopFunction = stopFunction;
 
-        GameID = Program.state.gameTitleID;
-        GameName = Program.state.api.GetGameTitle();
+        GameID = Program.state.GameTitleID;
+        GameName = Program.state.API.GetGameTitle();
         Controller = new();
     }
 
     public static void Create(string name, string description, LuaFunction start, LuaFunction update, LuaFunction stop)
     {
-        Program.state.autosplitters.Add(new Autosplitter(name, description, start, update, stop));
+        Program.state.Autosplitters.Add(new Autosplitter(name, description, start, update, stop));
     }
 
     public void Start()

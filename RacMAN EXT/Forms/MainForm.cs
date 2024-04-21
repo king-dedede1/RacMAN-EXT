@@ -20,7 +20,7 @@ public partial class MainForm : Form
     {
         LoadTrainer();
 
-        if (state.apiType == APIType.PS3)
+        if (state.APIType == APIType.PS3)
         {
             pS3ToolStripMenuItem.Enabled = true;
         }
@@ -32,24 +32,27 @@ public partial class MainForm : Form
 
     internal void LoadTrainer()
     {
-        LuaConsoleForm.instance.Log("Loading trainer...");
-        if (TrainerPanel != null)
+        if (state.Game != null)
         {
-            this.Controls.Remove(TrainerPanel);
+            LuaConsoleForm.instance.Log("Loading trainer...");
+            if (TrainerPanel != null)
+            {
+                this.Controls.Remove(TrainerPanel);
+            }
+            var trainer = state.Game.Trainer;
+            TrainerPanel panel = new TrainerPanel(trainer);
+            this.Controls.Add(panel);
+            this.TrainerPanel = panel;
+            this.Trainer = trainer;
+            panel.CallOnLoadEvent();
+            LuaConsoleForm.instance.Log($"Done loading trainer for {trainer.TitleID}");
         }
-        var trainer = state.Game.Trainer;
-        TrainerPanel panel = new TrainerPanel(trainer);
-        this.Controls.Add(panel);
-        this.TrainerPanel = panel;
-        this.Trainer = trainer;
-        panel.CallOnLoadEvent();
-        LuaConsoleForm.instance.Log($"Done loading trainer for {trainer.TitleID}");
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
         state.Game.SaveEverything();
-        state.api?.Disconnect();
+        state.API?.Disconnect();
     }
 
     private void aboutRaCMANToolStripMenuItem_Click(object sender, EventArgs e)
@@ -71,7 +74,7 @@ public partial class MainForm : Form
 
     private void luaConsoleToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        state.consoleForm.Show();
+        state.ConsoleForm.Show();
     }
 
     private void reloadLuaStateToolStripMenuItem_Click(object sender, EventArgs e)

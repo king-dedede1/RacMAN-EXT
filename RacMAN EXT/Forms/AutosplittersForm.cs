@@ -19,7 +19,7 @@ public partial class AutosplittersForm : Form
 
     private void AutosplittersForm_Load(object sender, EventArgs e)
     {
-        foreach (Autosplitter a in Program.state.autosplitters)
+        foreach (Autosplitter a in Program.state.Autosplitters)
         {
             checkedListBox1.Items.Add(a.Name);
         }
@@ -29,17 +29,17 @@ public partial class AutosplittersForm : Form
     {
         if (e.NewValue == CheckState.Checked)
         {
-            Program.state.autosplitters[e.Index].Start();
+            Program.state.Autosplitters[e.Index].Start();
         }
         else
         {
-            Program.state.autosplitters[e.Index].Stop();
+            Program.state.Autosplitters[e.Index].Stop();
         }
     }
 
     private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        label1.Text = Program.state.autosplitters[checkedListBox1.SelectedIndex].Name;
-        textBox1.Text = Program.state.autosplitters[checkedListBox1.SelectedIndex].Description;
+        label1.Text = Program.state.Autosplitters[checkedListBox1.SelectedIndex].Name;
+        textBox1.Text = Program.state.Autosplitters[checkedListBox1.SelectedIndex].Description;
     }
 }

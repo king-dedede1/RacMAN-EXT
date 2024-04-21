@@ -25,6 +25,11 @@ public partial class LuaConsoleForm : Form
         console.AppendText("\n"+msg,Color.Gray);
     }
 
+    /// <summary>
+    /// DO NOT CALL THIS DIRECTLY, use Racman.Log instead.
+    /// This WILL crash if used on a different thread!
+    /// </summary>
+    /// <param name="msg"></param>
     public void Log(string msg)
     {
         console.AppendText($"\n[INFO]  {msg}");
@@ -45,7 +50,8 @@ public partial class LuaConsoleForm : Form
         if (commandBox.Text != "")
         {
             console.AppendText($"\n> {commandBox.Text}");
-            var luaResult = Racman.EvalLua($"return {commandBox.Text}");
+            //TODO change Program.state to private member field
+            var luaResult = Program.state.EvalLua($"return {commandBox.Text}");
             if (luaResult != null)
             {
                 if (luaResult.Length > 0)

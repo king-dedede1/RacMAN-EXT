@@ -10,6 +10,13 @@ public class LivesplitController
 {
     NamedPipeClientStream pipe;
 
+    /*TODO change this so that there's one pipe among all livesplit controllers, even if there's
+     * more than 1 livesplit controller having more than 1 pipe is unnecessary.
+     * 
+     * ALSO autosplitter shouldnt get a livesplit controller until it is actually started,
+     * this is bad
+     */
+
     internal LivesplitController()
     {
         pipe = new("LiveSplit");
