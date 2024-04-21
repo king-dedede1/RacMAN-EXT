@@ -44,7 +44,7 @@ partial class MainForm
         luaConsoleToolStripMenuItem = new ToolStripMenuItem();
         rAMWatchToolStripMenuItem = new ToolStripMenuItem();
         modLoaderToolStripMenuItem = new ToolStripMenuItem();
-        toolStripMenuItem1 = new ToolStripMenuItem();
+        trainerMenuItem = new ToolStripMenuItem();
         reloadToolStripMenuItem = new ToolStripMenuItem();
         openDesignerToolStripMenuItem = new ToolStripMenuItem();
         modulesToolStripMenuItem = new ToolStripMenuItem();
@@ -58,7 +58,7 @@ partial class MainForm
         // 
         // menuStrip1
         // 
-        menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, toolsToolStripMenuItem, toolStripMenuItem1, modulesToolStripMenuItem, pS3ToolStripMenuItem });
+        menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, toolsToolStripMenuItem, trainerMenuItem, modulesToolStripMenuItem, pS3ToolStripMenuItem });
         menuStrip1.Location = new Point(0, 0);
         menuStrip1.Name = "menuStrip1";
         menuStrip1.Padding = new Padding(7, 2, 0, 2);
@@ -167,24 +167,24 @@ partial class MainForm
         modLoaderToolStripMenuItem.Size = new Size(180, 22);
         modLoaderToolStripMenuItem.Text = "Mod Loader...";
         // 
-        // toolStripMenuItem1
+        // trainerMenuItem
         // 
-        toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { reloadToolStripMenuItem, openDesignerToolStripMenuItem });
-        toolStripMenuItem1.Name = "toolStripMenuItem1";
-        toolStripMenuItem1.Size = new Size(54, 20);
-        toolStripMenuItem1.Text = "Trainer";
+        trainerMenuItem.DropDownItems.AddRange(new ToolStripItem[] { reloadToolStripMenuItem, openDesignerToolStripMenuItem });
+        trainerMenuItem.Name = "trainerMenuItem";
+        trainerMenuItem.Size = new Size(54, 20);
+        trainerMenuItem.Text = "Trainer";
         // 
         // reloadToolStripMenuItem
         // 
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(146, 22);
+        reloadToolStripMenuItem.Size = new Size(180, 22);
         reloadToolStripMenuItem.Text = "Reload";
         reloadToolStripMenuItem.Click += reloadToolStripMenuItem_Click;
         // 
         // openDesignerToolStripMenuItem
         // 
         openDesignerToolStripMenuItem.Name = "openDesignerToolStripMenuItem";
-        openDesignerToolStripMenuItem.Size = new Size(146, 22);
+        openDesignerToolStripMenuItem.Size = new Size(180, 22);
         openDesignerToolStripMenuItem.Text = "Open Editor...";
         openDesignerToolStripMenuItem.Click += openDesignerToolStripMenuItem_Click;
         // 
@@ -265,7 +265,7 @@ partial class MainForm
     private System.Windows.Forms.ToolStripMenuItem savesManagerToolStripMenuItem;
     private ToolStripSeparator toolStripSeparator2;
     private ToolStripMenuItem reloadLuaStateToolStripMenuItem;
-    private ToolStripMenuItem toolStripMenuItem1;
+    private ToolStripMenuItem trainerMenuItem;
     private ToolStripMenuItem reloadToolStripMenuItem;
     private ToolStripMenuItem openDesignerToolStripMenuItem;
     private ToolStripSeparator toolStripSeparator3;

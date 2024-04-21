@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Reflection;
 using RacMAN.API;
 
 namespace RacMAN.Forms;
@@ -10,7 +11,7 @@ public partial class AttachGameForm : Form
     public AttachGameForm()
     {
         InitializeComponent();
-
+        versionLabel.Text = $"v{Assembly.GetEntryAssembly()!.GetName().Version}";
         comboBox1.SelectedIndex = 0;
     }
 

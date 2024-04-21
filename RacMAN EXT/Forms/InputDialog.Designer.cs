@@ -70,7 +70,7 @@ partial class InputDialog
         Controls.Add(label1);
         Controls.Add(textBox1);
         Name = "InputDialog";
-        Text = "InputDialog";
+        Text = "Input";
         ResumeLayout(false);
         PerformLayout();
     }

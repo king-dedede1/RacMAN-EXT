@@ -49,6 +49,7 @@ public partial class MainForm : Form
             panel.CallOnLoadEvent();
             LuaConsoleForm.instance.Log($"Done loading trainer for {trainer.TitleID}");
         }
+        trainerMenuItem.Enabled = TrainerPanel != null;
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
