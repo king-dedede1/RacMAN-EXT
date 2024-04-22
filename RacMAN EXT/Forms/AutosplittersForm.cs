@@ -39,6 +39,7 @@ public partial class AutosplittersForm : Form
 
     private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
     {
+        if (checkedListBox1.SelectedIndex < 0) return;
         label1.Text = Program.state.Autosplitters[checkedListBox1.SelectedIndex].Name;
         textBox1.Text = Program.state.Autosplitters[checkedListBox1.SelectedIndex].Description;
     }

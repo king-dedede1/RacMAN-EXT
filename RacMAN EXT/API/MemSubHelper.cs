@@ -99,7 +99,7 @@ internal class MemSubHelper
                 {
                     case MemSubType.SUBSCRIBE:
                         var newValue = api.ReadMemory(memsub.address, memsub.size);
-                        if (memsub.oldValue == null || newValue.SequenceEqual(memsub.oldValue.Reverse().ToArray()))
+                        if (memsub.oldValue == null || !newValue.SequenceEqual(memsub.oldValue))
                         {
                             Program.state.MainForm.BeginInvoke(() => memsub.callback!(newValue));
                             // callback is set by SubMemory and shouldn't be null

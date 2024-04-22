@@ -1,16 +1,28 @@
 ﻿using NLua;
 using NLua.Exceptions;
-using System.Reflection;
 using RacMAN.API;
+using RacMAN.API.Inputs;
+using RacMAN.Autosplitters;
 using RacMAN.Forms;
 using System.Net;
-using RacMAN.Autosplitters;
+using System.Reflection;
 
 namespace RacMAN;
 public class Racman
 {
     public MemoryAPI? API { get; private set; }
     public APIType APIType { get; private set; }
+
+    private IInputProvider? _inputprovider;
+    public IInputProvider? InputProvider
+    {
+        get => _inputprovider;
+        internal set {
+            _inputprovider = value;
+            InputProviderChanged?.Invoke();
+        }
+    }
+
     public bool Connected { get; private set; }
     public string GameTitleID { get; private set; }
     public MainForm MainForm { get; private set; }
@@ -20,11 +32,12 @@ public class Racman
 
     private Mutex luaMut = new();
 
-    internal event Action OnAPIConnect;
+    internal event Action APIConnected;
+    internal event Action InputProviderChanged;
 
     public static Lua lua; // maybe shouldnt be static?
 
-    public Racman()
+    internal Racman()
     {
         MainForm = new MainForm(this);
         Connected = false;
@@ -34,12 +47,13 @@ public class Racman
         // Create the window so logging can still happen if the window isn't shown
         // For some reason, this works.
         var _ = ConsoleForm.Handle;
+        _ = MainForm.Handle;
 
         GameTitleID = "NONE00000";
 
     }
 
-    public void ShowConnectDialog()
+    internal void ShowConnectDialog()
     {
         AttachGameForm form = new AttachGameForm();
         form.ShowDialog();
@@ -77,11 +91,20 @@ public class Racman
             MainForm.Text = $"RaCMAN {Assembly.GetEntryAssembly().GetName().Version} - {this.GameTitleID} - {API.GetGameTitle()}";
             // load game from disk
             Game = new(GameTitleID);
+
+            if (API is IInputProvider input)
+            {
+                InputProvider = input;
+            }
+            else
+            {
+                InputProvider = null;
+            }
         }
 
 
         InitLuaState();
-        OnAPIConnect?.Invoke();
+        APIConnected?.Invoke();
     }
 
     internal void InitLuaState()
@@ -134,7 +157,7 @@ public class Racman
         LuaConsoleForm.instance.Log("Lua done initializing");
     }
 
-    public object[]? EvalLua(string code)
+    internal object[]? EvalLua(string code)
     {
         object[]? returnVal = null;
         if (lua != null)
@@ -153,7 +176,7 @@ public class Racman
         return returnVal;
     }
 
-    public object[]? EvalLua(LuaFunction func, params object[]? param)
+    internal object[]? EvalLua(LuaFunction func, params object?[]? param)
     {
         object[]? returnVal = null;
         if (lua != null)
@@ -165,7 +188,7 @@ public class Racman
             }
             catch (LuaException e)
             {
-                LuaConsoleForm.instance.Error(e.ToString());
+                Error(e.ToString());
             }
             luaMut.ReleaseMutex();
         }
@@ -184,6 +207,24 @@ public class Racman
 
     public void Error(string msg)
     {
-        ConsoleForm.BeginInvoke(ConsoleForm.Warn, msg);
+        ConsoleForm.BeginInvoke(ConsoleForm.Error, msg);
+    }
+
+    public void MakeAddressInputProviderIfNull(uint buttonAddress, uint analogAddress)
+    {
+        if (API == null)
+        {
+            Error("Can't set input provider because API is null");
+            return;
+        }
+        if (InputProvider == null)
+        {
+            InputProvider = new AddressInputProvider(API, buttonAddress, analogAddress);
+            Log($"Using address input provider (buttons = 0x{buttonAddress:X8}, analog = 0x{analogAddress:X8})");
+        }
+        else
+        {
+            Log("Not switching input provider as one is already in use.");
+        }
     }
 }

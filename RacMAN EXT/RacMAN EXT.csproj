@@ -40,6 +40,11 @@
 	  <Content Remove="data\game\NPEA00387\trainer.json" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="data\game\npea00387\scripts\inputp.lua" />
+	  <None Remove="data\game\npea00387\scripts\input_test_autosplitter.lua" />
+	</ItemGroup>
+
   <ItemGroup>
     <None Update="data\game\NPEA00387\trainer.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

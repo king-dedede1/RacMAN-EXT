@@ -13,7 +13,8 @@ public partial class MainForm : Form
     {
         InitializeComponent();
         this.state = state;
-        state.OnAPIConnect += ReloadGameSpecificStuff;
+        state.APIConnected += ReloadGameSpecificStuff;
+        state.InputProviderChanged += CheckForInputProvider;
     }
 
     private void ReloadGameSpecificStuff()
@@ -76,7 +77,20 @@ public partial class MainForm : Form
 
     private void MainForm_Shown(object sender, EventArgs e)
     {
+    }
 
+    private void CheckForInputProvider()
+    {
+        if (state.InputProvider == null && state.Connected)
+        {
+            MessageBox.Show("No controller input provider was found. Input display is not available and controller combos will not be triggered.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            inputDisplayToolStripMenuItem.Enabled = false;
+        }
+        else
+        {
+            inputDisplayToolStripMenuItem.Enabled = true;
+        }
     }
 
     private void luaConsoleToolStripMenuItem_Click(object sender, EventArgs e)
