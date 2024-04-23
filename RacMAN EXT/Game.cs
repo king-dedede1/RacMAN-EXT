@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RacMAN.ControllerCombos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -20,25 +21,27 @@ public class Game
     };
 
     public Trainer Trainer { get; internal set; }
+    public ControllerComboGroup ControllerCombos { get; internal set; }
     public string? ScriptFolderPath { get; }
 
     private string folderPath;
     private string trainerPath;
+    private string combosPath;
 
     /*
     to be added:
 
     components
     mods
-    scripts
-    hotkeys/combos
-    autosplitters
+
+
+
     */
 
     /// <summary>
     /// Load a `game` object from a game folder
     /// </summary>
-    public Game(string titleID)
+    public Game(string titleID, string gameName)
     {
         folderPath = $"data/game/{titleID}/";
         if (!Directory.Exists(folderPath))
@@ -58,13 +61,40 @@ public class Game
             File.WriteAllText(trainerPath, JsonSerializer.Serialize(Trainer, jso));
         }
 
+        combosPath = Path.Combine(folderPath, "combos.json");
+        if (File.Exists(combosPath))
+        {
+            ControllerCombos = JsonSerializer.Deserialize<ControllerComboGroup>(File.ReadAllText(combosPath));
+        }
+        else
+        {
+            ControllerCombos = new ControllerComboGroup()
+            {
+                Name = $"{gameName} ({titleID})"
+            };
+            SaveCombos();
+        }
+
         // ScriptFolderPath should be the path to the game's scripts folder if it exists, otherwise, it should be null.
         ScriptFolderPath = $"data/game/{titleID}/scripts/";
         if (!Directory.Exists(ScriptFolderPath)) ScriptFolderPath = null;
     }
 
-    public void SaveEverything()
+    public void SaveTrainer()
     {
         File.WriteAllText(trainerPath, JsonSerializer.Serialize(Trainer, jso));
+
+    }
+
+    public void SaveCombos()
+    {
+
+        File.WriteAllText(combosPath, JsonSerializer.Serialize(ControllerCombos, jso));
+    }
+
+    public void SaveEverything()
+    {
+        SaveTrainer();
+        SaveCombos();
     }
 }

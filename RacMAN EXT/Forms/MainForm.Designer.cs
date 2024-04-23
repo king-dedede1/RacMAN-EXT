@@ -127,14 +127,13 @@ partial class MainForm
         // 
         // combosHotkeysToolStripMenuItem
         // 
-        combosHotkeysToolStripMenuItem.Enabled = false;
         combosHotkeysToolStripMenuItem.Name = "combosHotkeysToolStripMenuItem";
         combosHotkeysToolStripMenuItem.Size = new Size(180, 22);
         combosHotkeysToolStripMenuItem.Text = "Combos/Hotkeys...";
+        combosHotkeysToolStripMenuItem.Click += combosHotkeysToolStripMenuItem_Click;
         // 
         // inputDisplayToolStripMenuItem
         // 
-        inputDisplayToolStripMenuItem.Enabled = false;
         inputDisplayToolStripMenuItem.Name = "inputDisplayToolStripMenuItem";
         inputDisplayToolStripMenuItem.Size = new Size(180, 22);
         inputDisplayToolStripMenuItem.Text = "Input Display...";
@@ -177,14 +176,14 @@ partial class MainForm
         // reloadToolStripMenuItem
         // 
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(180, 22);
+        reloadToolStripMenuItem.Size = new Size(146, 22);
         reloadToolStripMenuItem.Text = "Reload";
         reloadToolStripMenuItem.Click += reloadToolStripMenuItem_Click;
         // 
         // openDesignerToolStripMenuItem
         // 
         openDesignerToolStripMenuItem.Name = "openDesignerToolStripMenuItem";
-        openDesignerToolStripMenuItem.Size = new Size(180, 22);
+        openDesignerToolStripMenuItem.Size = new Size(146, 22);
         openDesignerToolStripMenuItem.Text = "Open Editor...";
         openDesignerToolStripMenuItem.Click += openDesignerToolStripMenuItem_Click;
         // 

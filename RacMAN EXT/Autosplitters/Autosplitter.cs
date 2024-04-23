@@ -31,7 +31,6 @@ public class Autosplitter
 
         GameID = Program.state.GameTitleID;
         GameName = Program.state.API.GetGameTitle();
-        Controller = new();
     }
 
     public static void Create(string name, string description, LuaFunction start, LuaFunction update, LuaFunction stop)

@@ -77,14 +77,16 @@ public partial class MainForm : Form
 
     private void MainForm_Shown(object sender, EventArgs e)
     {
+        if (state.InputProvider == null)
+        {
+            MessageBox.Show("No controller input provider was found. Input display is not available and controller combos will not be triggered.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
     }
 
     private void CheckForInputProvider()
     {
         if (state.InputProvider == null && state.Connected)
         {
-            MessageBox.Show("No controller input provider was found. Input display is not available and controller combos will not be triggered.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
             inputDisplayToolStripMenuItem.Enabled = false;
         }
         else
@@ -143,5 +145,14 @@ public partial class MainForm : Form
     private void autosplittersToolStripMenuItem_Click(object sender, EventArgs e)
     {
         new AutosplittersForm().Show();
+    }
+
+    private void combosHotkeysToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (state.CombosForm == null || state.CombosForm.IsDisposed)
+        {
+            state.CombosForm = new(state.Game.ControllerCombos, state);
+        }
+        state.CombosForm.Show();
     }
 }

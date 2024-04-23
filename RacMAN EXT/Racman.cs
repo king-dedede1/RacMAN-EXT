@@ -26,6 +26,7 @@ public class Racman
     public bool Connected { get; private set; }
     public string GameTitleID { get; private set; }
     public MainForm MainForm { get; private set; }
+    public ControllerCombosForm? CombosForm { get; set; }
     public LuaConsoleForm ConsoleForm { get; private set; }
     public Game? Game { get; private set; }
     public List<Autosplitter> Autosplitters { get; private set; } = [];
@@ -43,6 +44,7 @@ public class Racman
         Connected = false;
         API = null;
         ConsoleForm = new LuaConsoleForm();
+
 
         // Create the window so logging can still happen if the window isn't shown
         // For some reason, this works.
@@ -88,9 +90,10 @@ public class Racman
         {
             this.Connected = true;
             this.GameTitleID = this.API.GetGameTitleID();
-            MainForm.Text = $"RaCMAN {Assembly.GetEntryAssembly().GetName().Version} - {this.GameTitleID} - {API.GetGameTitle()}";
+            var gameTitle = API.GetGameTitle();
+            MainForm.Text = $"RaCMAN {Assembly.GetEntryAssembly().GetName().Version} - {this.GameTitleID} - {gameTitle}";
             // load game from disk
-            Game = new(GameTitleID);
+            Game = new(GameTitleID, gameTitle);
 
             if (API is IInputProvider input)
             {
@@ -193,6 +196,18 @@ public class Racman
             luaMut.ReleaseMutex();
         }
         return returnVal;
+    }
+
+    internal LuaFunction? CompileLuaFunction(string code)
+    {
+        string funcCode = $"""
+            local function myFunction()
+                {code}
+            end
+            return myFunction
+            """;
+        var returnval = EvalLua(funcCode);
+        return (LuaFunction?) returnval?[0];
     }
 
     public void Log(string msg)
