@@ -73,16 +73,6 @@ namespace RacMAN.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap delete {
-            get {
-                object obj = ResourceManager.GetObject("delete", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Down {
             get {
                 object obj = ResourceManager.GetObject("Down", resourceCulture);
@@ -96,26 +86,6 @@ namespace RacMAN.Properties {
         internal static System.Drawing.Bitmap Folder {
             get {
                 object obj = ResourceManager.GetObject("Folder", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap MoveDown {
-            get {
-                object obj = ResourceManager.GetObject("MoveDown", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap MoveUp {
-            get {
-                object obj = ResourceManager.GetObject("MoveUp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
