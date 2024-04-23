@@ -44,3 +44,4 @@ Everything should work right out of the box... hopefully
 - [racman](https://github.com/MichaelRelaxen/racman) contributors
 - [webMAN MOD](https://github.com/aldostools/webMAN-MOD) contributors
 - [bordplate](https://github.com/bordplate), for the [Ratchetron](https://github.com/bordplate/Ratchetron) API
+- Some icons from [aha-soft.com](http://www.small-icons.com/packs/16x16-free-application-icons.htm) and [softicons.com](https://www.softicons.com/system-icons/refresh-cl-icons-by-tpdk/game-controllers-icon) (free for non-commercial use, as far as I can tell) 
