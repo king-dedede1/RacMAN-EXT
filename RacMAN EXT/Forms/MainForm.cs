@@ -1,4 +1,5 @@
 ﻿using RacMAN.API;
+using RacMAN.Forms.InputDisplay;
 using System.IO.Compression;
 using System.Text.Json;
 
@@ -8,6 +9,7 @@ public partial class MainForm : Form
     internal Racman state;
     public TrainerPanel? TrainerPanel { get; set; }
     public Trainer Trainer { get; set; }
+    public InputDisplayForm? InputDisplay {  get; set; }
 
     public MainForm(Racman state)
     {
@@ -155,5 +157,10 @@ public partial class MainForm : Form
             state.CombosForm = new(state.Game.ControllerCombos, state);
         }
         state.CombosForm.Show();
+    }
+
+    private void inputDisplayToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        (InputDisplay ??= new InputDisplayForm(state)).Show();
     }
 }

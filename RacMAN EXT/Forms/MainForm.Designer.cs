@@ -137,6 +137,7 @@ partial class MainForm
         inputDisplayToolStripMenuItem.Name = "inputDisplayToolStripMenuItem";
         inputDisplayToolStripMenuItem.Size = new Size(180, 22);
         inputDisplayToolStripMenuItem.Text = "Input Display...";
+        inputDisplayToolStripMenuItem.Click += inputDisplayToolStripMenuItem_Click;
         // 
         // autosplittersToolStripMenuItem
         // 
@@ -176,14 +177,14 @@ partial class MainForm
         // reloadToolStripMenuItem
         // 
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(146, 22);
+        reloadToolStripMenuItem.Size = new Size(180, 22);
         reloadToolStripMenuItem.Text = "Reload";
         reloadToolStripMenuItem.Click += reloadToolStripMenuItem_Click;
         // 
         // openDesignerToolStripMenuItem
         // 
         openDesignerToolStripMenuItem.Name = "openDesignerToolStripMenuItem";
-        openDesignerToolStripMenuItem.Size = new Size(146, 22);
+        openDesignerToolStripMenuItem.Size = new Size(180, 22);
         openDesignerToolStripMenuItem.Text = "Open Editor...";
         openDesignerToolStripMenuItem.Click += openDesignerToolStripMenuItem_Click;
         // 
