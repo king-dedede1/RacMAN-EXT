@@ -14,12 +14,36 @@ using Timer = System.Windows.Forms.Timer;
 namespace RacMAN.Forms.InputDisplay;
 public partial class InputDisplayForm : Form
 {
-    private Timer timer;
-    Racman State;
-    public InputDisplaySkin controllerSkin { get; set; }
+    Racman State { get; set; }
+
+    private InputDisplaySkin _skin;
+    public InputDisplaySkin Skin
+    {
+        get => _skin;
+        set
+        {
+            _skin = value;
+            UpdateSize();
+        }
+    }
+
+    private bool _borderless;
+    public bool Borderless
+    {
+        get => _borderless;
+        set
+        {
+            _borderless = value;
+            UpdateBorder();
+        }
+    }
 
     private const string SkinFolder = "data/common/inputdisplay/";
     private const GraphicsUnit units = GraphicsUnit.Pixel;
+    private bool mouseDown;
+    private Timer timer;
+    private Point mouseLocation;
+    private string[] skinPaths;
 
     public InputDisplayForm(Racman state)
     {
@@ -32,13 +56,45 @@ public partial class InputDisplayForm : Form
         timer.Tick += Timer_Tick;
         timer.Start();
 
-        foreach (var folder in Directory.EnumerateDirectories(SkinFolder))
+        skinPaths = Directory.GetDirectories(SkinFolder);
+        Skin = InputDisplaySkin.Load(skinPaths[0]);
+
+        UpdateBorder();
+
+        foreach (var skinpath in skinPaths)
         {
-            controllerSkin = InputDisplaySkin.Load(folder);
-            Width = controllerSkin.Buttons["base"].spriteWidth;
-            Height = controllerSkin.Buttons["base"].spriteHeight + 40;
-            break;
+            var menuItem = new ToolStripMenuItem();
+            menuItem.Text = Path.GetFileName(skinpath);
+            menuItem.Click += delegate
+            {
+                Skin = InputDisplaySkin.Load(skinpath);
+            };
+            skinToolStripMenuItem.DropDownItems.Add(menuItem);
         }
+    }
+
+    private void UpdateSize()
+    {
+        Width = Skin.Buttons["base"].spriteWidth;
+        Height = Skin.Buttons["base"].spriteHeight;
+        if (!Borderless)
+        {
+            Width += 15;
+            Height += 39;
+        }
+    }
+
+    private void UpdateBorder()
+    {
+        if (Borderless)
+        {
+            FormBorderStyle = FormBorderStyle.None;
+        }
+        else
+        {
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+        }
+        UpdateSize();
     }
 
     private void Timer_Tick(object? sender, EventArgs e)
@@ -48,31 +104,31 @@ public partial class InputDisplayForm : Form
 
     private void InputDisplayForm_Paint(object sender, PaintEventArgs e)
     {
-        Image sprite = controllerSkin.Image!;
+        Image sprite = Skin.Image!;
 
-        InputPlot basePlot = controllerSkin.Buttons["base"];
-        InputPlot r3 = controllerSkin.Buttons["r3"];
-        InputPlot r3Press = controllerSkin.Buttons["r3Press"];
-        InputPlot l3 = controllerSkin.Buttons["l3"];
-        InputPlot l3Press = controllerSkin.Buttons["l3Press"];
+        InputPlot basePlot = Skin.Buttons["base"];
+        InputPlot r3 = Skin.Buttons["r3"];
+        InputPlot r3Press = Skin.Buttons["r3Press"];
+        InputPlot l3 = Skin.Buttons["l3"];
+        InputPlot l3Press = Skin.Buttons["l3Press"];
 
-        InputPlot dpadLeft = controllerSkin.Buttons["dpadLeft"];
-        InputPlot dpadRight = controllerSkin.Buttons["dpadRight"];
-        InputPlot dpadDown = controllerSkin.Buttons["dpadDown"];
-        InputPlot dpadUp = controllerSkin.Buttons["dpadUp"];
+        InputPlot dpadLeft = Skin.Buttons["dpadLeft"];
+        InputPlot dpadRight = Skin.Buttons["dpadRight"];
+        InputPlot dpadDown = Skin.Buttons["dpadDown"];
+        InputPlot dpadUp = Skin.Buttons["dpadUp"];
 
-        InputPlot cross = controllerSkin.Buttons["cross"];
-        InputPlot circle = controllerSkin.Buttons["circle"];
-        InputPlot triangle = controllerSkin.Buttons["triangle"];
-        InputPlot square = controllerSkin.Buttons["square"];
+        InputPlot cross = Skin.Buttons["cross"];
+        InputPlot circle = Skin.Buttons["circle"];
+        InputPlot triangle = Skin.Buttons["triangle"];
+        InputPlot square = Skin.Buttons["square"];
 
-        InputPlot select = controllerSkin.Buttons["select"];
-        InputPlot start = controllerSkin.Buttons["start"];
+        InputPlot select = Skin.Buttons["select"];
+        InputPlot start = Skin.Buttons["start"];
 
-        InputPlot r1 = controllerSkin.Buttons["r1"];
-        InputPlot l1 = controllerSkin.Buttons["l1"];
-        InputPlot l2 = controllerSkin.Buttons["l2"];
-        InputPlot r2 = controllerSkin.Buttons["r2"];
+        InputPlot r1 = Skin.Buttons["r1"];
+        InputPlot l1 = Skin.Buttons["l1"];
+        InputPlot l2 = Skin.Buttons["l2"];
+        InputPlot r2 = Skin.Buttons["r2"];
 
         InputState inputs = State.InputProvider.Inputs;
         ButtonState buttons = inputs.Buttons;
@@ -81,19 +137,19 @@ public partial class InputDisplayForm : Form
         g.DrawImage(sprite, basePlot.drawX, basePlot.drawY, new Rectangle(basePlot.spriteX, basePlot.spriteY, basePlot.spriteWidth, basePlot.spriteHeight), units);
         if (buttons.R3)
         {
-            g.DrawImage(sprite, r3.drawX + (inputs.RX * controllerSkin.AnalogPitch), r3.drawY + (inputs.RY * controllerSkin.AnalogPitch), new Rectangle(r3.spriteX, r3.spriteY, r3.spriteWidth, r3.spriteHeight), units);
+            g.DrawImage(sprite, r3.drawX + (inputs.RX * Skin.AnalogPitch), r3.drawY + (inputs.RY * Skin.AnalogPitch), new Rectangle(r3.spriteX, r3.spriteY, r3.spriteWidth, r3.spriteHeight), units);
         }
         else
         {
-            g.DrawImage(sprite, r3Press.drawX + (inputs.RX * controllerSkin.AnalogPitch), r3Press.drawY + (inputs.RY * controllerSkin.AnalogPitch), new Rectangle(r3Press.spriteX, r3Press.spriteY, r3Press.spriteWidth, r3Press.spriteHeight), units);
+            g.DrawImage(sprite, r3Press.drawX + (inputs.RX * Skin.AnalogPitch), r3Press.drawY + (inputs.RY * Skin.AnalogPitch), new Rectangle(r3Press.spriteX, r3Press.spriteY, r3Press.spriteWidth, r3Press.spriteHeight), units);
         }
         if (buttons.L3)
         {
-            g.DrawImage(sprite, l3.drawX + (inputs.LX * controllerSkin.AnalogPitch), l3.drawY + (inputs.LY * controllerSkin.AnalogPitch), new Rectangle(l3.spriteX, l3.spriteY, l3.spriteWidth, l3.spriteHeight), units);
+            g.DrawImage(sprite, l3.drawX + (inputs.LX * Skin.AnalogPitch), l3.drawY + (inputs.LY * Skin.AnalogPitch), new Rectangle(l3.spriteX, l3.spriteY, l3.spriteWidth, l3.spriteHeight), units);
         }
         else
         {
-            g.DrawImage(sprite, l3Press.drawX + (inputs.LX * controllerSkin.AnalogPitch), l3Press.drawY + (inputs.LY * controllerSkin.AnalogPitch), new Rectangle(l3Press.spriteX, l3Press.spriteY, l3Press.spriteWidth, l3Press.spriteHeight), units);
+            g.DrawImage(sprite, l3Press.drawX + (inputs.LX * Skin.AnalogPitch), l3Press.drawY + (inputs.LY * Skin.AnalogPitch), new Rectangle(l3Press.spriteX, l3Press.spriteY, l3Press.spriteWidth, l3Press.spriteHeight), units);
         }
         if (buttons.DLeft)
         {
@@ -150,6 +206,51 @@ public partial class InputDisplayForm : Form
         if (buttons.R2)
         {
             g.DrawImage(sprite, r2.drawX, r2.drawY, new Rectangle(r2.spriteX, r2.spriteY, r2.spriteWidth, r2.spriteHeight), units);
+        }
+    }
+
+    private void InputDisplayForm_MouseDown(object sender, MouseEventArgs e)
+    {
+        if (Borderless && e.Button == MouseButtons.Left)
+        {
+            mouseDown = true;
+            mouseLocation = e.Location;
+        }
+    }
+
+    private void InputDisplayForm_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (mouseDown)
+        {
+            this.Location = new Point(
+                Location.X - mouseLocation.X + e.X,
+                Location.Y - mouseLocation.Y + e.Y
+                );
+            Update();
+        }
+    }
+
+    private void InputDisplayForm_MouseUp(object sender, MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Left)
+            mouseDown = false;
+        else if (e.Button == MouseButtons.Right)
+        {
+            contextMenuStrip1.Show(this, e.Location);
+        }
+    }
+
+    private void borderlessToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+    {
+        Borderless = borderlessToolStripMenuItem.Checked;
+    }
+
+    private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        colorDialog1.Color = BackColor;
+        if (colorDialog1.ShowDialog() == DialogResult.OK)
+        {
+            BackColor = colorDialog1.Color;
         }
     }
 }
