@@ -46,6 +46,7 @@ internal class PineClient
         client.Connect(IPAddress.Parse("127.0.0.1"), slot);
         stream = client.GetStream();
         reader = new BinaryReader(stream);
+        client.ReceiveTimeout = 1000;
     }
 
     public void Close()

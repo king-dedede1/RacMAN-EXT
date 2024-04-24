@@ -65,7 +65,5 @@ internal class AddressInputProvider : IInputProvider
             DDown = (b & 0x4000) != 0,
             DLeft = (b & 0x8000) != 0,
         };
-
-        Program.state.Log("button function called");
     }
 }

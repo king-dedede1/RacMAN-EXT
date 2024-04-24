@@ -3,6 +3,7 @@ using NLua.Exceptions;
 using RacMAN.API;
 using RacMAN.API.Inputs;
 using RacMAN.Autosplitters;
+using RacMAN.ControllerCombos;
 using RacMAN.Forms;
 using System.Net;
 using System.Reflection;
@@ -30,6 +31,7 @@ public class Racman
     public LuaConsoleForm ConsoleForm { get; private set; }
     public Game? Game { get; private set; }
     public List<Autosplitter> Autosplitters { get; private set; } = [];
+    internal ControllerComboManager? ControllerComboManager { get; set; }
 
     private Mutex luaMut = new();
 
@@ -107,6 +109,7 @@ public class Racman
 
 
         InitLuaState();
+        ControllerComboManager = new(this, Game.ControllerCombos);
         APIConnected?.Invoke();
     }
 

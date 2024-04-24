@@ -16,7 +16,7 @@ public partial class ControllerCombosForm : Form
 {
     private ControllerCombo? selectedCombo;
     private Racman state;
-
+    private bool ignoreCheckedEvents = false;
     public ControllerCombosForm(ControllerComboGroup comboGroup, Racman state)
     {
         InitializeComponent();
@@ -152,10 +152,12 @@ public partial class ControllerCombosForm : Form
             nameTextBox.Text = combo.Name;
             descriptionTextBox.Text = combo.Description;
             actionTextBox.Text = combo.LuaActionString;
+            ignoreCheckedEvents = true;
             controllerComboCheckbox.Checked = combo.IsControllerCombo;
             hotkeyCheckbox.Checked = combo.IsHotkey;
             globalCheckbox.Checked = combo.IsHotkeyGlobal;
-            controllerComboLabel.Text = "(Controller Combmo)"; // combo.ComboButtonState.ToString();
+            ignoreCheckedEvents = false;
+            controllerComboLabel.Text = combo.ComboButtonState.ToString();
             hotkeyLabel.Text = new KeysConverter().ConvertToString(combo.HotkeyKey);
         }
     }
@@ -221,12 +223,14 @@ public partial class ControllerCombosForm : Form
 
     private void controllerComboCheckbox_CheckedChanged(object sender, EventArgs e)
     {
+        if (ignoreCheckedEvents) return;
         SaveStuffFromControls();
         controllerComboGroup.Enabled = controllerComboCheckbox.Checked;
     }
 
     private void hotkeyCheckbox_CheckedChanged(object sender, EventArgs e)
     {
+        if (ignoreCheckedEvents) return;
         SaveStuffFromControls();
         hotkeyGroup.Enabled = hotkeyCheckbox.Checked;
     }
@@ -276,6 +280,30 @@ public partial class ControllerCombosForm : Form
             hotkeyLabel.Text = new KeysConverter().ConvertToString(e.Modifiers | e.KeyCode);
             changeHotkeyButton.Text = "Change Hotkey...";
             waitingForKey = false;
+
+            // Update the hotkey
+            state.ControllerComboManager.AddOrUpdateCombo(selectedCombo);
+        }
+    }
+
+    private void globalCheckbox_CheckedChanged(object sender, EventArgs e)
+    {
+        if (ignoreCheckedEvents) return;
+        SaveStuffFromControls();
+    }
+
+    private void changeComboButton_Click(object sender, EventArgs e)
+    {
+        if (state.InputProvider != null && selectedCombo != null)
+        {
+            MessageBox.Show("Hold down the buttons on the controller and press OK.");
+            var buttons = state.InputProvider.Inputs.Buttons;
+            selectedCombo.ComboButtonState = buttons;
+            controllerComboLabel.Text = buttons.ToString();
+        }
+        else
+        {
+            MessageBox.Show("Can't read controller input right now; no input provider is available.");
         }
     }
 }

@@ -275,6 +275,7 @@ partial class ControllerCombosForm
         changeComboButton.TabIndex = 1;
         changeComboButton.Text = "Change Combo...";
         changeComboButton.UseVisualStyleBackColor = true;
+        changeComboButton.Click += changeComboButton_Click;
         // 
         // controllerComboLabel
         // 
@@ -307,6 +308,7 @@ partial class ControllerCombosForm
         globalCheckbox.TabIndex = 4;
         globalCheckbox.Text = "Global";
         globalCheckbox.UseVisualStyleBackColor = true;
+        globalCheckbox.CheckedChanged += globalCheckbox_CheckedChanged;
         // 
         // hotkeyLabel
         // 

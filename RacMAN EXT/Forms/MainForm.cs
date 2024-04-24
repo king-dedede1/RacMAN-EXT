@@ -55,11 +55,12 @@ public partial class MainForm : Form
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
+        state.ControllerComboManager?.Close();
         if (TrainerPanel != null)
         {
             TrainerPanel.CallOnUnloadEvent();
         }
-        state.Game.SaveEverything();
+        state.Game?.SaveEverything();
         state.API?.Disconnect();
     }
 
