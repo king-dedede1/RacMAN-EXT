@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using static System.Windows.Forms.AxHost;
+using ButtonState = RacMAN.API.Inputs.ButtonState;
 
 namespace RacMAN.ControllerCombos;
 
@@ -71,7 +71,7 @@ internal class ControllerComboManager
         {
             var isRacmanFocused = Form.ActiveForm != null;
             var hotkey = HotkeyDict[id];
-            if (hotkey.IsHotkeyGlobal || isRacmanFocused)
+            if ((hotkey.IsHotkeyGlobal && (bool)State.Settings.GlobalHotkeysEnabled!)|| isRacmanFocused)
             {
                 if (hotkey.LuaAction != null)
                 {
@@ -107,26 +107,47 @@ internal class ControllerComboManager
 
     private void ControllerHandlerThread()
     {
+        ButtonState currentInputs, oldInputs = new();
         var inputCheck = true;
         while (Running)
         {
+            currentInputs = State.InputProvider!.Inputs.Buttons;
             var allCombos = GetControllerCombosRecursive(ComboGroup);
-            RacMAN.API.Inputs.ButtonState currentInputs = State.InputProvider.Inputs.Buttons;
             if (!inputCheck && currentInputs.IsEmpty) inputCheck = true;
-            if (inputCheck && !currentInputs.IsEmpty)
+            if ((bool) !State.Settings.TriggerCombosOnButtonRelease!)
             {
-                foreach (var combo in allCombos)
+                if (inputCheck && !currentInputs.IsEmpty)
                 {
-                    if (currentInputs == combo.ComboButtonState)
+                    foreach (var combo in allCombos)
                     {
-                        State.Log($"Calling controller combo {combo.Name}!");
-                        TryCallLuaFunction(combo);
-                        inputCheck = false;
-                        break;
+                        if (currentInputs == combo.ComboButtonState)
+                        {
+                            State.Log($"Calling controller combo {combo.Name}!");
+                            TryCallLuaFunction(combo);
+                            inputCheck = false;
+                            break;
+                        }
                     }
                 }
             }
+            else
+            {
+                if (ButtonState.ButtonReleased(oldInputs, currentInputs) && inputCheck)
+                {
+                    foreach (var combo in allCombos)
+                    {
+                        if (oldInputs == combo.ComboButtonState)
+                        {
+                            State.Log($"Calling controller combo {combo.Name}!");
+                            TryCallLuaFunction(combo);
+                            break;
+                        }
+                    }
+                    inputCheck = false;
+                }
+            }
             Thread.Sleep(16);
+            oldInputs = currentInputs;
         }
     }
 

@@ -17,6 +17,9 @@ public struct InputState
     // Not worrying about pressure sensitive buttons or analog triggers right now
 }
 
+/// <summary>
+/// this is a mess, rewrite to use bitfields
+/// </summary>
 public struct ButtonState
 {
     public bool Cross { get; set;}
@@ -96,5 +99,30 @@ public struct ButtonState
         }
 
         return sb.Length == 0? "(empty)" : sb.ToString();
+    }
+
+    /// <summary>
+    /// Check if any button was released
+    /// </summary>
+    /// <returns></returns>
+    public static bool ButtonReleased(ButtonState oldState, ButtonState currentState)
+    {
+        return (oldState.Cross && !currentState.Cross)
+            || (oldState.Circle && !currentState.Circle)
+            || (oldState.Square && !currentState.Square)
+            || (oldState.Triangle && !currentState.Triangle)
+            || (oldState.DUp && !currentState.DUp)
+            || (oldState.DDown && !currentState.DDown)
+            || (oldState.DLeft && !currentState.DLeft)
+            || (oldState.DRight && !currentState.DRight)
+            || (oldState.L1 && !currentState.L1)
+            || (oldState.L2 && !currentState.L2)
+            || (oldState.L3 && !currentState.L3)
+            || (oldState.R1 && !currentState.R1)
+            || (oldState.R2 && !currentState.R2)
+            || (oldState.R3 && !currentState.R3);
+
+        // this would be so much easier:
+        // (oldState.mask & ~currentState.mask) != 0
     }
 }

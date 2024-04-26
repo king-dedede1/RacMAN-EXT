@@ -49,7 +49,7 @@ partial class LuaConsoleForm
         // 
         // commandBox
         // 
-        commandBox.Font = new Font("Monaco", 9F, FontStyle.Regular, GraphicsUnit.Point,  0);
+        commandBox.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point,  0);
         commandBox.Location = new Point(14, 343);
         commandBox.Margin = new Padding(4, 3, 4, 3);
         commandBox.Name = "commandBox";

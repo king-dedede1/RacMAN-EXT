@@ -27,10 +27,12 @@ public class Ratchetron : MemoryAPI
     private Dictionary<int, UInt32> frozenAddresses = [];
 
     private static Mutex writeLock = new();
+    private int timeout;
 
-    public Ratchetron(string ip)
+    public Ratchetron(string ip, int timeout = 1000)
     {
         this.ip = ip;
+        this.timeout = timeout;
         Connect();
     }
 
@@ -48,6 +50,8 @@ public class Ratchetron : MemoryAPI
         {
             this.client = new TcpClient(this.ip, this.port);
             this.client.NoDelay = true;
+            client.ReceiveTimeout = timeout;
+            client.SendTimeout = timeout;
 
             this.stream = client.GetStream();
 

@@ -9,7 +9,7 @@ public partial class MainForm : Form
     internal Racman state;
     public TrainerPanel? TrainerPanel { get; set; }
     public Trainer Trainer { get; set; }
-    public InputDisplayForm? InputDisplay {  get; set; }
+    public InputDisplayForm? InputDisplay { get; set; }
 
     public MainForm(Racman state)
     {
@@ -63,6 +63,7 @@ public partial class MainForm : Form
             TrainerPanel.CallOnUnloadEvent();
         }
         state.Game?.SaveEverything();
+        state.SaveSettings();
         state.API?.Disconnect();
     }
 
@@ -161,6 +162,12 @@ public partial class MainForm : Form
 
     private void inputDisplayToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        (InputDisplay ??= new InputDisplayForm(state)).Show();
+        if (InputDisplay == null || InputDisplay.IsDisposed) InputDisplay = new(state);
+        InputDisplay.Show();
+    }
+
+    private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        new SettingsForm(state).Show();
     }
 }

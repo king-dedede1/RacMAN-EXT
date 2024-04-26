@@ -12,6 +12,7 @@ internal class MemSubHelper
     private MemoryAPI api;
     private bool workerRunning;
     private List<MemSub> memSubs = [];
+    private Thread workerThread;
 
     private class MemSub
     {
@@ -33,13 +34,15 @@ internal class MemSubHelper
     public MemSubHelper(MemoryAPI api)
     {
         this.api = api;
-        new Thread(MemSubWorkerThread).Start();
+        workerThread = new Thread(MemSubWorkerThread);
+        workerThread.Start();
         workerRunning = true;
     }
 
     internal void Stop()
     {
         workerRunning = false;
+        workerThread.Join();
     }
 
     private enum MemSubType

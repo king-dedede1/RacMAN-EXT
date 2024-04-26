@@ -7,6 +7,7 @@ using RacMAN.ControllerCombos;
 using RacMAN.Forms;
 using System.Net;
 using System.Reflection;
+using System.Text.Json;
 
 namespace RacMAN;
 public class Racman
@@ -32,20 +33,33 @@ public class Racman
     public Game? Game { get; private set; }
     public List<Autosplitter> Autosplitters { get; private set; } = [];
     internal ControllerComboManager? ControllerComboManager { get; set; }
+    internal UserSettings Settings { get; }
 
     private Mutex luaMut = new();
 
     internal event Action APIConnected;
     internal event Action InputProviderChanged;
 
+    private const string settingsPath = "data/common/user/settings.json";
+    private readonly JsonSerializerOptions o = new() { WriteIndented = true, Converters = { new ColorJsonConverter() } };
+
     public static Lua lua; // maybe shouldnt be static?
 
     internal Racman()
     {
+        if (File.Exists(settingsPath))
+        {
+            Settings = JsonSerializer.Deserialize<UserSettings>(File.ReadAllText(settingsPath), o) ?? new UserSettings();
+        }
+        else
+        {
+            Settings = new UserSettings();
+        }
+
         MainForm = new MainForm(this);
         Connected = false;
         API = null;
-        ConsoleForm = new LuaConsoleForm();
+        ConsoleForm = new LuaConsoleForm(this);
 
 
         // Create the window so logging can still happen if the window isn't shown
@@ -59,7 +73,7 @@ public class Racman
 
     internal void ShowConnectDialog()
     {
-        AttachGameForm form = new AttachGameForm();
+        AttachGameForm form = new AttachGameForm(this);
         form.ShowDialog();
 
         APIType = form.apiType;
@@ -69,14 +83,23 @@ public class Racman
         switch (form.apiType)
         {
             case APIType.PS3:
-                this.API = new Ratchetron(IPAddress.Parse(form.BoxText));
+                this.API = new Ratchetron(form.BoxText, (int) Settings.SocketTimeoutInterval);
+                Settings.RatchetronIP = form.BoxText;
                 break;
             case APIType.RPCS3:
-                this.API = new RPCS3(UInt16.Parse(form.BoxText));
-                break;
+                {
+                    var slot = UInt16.Parse(form.BoxText);
+                    Settings.RPCS3Slot = slot;
+                    this.API = new RPCS3(slot, (int) Settings.SocketTimeoutInterval);
+                    break;
+                }
             case APIType.PCSX2:
-                this.API = new PCSX2(UInt16.Parse(form.BoxText));
-                break;
+                {
+                    var slot = UInt16.Parse(form.BoxText);
+                    Settings.PCSX2Slot = slot;
+                    this.API = new PCSX2(slot, (int) Settings.SocketTimeoutInterval);
+                    break;
+                }
             case APIType.None:
                 this.API = null;
                 break;
@@ -96,7 +119,6 @@ public class Racman
             MainForm.Text = $"RaCMAN {Assembly.GetEntryAssembly().GetName().Version} - {this.GameTitleID} - {gameTitle}";
             // load game from disk
             Game = new(GameTitleID, gameTitle);
-
             if (API is IInputProvider input)
             {
                 InputProvider = input;
@@ -109,7 +131,8 @@ public class Racman
 
 
         InitLuaState();
-        ControllerComboManager = new(this, Game.ControllerCombos);
+        if (Game != null && InputProvider != null)
+            ControllerComboManager = new(this, Game.ControllerCombos);
         APIConnected?.Invoke();
     }
 
@@ -244,5 +267,11 @@ public class Racman
         {
             Log("Not switching input provider as one is already in use.");
         }
+    }
+
+    internal void SaveSettings()
+    {
+        
+        File.WriteAllText(settingsPath, JsonSerializer.Serialize(Settings, o));
     }
 }

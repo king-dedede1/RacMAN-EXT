@@ -75,6 +75,7 @@ partial class MainForm
         // 
         // aboutRaCMANToolStripMenuItem
         // 
+        aboutRaCMANToolStripMenuItem.Image = Properties.Resources.Info;
         aboutRaCMANToolStripMenuItem.Name = "aboutRaCMANToolStripMenuItem";
         aboutRaCMANToolStripMenuItem.Size = new Size(195, 22);
         aboutRaCMANToolStripMenuItem.Text = "About RaCMAN...";
@@ -82,13 +83,15 @@ partial class MainForm
         // 
         // settingsToolStripMenuItem
         // 
-        settingsToolStripMenuItem.Enabled = false;
+        settingsToolStripMenuItem.Image = Properties.Resources.Application;
         settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
         settingsToolStripMenuItem.Size = new Size(195, 22);
         settingsToolStripMenuItem.Text = "Settings...";
+        settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
         // 
         // reconnectToolStripMenuItem
         // 
+        reconnectToolStripMenuItem.Image = Properties.Resources.Exit;
         reconnectToolStripMenuItem.Name = "reconnectToolStripMenuItem";
         reconnectToolStripMenuItem.Size = new Size(195, 22);
         reconnectToolStripMenuItem.Text = "Reconnect";
@@ -101,6 +104,7 @@ partial class MainForm
         // 
         // reloadLuaStateToolStripMenuItem
         // 
+        reloadLuaStateToolStripMenuItem.Image = Properties.Resources.Refresh;
         reloadLuaStateToolStripMenuItem.Name = "reloadLuaStateToolStripMenuItem";
         reloadLuaStateToolStripMenuItem.Size = new Size(195, 22);
         reloadLuaStateToolStripMenuItem.Text = "Reload Lua runtime";
@@ -113,6 +117,7 @@ partial class MainForm
         // 
         // installGamePackageToolStripMenuItem
         // 
+        installGamePackageToolStripMenuItem.Image = Properties.Resources.Download;
         installGamePackageToolStripMenuItem.Name = "installGamePackageToolStripMenuItem";
         installGamePackageToolStripMenuItem.Size = new Size(195, 22);
         installGamePackageToolStripMenuItem.Text = "Install Game Package...";
@@ -127,6 +132,7 @@ partial class MainForm
         // 
         // combosHotkeysToolStripMenuItem
         // 
+        combosHotkeysToolStripMenuItem.Image = Properties.Resources.HotKeys;
         combosHotkeysToolStripMenuItem.Name = "combosHotkeysToolStripMenuItem";
         combosHotkeysToolStripMenuItem.Size = new Size(180, 22);
         combosHotkeysToolStripMenuItem.Text = "Combos/Hotkeys...";
@@ -134,6 +140,7 @@ partial class MainForm
         // 
         // inputDisplayToolStripMenuItem
         // 
+        inputDisplayToolStripMenuItem.Image = Properties.Resources.GameController;
         inputDisplayToolStripMenuItem.Name = "inputDisplayToolStripMenuItem";
         inputDisplayToolStripMenuItem.Size = new Size(180, 22);
         inputDisplayToolStripMenuItem.Text = "Input Display...";
@@ -141,6 +148,7 @@ partial class MainForm
         // 
         // autosplittersToolStripMenuItem
         // 
+        autosplittersToolStripMenuItem.Image = Properties.Resources.Clock;
         autosplittersToolStripMenuItem.Name = "autosplittersToolStripMenuItem";
         autosplittersToolStripMenuItem.Size = new Size(180, 22);
         autosplittersToolStripMenuItem.Text = "Autosplitters...";
@@ -148,6 +156,7 @@ partial class MainForm
         // 
         // luaConsoleToolStripMenuItem
         // 
+        luaConsoleToolStripMenuItem.Image = Properties.Resources.Equipment;
         luaConsoleToolStripMenuItem.Name = "luaConsoleToolStripMenuItem";
         luaConsoleToolStripMenuItem.Size = new Size(180, 22);
         luaConsoleToolStripMenuItem.Text = "Lua Console...";
@@ -156,6 +165,7 @@ partial class MainForm
         // rAMWatchToolStripMenuItem
         // 
         rAMWatchToolStripMenuItem.Enabled = false;
+        rAMWatchToolStripMenuItem.Image = Properties.Resources.Find;
         rAMWatchToolStripMenuItem.Name = "rAMWatchToolStripMenuItem";
         rAMWatchToolStripMenuItem.Size = new Size(180, 22);
         rAMWatchToolStripMenuItem.Text = "RAM Watch...";
@@ -163,6 +173,7 @@ partial class MainForm
         // modLoaderToolStripMenuItem
         // 
         modLoaderToolStripMenuItem.Enabled = false;
+        modLoaderToolStripMenuItem.Image = Properties.Resources.Script;
         modLoaderToolStripMenuItem.Name = "modLoaderToolStripMenuItem";
         modLoaderToolStripMenuItem.Size = new Size(180, 22);
         modLoaderToolStripMenuItem.Text = "Mod Loader...";
@@ -176,6 +187,7 @@ partial class MainForm
         // 
         // reloadToolStripMenuItem
         // 
+        reloadToolStripMenuItem.Image = Properties.Resources.Refresh;
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
         reloadToolStripMenuItem.Size = new Size(180, 22);
         reloadToolStripMenuItem.Text = "Reload";
@@ -183,6 +195,7 @@ partial class MainForm
         // 
         // openDesignerToolStripMenuItem
         // 
+        openDesignerToolStripMenuItem.Image = Properties.Resources.Wrench;
         openDesignerToolStripMenuItem.Name = "openDesignerToolStripMenuItem";
         openDesignerToolStripMenuItem.Size = new Size(180, 22);
         openDesignerToolStripMenuItem.Text = "Open Editor...";
@@ -198,6 +211,7 @@ partial class MainForm
         // addRemoveToolStripMenuItem
         // 
         addRemoveToolStripMenuItem.Enabled = false;
+        addRemoveToolStripMenuItem.Image = Properties.Resources.Component;
         addRemoveToolStripMenuItem.Name = "addRemoveToolStripMenuItem";
         addRemoveToolStripMenuItem.Size = new Size(202, 22);
         addRemoveToolStripMenuItem.Text = "Add/Remove modules...";
@@ -218,7 +232,7 @@ partial class MainForm
         // 
         savesManagerToolStripMenuItem.Enabled = false;
         savesManagerToolStripMenuItem.Name = "savesManagerToolStripMenuItem";
-        savesManagerToolStripMenuItem.Size = new Size(162, 22);
+        savesManagerToolStripMenuItem.Size = new Size(180, 22);
         savesManagerToolStripMenuItem.Text = "Saves Manager...";
         // 
         // openFileDialog1

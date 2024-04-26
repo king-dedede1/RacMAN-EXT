@@ -9,14 +9,15 @@ public class PCSX2 : MemoryAPI
     PineClient client;
     MemSubHelper MemSubHelper;
 
-    public PCSX2(ushort slot)
+    public PCSX2(ushort slot, int timeout = 1000)
     {
-        client = new(slot);
+        client = new(slot, timeout);
         MemSubHelper = new(this);
     }
 
     public override void Disconnect()
     {
+        MemSubHelper.Stop();
         client.Close();
     }
 

@@ -39,14 +39,15 @@ internal class PineClient
     NetworkStream stream;
     BinaryReader reader;
 
-    public PineClient(UInt16 slot)
+    public PineClient(UInt16 slot, int timeout = 1000)
     {
         // This will have to be changed for platforms other than windows
         client = new TcpClient();
         client.Connect(IPAddress.Parse("127.0.0.1"), slot);
         stream = client.GetStream();
         reader = new BinaryReader(stream);
-        client.ReceiveTimeout = 1000;
+        client.ReceiveTimeout = timeout;
+        client.SendTimeout = timeout;
     }
 
     public void Close()

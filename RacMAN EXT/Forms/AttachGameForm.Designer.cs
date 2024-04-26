@@ -127,6 +127,7 @@ partial class AttachGameForm
         MaximizeBox = false;
         Name = "AttachGameForm";
         Text = "RaCMAN-EXT";
+        Shown += AttachGameForm_Shown;
         ResumeLayout(false);
         PerformLayout();
     }

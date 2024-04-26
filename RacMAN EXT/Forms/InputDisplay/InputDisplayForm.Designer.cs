@@ -34,19 +34,20 @@ partial class InputDisplayForm
         backgroundColorToolStripMenuItem = new ToolStripMenuItem();
         borderlessToolStripMenuItem = new ToolStripMenuItem();
         colorDialog1 = new ColorDialog();
+        hideToolStripMenuItem = new ToolStripMenuItem();
         contextMenuStrip1.SuspendLayout();
         SuspendLayout();
         // 
         // contextMenuStrip1
         // 
-        contextMenuStrip1.Items.AddRange(new ToolStripItem[] { skinToolStripMenuItem, backgroundColorToolStripMenuItem, borderlessToolStripMenuItem });
+        contextMenuStrip1.Items.AddRange(new ToolStripItem[] { skinToolStripMenuItem, backgroundColorToolStripMenuItem, borderlessToolStripMenuItem, hideToolStripMenuItem });
         contextMenuStrip1.Name = "contextMenuStrip1";
-        contextMenuStrip1.Size = new Size(181, 92);
+        contextMenuStrip1.Size = new Size(181, 114);
         // 
         // skinToolStripMenuItem
         // 
         skinToolStripMenuItem.Name = "skinToolStripMenuItem";
-        skinToolStripMenuItem.Size = new Size(179, 22);
+        skinToolStripMenuItem.Size = new Size(180, 22);
         skinToolStripMenuItem.Text = "Skin";
         // 
         // backgroundColorToolStripMenuItem
@@ -60,9 +61,16 @@ partial class InputDisplayForm
         // 
         borderlessToolStripMenuItem.CheckOnClick = true;
         borderlessToolStripMenuItem.Name = "borderlessToolStripMenuItem";
-        borderlessToolStripMenuItem.Size = new Size(179, 22);
+        borderlessToolStripMenuItem.Size = new Size(180, 22);
         borderlessToolStripMenuItem.Text = "Borderless";
         borderlessToolStripMenuItem.CheckedChanged += borderlessToolStripMenuItem_CheckedChanged;
+        // 
+        // hideToolStripMenuItem
+        // 
+        hideToolStripMenuItem.Name = "hideToolStripMenuItem";
+        hideToolStripMenuItem.Size = new Size(180, 22);
+        hideToolStripMenuItem.Text = "Hide";
+        hideToolStripMenuItem.Click += hideToolStripMenuItem_Click;
         // 
         // InputDisplayForm
         // 
@@ -88,4 +96,5 @@ partial class InputDisplayForm
     private ToolStripMenuItem backgroundColorToolStripMenuItem;
     private ToolStripMenuItem borderlessToolStripMenuItem;
     private ColorDialog colorDialog1;
+    private ToolStripMenuItem hideToolStripMenuItem;
 }

@@ -9,14 +9,15 @@ public class RPCS3 : MemoryAPI
     PineClient client;
     MemSubHelper MemSubHelper;
 
-    public RPCS3(ushort slot)
+    public RPCS3(ushort slot, int timeout = 1000)
     {
-        client = new(slot);
+        client = new(slot, timeout);
         MemSubHelper = new(this);
     }
 
     public override void Disconnect()
     {
+        MemSubHelper.Stop();
         client.Close();
     }
 

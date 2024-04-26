@@ -56,11 +56,13 @@ public partial class InputDisplayForm : Form
         timer.Tick += Timer_Tick;
         timer.Start();
 
-        skinPaths = Directory.GetDirectories(SkinFolder);
-        Skin = InputDisplaySkin.Load(skinPaths[0]);
+        Skin = InputDisplaySkin.Load(Path.Join(SkinFolder, State.Settings.InputDisplaySkin ??= "Compact"));
+        borderlessToolStripMenuItem.Checked = (bool) State.Settings.InputDisplayBorderless!;
+        BackColor = (Color) State.Settings.InputDisplayBackColor!;
 
         UpdateBorder();
 
+        skinPaths = Directory.GetDirectories(SkinFolder);
         foreach (var skinpath in skinPaths)
         {
             var menuItem = new ToolStripMenuItem();
@@ -68,6 +70,7 @@ public partial class InputDisplayForm : Form
             menuItem.Click += delegate
             {
                 Skin = InputDisplaySkin.Load(skinpath);
+                State.Settings.InputDisplaySkin = Path.GetFileName(skinpath);
             };
             skinToolStripMenuItem.DropDownItems.Add(menuItem);
         }
@@ -243,6 +246,7 @@ public partial class InputDisplayForm : Form
     private void borderlessToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
     {
         Borderless = borderlessToolStripMenuItem.Checked;
+        State.Settings.InputDisplayBorderless = Borderless;
     }
 
     private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -251,6 +255,12 @@ public partial class InputDisplayForm : Form
         if (colorDialog1.ShowDialog() == DialogResult.OK)
         {
             BackColor = colorDialog1.Color;
+            State.Settings.InputDisplayBackColor = BackColor;
         }
+    }
+
+    private void hideToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        Hide();
     }
 }

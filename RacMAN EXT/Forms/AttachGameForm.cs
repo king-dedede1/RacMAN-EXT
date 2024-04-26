@@ -5,14 +5,18 @@ using RacMAN.API;
 namespace RacMAN.Forms;
 public partial class AttachGameForm : Form
 {
+    Racman state;
     public APIType apiType = APIType.None;
     public string BoxText => textBox1.Text;
 
-    public AttachGameForm()
+    public AttachGameForm(Racman state)
     {
         InitializeComponent();
         versionLabel.Text = $"v{Assembly.GetEntryAssembly()!.GetName().Version}";
-        comboBox1.SelectedIndex = 0;
+        this.state = state;
+        comboBox1.SelectedIndex = state.Settings.DefaultAPIDropdownIndex ?? 0;
+
+        
     }
 
     private void continueButton_Click(object sender, EventArgs e)
@@ -29,6 +33,7 @@ public partial class AttachGameForm : Form
 
     private void Connect()
     {
+        state.Settings.DefaultAPIDropdownIndex = comboBox1.SelectedIndex;
         switch (this.comboBox1.SelectedIndex)
         {
             case 0:
@@ -47,13 +52,20 @@ public partial class AttachGameForm : Form
 
     private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (comboBox1.SelectedIndex == 0)
+        switch (comboBox1.SelectedIndex)
         {
-            label3.Text = "IP Address:";
-        }
-        else
-        {
-            label3.Text = "PINE Slot:";
+            case 0:
+                textBox1.Text = state.Settings.RatchetronIP;
+                label3.Text = "IP Address:";
+                break;
+            case 1:
+                textBox1.Text = state.Settings.RPCS3Slot.ToString();
+                label3.Text = "PINE Slot:";
+                break;
+            case 2:
+                textBox1.Text = state.Settings.PCSX2Slot.ToString();
+                label3.Text = "PINE Slot:";
+                break;
         }
 
     }
@@ -64,5 +76,10 @@ public partial class AttachGameForm : Form
         {
             Connect();
         }
+    }
+
+    private void AttachGameForm_Shown(object sender, EventArgs e)
+    {
+        if ((bool) state.Settings.AutoConnect!) Connect();
     }
 }

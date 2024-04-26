@@ -12,12 +12,23 @@ namespace RacMAN.Forms;
 public partial class LuaConsoleForm : Form
 {
     public static LuaConsoleForm instance;
+    Racman state;
 
-    public LuaConsoleForm()
+    public LuaConsoleForm(Racman state)
     {
         InitializeComponent();
         console.Text = string.Empty;
         instance = this;
+        this.state = state;
+        UpdateColors();
+    }
+
+    internal void UpdateColors()
+    {
+        UserSettings settings = state.Settings;
+        console.Font = new Font((string) settings.ConsoleTextFontName, (float) settings.ConsoleTextFontSize, (FontStyle) settings.ConsoleTextFontStyle);
+        console.ForeColor = (Color)settings.ConsoleTextColor;
+        console.BackColor = (Color)settings.ConsoleBackColor;
     }
 
     public void Append(string msg)
